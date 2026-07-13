@@ -1,0 +1,30 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: bobbys_petshop
+      POSTGRES_USER: bobbys
+      POSTGRES_PASSWORD: bobbys_dev_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bobbys -d bobbys_petshop"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://bobbys:bobbys_dev_password@postgres:5432/bobbys_petshop?schema=public
+      NEXT_PUBLIC_SITE_URL: http://localhost:3000
+    ports:
+      - "3000:3000"
+
+volumes:
+  postgres_data:

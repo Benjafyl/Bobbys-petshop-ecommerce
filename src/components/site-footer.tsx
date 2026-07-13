@@ -1,0 +1,47 @@
+import Link from "next/link";
+import { AtSign, Mail, MessageCircle } from "lucide-react";
+
+export function SiteFooter() {
+  return (
+    <footer className="border-t border-[#E5DED4] bg-[#243C3A] text-white">
+      <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-[1.4fr_1fr_1fr] lg:px-8">
+        <div>
+          <p className="text-lg font-black">Bobby&apos;s Pet Shop</p>
+          <p className="mt-3 max-w-md text-sm leading-6 text-[#E5DED4]">
+            Parkas impermeables y chalecos para mascotas en Chile. La primera version
+            esta preparada para operar con transferencia, retiro y despacho nacional.
+          </p>
+        </div>
+        <div>
+          <p className="text-sm font-black uppercase tracking-[0.18em] text-[#F9D36B]">
+            Ayuda
+          </p>
+          <div className="mt-3 grid gap-2 text-sm text-[#E5DED4]">
+            <Link href="/preguntas-frecuentes">Preguntas frecuentes</Link>
+            <Link href="/cambios-y-devoluciones">Cambios y devoluciones</Link>
+            <Link href="/seguimiento">Seguimiento de pedido</Link>
+          </div>
+        </div>
+        <div>
+          <p className="text-sm font-black uppercase tracking-[0.18em] text-[#F9D36B]">
+            Contacto
+          </p>
+          <div className="mt-3 flex gap-2">
+            <Link className="rounded-full bg-white/10 p-2" href="/contacto" aria-label="WhatsApp">
+              <MessageCircle size={18} />
+            </Link>
+            <Link className="rounded-full bg-white/10 p-2" href="/contacto" aria-label="Correo">
+              <Mail size={18} />
+            </Link>
+            <Link className="rounded-full bg-white/10 p-2" href="/sobre-bobbys" aria-label="Redes sociales">
+              <AtSign size={18} />
+            </Link>
+          </div>
+        </div>
+      </div>
+      <div className="border-t border-white/10 px-4 py-4 text-center text-xs text-[#C8D2CC]">
+        Datos bancarios y secretos se configuran por ambiente. No se publican en el repositorio.
+      </div>
+    </footer>
+  );
+}

@@ -68,7 +68,7 @@ export default function Home() {
                 Explorar por categoría
               </Link>
             </div>
-            <p className="mt-6 text-sm leading-6 text-[#52615D]">Precios, tallas y disponibilidad por confirmar. Compras aún no habilitadas.</p>
+            <p className="mt-6 text-sm leading-6 text-[#52615D]">Algunos productos ya muestran precio y tallas del inventario. Compras aún no habilitadas.</p>
           </div>
           <div className="relative min-h-[520px] overflow-hidden rounded-lg bg-[#F4E8D8]">
             <Image src="/images/official/parka-beige-modelo.jpg" alt="Perro con parka beige y negra de Bobby's Pet Shop" fill priority sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
@@ -165,7 +165,7 @@ export default function Home() {
 
       <section className="border-t border-[#E5DED4] bg-[#F4E8D8]">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-5 px-4 py-10 sm:px-6 md:flex-row md:items-center lg:px-8">
-          <div className="flex items-start gap-3"><Heart className="mt-1 shrink-0 text-[#B6633A]" size={24} /><div><h2 className="text-xl font-black">La colección sigue creciendo</h2><p className="mt-1 max-w-xl text-sm leading-6 text-[#52615D]">Ya puedes conocer los diseños oficiales. Confirmaremos precios, tallas y disponibilidad antes de habilitar compras.</p></div></div>
+          <div className="flex items-start gap-3"><Heart className="mt-1 shrink-0 text-[#B6633A]" size={24} /><div><h2 className="text-xl font-black">La colección sigue creciendo</h2><p className="mt-1 max-w-xl text-sm leading-6 text-[#52615D]">Ya puedes conocer los diseños oficiales. Seguimos completando precios, tallas y disponibilidad antes de habilitar compras.</p></div></div>
           <Link href="/tienda" className="inline-flex shrink-0 items-center gap-2 rounded-md bg-[#243C3A] px-5 py-3 text-sm font-black text-white">Explorar con filtros <ArrowRight size={17} /></Link>
         </div>
       </section>

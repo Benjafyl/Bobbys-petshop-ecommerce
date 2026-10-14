@@ -12,8 +12,8 @@ export default function FaqPage() {
           específicas de cada prenda cuando estén confirmadas.
         </p>
         <p>
-          <strong>¿Ya hay precios y stock?</strong> Todavía no. El catálogo muestra fotos oficiales;
-          publicaremos precios, tallas y disponibilidad antes de recibir pedidos.
+          <strong>¿Ya hay precios y tallas?</strong> Algunos productos muestran precio de lista y
+          tallas registradas en el inventario. La disponibilidad actual debe confirmarse antes de comprar.
         </p>
       </div>
     </InfoPage>

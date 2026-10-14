@@ -2,9 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { officialCategoryLabels, type OfficialProduct } from "@/lib/official-catalog";
+import { formatClp, publicInventoryBySlug } from "@/lib/public-inventory";
 
 export function OfficialProductCard({ product, headingLevel = "h3" }: { product: OfficialProduct; headingLevel?: "h3" | "h4" }) {
   const Heading = headingLevel;
+  const inventory = publicInventoryBySlug[product.slug];
   return (
     <article className="group overflow-hidden rounded-lg border border-[#E5DED4] bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
       <Link href={`/producto/${product.slug}`} className="block" aria-label={`Ver ${product.name}`}>
@@ -23,7 +25,12 @@ export function OfficialProductCard({ product, headingLevel = "h3" }: { product:
         <div className="flex items-center justify-between gap-3 p-4">
           <div>
             <Heading className="text-lg font-black leading-tight text-[#243C3A]">{product.name}</Heading>
-            <p className="mt-1 text-sm text-[#52615D]">Precio y tallas por confirmar</p>
+            {inventory ? (
+              <>
+                <p className="mt-1 text-base font-black text-[#B6633A]">{formatClp(inventory.priceClp)}</p>
+                <p className="mt-1 text-xs text-[#52615D]">Tallas registradas: {inventory.sizes.join(" · ")}</p>
+              </>
+            ) : <p className="mt-1 text-sm text-[#52615D]">Precio y tallas por confirmar</p>}
           </div>
           <ArrowUpRight className="shrink-0 text-[#B6633A]" size={20} />
         </div>

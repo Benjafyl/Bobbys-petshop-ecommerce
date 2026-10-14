@@ -5,10 +5,12 @@ import Link from "next/link";
 import { useState } from "react";
 import { ArrowLeft, Ruler } from "lucide-react";
 import { officialCategoryLabels, type OfficialProduct } from "@/lib/official-catalog";
+import { formatClp, inventoryAsOf, publicInventoryBySlug } from "@/lib/public-inventory";
 
 export function OfficialProductDetail({ product }: { product: OfficialProduct }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const active = product.images[activeIndex];
+  const inventory = publicInventoryBySlug[product.slug];
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
@@ -41,10 +43,22 @@ export function OfficialProductDetail({ product }: { product: OfficialProduct })
           <p className="text-sm font-black uppercase tracking-[0.18em] text-[#B6633A]">{officialCategoryLabels[product.category]}</p>
           <h1 className="mt-3 text-4xl font-black leading-tight text-[#243C3A]">{product.name}</h1>
           <p className="mt-4 text-lg leading-8 text-[#52615D]">{product.description}</p>
-          <div className="mt-8 rounded-lg border border-[#E5DED4] bg-white p-6">
-            <h2 className="text-lg font-black">Colección en preparación</h2>
-            <p className="mt-2 leading-7 text-[#52615D]">Precio, tallas y disponibilidad por confirmar. Por ahora puedes explorar las fotografías oficiales de este producto; todavía no recibimos compras en el sitio.</p>
-          </div>
+          {inventory ? (
+            <div className="mt-8 rounded-lg border border-[#E5DED4] bg-white p-6">
+              <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#B6633A]">Precio de lista</p>
+              <p className="mt-1 text-3xl font-black text-[#243C3A]">{formatClp(inventory.priceClp)}</p>
+              <h2 className="mt-6 text-lg font-black">Tallas registradas</h2>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {inventory.sizes.map((size) => <span key={size} className="rounded-md border border-[#E5DED4] bg-[#FBF7F1] px-4 py-2 text-sm font-bold">{size}</span>)}
+              </div>
+              <p className="mt-5 text-sm leading-6 text-[#52615D]">Según inventario del {inventoryAsOf}. Confirma la disponibilidad actual antes de comprar; la tienda aún no recibe pedidos en línea.</p>
+            </div>
+          ) : (
+            <div className="mt-8 rounded-lg border border-[#E5DED4] bg-white p-6">
+              <h2 className="text-lg font-black">Colección en preparación</h2>
+              <p className="mt-2 leading-7 text-[#52615D]">Precio, tallas y disponibilidad por confirmar. Por ahora puedes explorar las fotografías oficiales de este producto; todavía no recibimos compras en el sitio.</p>
+            </div>
+          )}
           <Link href="/guia-de-tallas" className="mt-5 inline-flex items-center gap-2 text-sm font-black text-[#B6633A]">
             <Ruler size={17} /> Cómo medir a tu perro
           </Link>

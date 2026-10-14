@@ -1,12 +1,12 @@
 # Bobby's Pet Shop E-commerce
 
 Primera base del e-commerce de Bobby's Pet Shop. El sitio publicado muestra el catálogo visual
-con fotografías oficiales. Los precios, tallas y existencias siguen por confirmar; aún no recibe pedidos ni pagos.
+con fotografías oficiales. Algunos productos muestran precios y tallas del inventario; aún no recibe pedidos ni pagos.
 
 ## Incluido
 
 - Storefront responsive con inicio, tienda, detalle de producto y guía para medir al perro.
-- Catálogo visual oficial de abrigos, polerones y accesorios, sin precios ni stock inventados.
+- Catálogo visual oficial de abrigos, polerones y accesorios, con precios y tallas publicados solo cuando se pudieron vincular al inventario.
 - Fotografías oficiales organizadas en `public/images/official/` y espacio de entrada en `materials/inbox/`.
 - Carrito y checkout inactivos hasta completar los datos comerciales.
 - Modelo Prisma para Postgres con usuarios, productos, variantes, pedidos, pagos, reviews, stock y auditoria.

@@ -18,7 +18,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-[#E5DED4] bg-[#FBF7F1]/95 backdrop-blur">
       <div className="bg-[#243C3A] px-4 py-2 text-center text-xs font-semibold text-white">
-        Catálogo oficial disponible · Precios, tallas y stock por confirmar · Compras aún no habilitadas
+        Catálogo oficial · Precios y tallas verificados en productos seleccionados · Compras aún no habilitadas
       </div>
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-3" aria-label="Ir al inicio">

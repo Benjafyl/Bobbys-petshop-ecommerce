@@ -24,6 +24,18 @@ export const publicInventoryBySlug: Record<string, PublicInventory> = {
     priceClp: 6500,
     sizes: ["S"],
   },
+  "poleron-flores-rosa": {
+    priceClp: 6500,
+    sizes: ["S"],
+  },
+  "poleron-leopardo-gris": {
+    priceClp: 6500,
+    sizes: ["L"],
+  },
+  "poleron-dinosaurios": {
+    priceClp: 6500,
+    sizes: ["L"],
+  },
 };
 
 export function formatClp(amount: number) {

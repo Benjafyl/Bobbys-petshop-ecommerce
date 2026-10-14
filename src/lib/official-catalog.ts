@@ -11,7 +11,7 @@ export type OfficialProduct = {
 
 export const officialCategoryLabels: Record<OfficialCategory, string> = {
   abrigos: "Abrigos",
-  polerones: "Polerones",
+  polerones: "Polerones y chalecos",
   halloween: "Halloween",
   accesorios: "Accesorios",
 };
@@ -61,17 +61,17 @@ export const officialProducts: OfficialProduct[] = [
   },
   {
     slug: "poleron-leopardo-gris",
-    name: "Polerón leopardo gris",
+    name: "Chaleco animal print blanco",
     category: "polerones",
-    description: "Polerón suave gris con estampado de leopardo y puños acanalados.",
-    images: [image("poleron-leopardo-gris-producto", "Polerón gris con estampado de leopardo")],
+    description: "Chaleco suave blanco y gris con estampado animal print y puños acanalados.",
+    images: [image("poleron-leopardo-gris-producto", "Chaleco blanco y gris con estampado animal print")],
   },
   {
     slug: "poleron-flores-rosa",
-    name: "Polerón flores rosa",
+    name: "Chaleco rosado con patitas",
     category: "polerones",
-    description: "Polerón rosa suave con diseño floral y terminaciones acanaladas.",
-    images: [image("poleron-flores-rosa-producto", "Polerón rosa con flores")],
+    description: "Chaleco rosado suave con diseño de patitas y terminaciones acanaladas.",
+    images: [image("poleron-flores-rosa-producto", "Chaleco rosado estampado con terminaciones acanaladas")],
   },
   {
     slug: "poleron-corazones-rosa",
@@ -82,10 +82,10 @@ export const officialProducts: OfficialProduct[] = [
   },
   {
     slug: "poleron-dinosaurios",
-    name: "Polerón dinosaurios",
+    name: "Chaleco azul con dinosaurios",
     category: "polerones",
-    description: "Polerón gris suave con dinosaurios en blanco y celeste.",
-    images: [image("poleron-dinosaurios-gris-producto", "Polerón gris con dinosaurios")],
+    description: "Chaleco suave gris y azul con dinosaurios en blanco y celeste.",
+    images: [image("poleron-dinosaurios-gris-producto", "Chaleco gris y azul con dinosaurios")],
   },
   {
     slug: "poleron-gris-jaspeado",

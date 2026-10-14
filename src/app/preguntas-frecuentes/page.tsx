@@ -8,12 +8,12 @@ export default function FaqPage() {
           <strong>¿Cómo se paga?</strong> Los medios de pago se informarán cuando habilitemos las compras.
         </p>
         <p>
-          <strong>¿Cómo elijo talla?</strong> Mide cuello, pecho y espalda, luego compara con la
-          guía de cada producto.
+          <strong>¿Cómo elijo talla?</strong> Mide cuello, pecho y espalda. Publicaremos las medidas
+          específicas de cada prenda cuando estén confirmadas.
         </p>
         <p>
-          <strong>¿Los precios y existencias son definitivos?</strong> Aún son referenciales.
-          Confirmaremos el catálogo oficial antes de recibir pedidos.
+          <strong>¿Ya hay precios y stock?</strong> Todavía no. El catálogo muestra fotos oficiales;
+          publicaremos precios, tallas y disponibilidad antes de recibir pedidos.
         </p>
       </div>
     </InfoPage>

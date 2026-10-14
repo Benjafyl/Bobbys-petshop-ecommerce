@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Bobby's Pet Shop",
     description: "Ropa y accesorios para perros. Sitio en preparación.",
-    images: ["/images/hero-raincoat.jpg"],
+    images: ["/images/official/parka-beige-modelo.jpg"],
   },
 };
 

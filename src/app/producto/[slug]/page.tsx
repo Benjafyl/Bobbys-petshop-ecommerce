@@ -1,26 +1,16 @@
 import { notFound } from "next/navigation";
-import { ProductDetail } from "@/components/product-detail";
-import { getProduct } from "@/lib/commerce";
-import { products } from "@/lib/catalog";
+import { OfficialProductDetail } from "@/components/official-product-detail";
+import { getOfficialProduct, officialProducts } from "@/lib/official-catalog";
 
-export function generateStaticParams() {
-  return products.map((product) => ({ slug: product.slug }));
+export function generateStaticParams() { return officialProducts.map((product) => ({ slug: product.slug })); }
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const product = getOfficialProduct((await params).slug);
+  return { title: product?.name ?? "Producto", description: product?.description };
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }) {
-  const product = getProduct(params.slug);
-  return {
-    title: product?.name ?? "Producto",
-    description: product?.description,
-  };
-}
-
-export default function ProductPage({ params }: { params: { slug: string } }) {
-  const product = getProduct(params.slug);
-
-  if (!product) {
-    notFound();
-  }
-
-  return <ProductDetail product={product} />;
+export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
+  const product = getOfficialProduct((await params).slug);
+  if (!product) notFound();
+  return <OfficialProductDetail product={product} />;
 }

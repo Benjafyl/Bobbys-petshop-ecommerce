@@ -1,39 +1,31 @@
 "use client";
 
 import Link from "next/link";
-import { Menu, Search, ShoppingBag, UserRound } from "lucide-react";
+import Image from "next/image";
+import { Menu, Search } from "lucide-react";
 import { useState } from "react";
-import { useStore } from "@/components/store-provider";
 
 const navItems = [
   { href: "/tienda", label: "Tienda" },
   { href: "/guia-de-tallas", label: "Tallas" },
-  { href: "/the-boss", label: "The Boss" },
+  { href: "/the-boss", label: "La marca" },
   { href: "/envios", label: "Envios" },
 ];
 
 export function SiteHeader() {
-  const { cartCount } = useStore();
   const [open, setOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#E5DED4] bg-[#FBF7F1]/95 backdrop-blur">
       <div className="bg-[#243C3A] px-4 py-2 text-center text-xs font-semibold text-white">
-        Sitio en preparación · Productos, precios y existencias referenciales · Compras aún no habilitadas
+        Catálogo oficial disponible · Precios, tallas y stock por confirmar · Compras aún no habilitadas
       </div>
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-3" aria-label="Ir al inicio">
-          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#243C3A] text-sm font-black text-[#F9D36B]">
-            BP
+          <span className="relative block h-12 w-24 overflow-hidden rounded-sm bg-[#F8F0E3] sm:w-32">
+            <Image src="/images/official/logo-bobbys-pet-shop.jpg" alt="Bobby's Pet Shop" fill sizes="128px" className="object-cover" />
           </span>
-          <span>
-            <span className="block text-base font-black text-[#243C3A]">
-              Bobby&apos;s Pet Shop
-            </span>
-            <span className="block text-xs font-semibold uppercase tracking-[0.18em] text-[#B6633A]">
-              Ropa y accesorios para perros
-            </span>
-          </span>
+          <span className="hidden text-xs font-semibold uppercase tracking-[0.18em] text-[#B6633A] sm:block">Ropa y accesorios<br />para perros</span>
         </Link>
 
         <nav className="hidden items-center gap-6 text-sm font-semibold text-[#354642] lg:flex">
@@ -51,25 +43,6 @@ export function SiteHeader() {
             aria-label="Buscar productos"
           >
             <Search size={18} />
-          </Link>
-          <Link
-            href="/cuenta"
-            className="hidden h-10 w-10 items-center justify-center rounded-full border border-[#E5DED4] text-[#243C3A] transition hover:bg-white sm:flex"
-            aria-label="Ir a mi cuenta"
-          >
-            <UserRound size={18} />
-          </Link>
-          <Link
-            href="/carrito"
-            className="relative flex h-10 w-10 items-center justify-center rounded-full bg-[#243C3A] text-white transition hover:bg-[#315955]"
-            aria-label={`Ir al carrito con ${cartCount} productos`}
-          >
-            <ShoppingBag size={18} />
-            {cartCount > 0 ? (
-              <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#F9D36B] px-1 text-xs font-black text-[#243C3A]">
-                {cartCount}
-              </span>
-            ) : null}
           </Link>
           <button
             className="flex h-10 w-10 items-center justify-center rounded-full border border-[#E5DED4] text-[#243C3A] lg:hidden"

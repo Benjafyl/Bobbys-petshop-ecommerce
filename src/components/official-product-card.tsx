@@ -3,7 +3,8 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { officialCategoryLabels, type OfficialProduct } from "@/lib/official-catalog";
 
-export function OfficialProductCard({ product }: { product: OfficialProduct }) {
+export function OfficialProductCard({ product, headingLevel = "h3" }: { product: OfficialProduct; headingLevel?: "h3" | "h4" }) {
+  const Heading = headingLevel;
   return (
     <article className="group overflow-hidden rounded-lg border border-[#E5DED4] bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
       <Link href={`/producto/${product.slug}`} className="block" aria-label={`Ver ${product.name}`}>
@@ -21,7 +22,7 @@ export function OfficialProductCard({ product }: { product: OfficialProduct }) {
         </div>
         <div className="flex items-center justify-between gap-3 p-4">
           <div>
-            <h2 className="text-lg font-black leading-tight text-[#243C3A]">{product.name}</h2>
+            <Heading className="text-lg font-black leading-tight text-[#243C3A]">{product.name}</Heading>
             <p className="mt-1 text-sm text-[#52615D]">Precio y tallas por confirmar</p>
           </div>
           <ArrowUpRight className="shrink-0 text-[#B6633A]" size={20} />

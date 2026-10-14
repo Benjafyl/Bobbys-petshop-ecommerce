@@ -5,16 +5,15 @@ export default function FaqPage() {
     <InfoPage eyebrow="Ayuda" title="Preguntas frecuentes">
       <div className="grid gap-5">
         <p>
-          <strong>Como se paga?</strong> En el MVP, por transferencia bancaria con revision
-          manual del equipo.
+          <strong>¿Cómo se paga?</strong> Los medios de pago se informarán cuando habilitemos las compras.
         </p>
         <p>
-          <strong>Como elijo talla?</strong> Mide cuello, pecho y espalda, luego compara con la
-          guia de cada producto.
+          <strong>¿Cómo elijo talla?</strong> Mide cuello, pecho y espalda, luego compara con la
+          guía de cada producto.
         </p>
         <p>
-          <strong>Que pasa si se agota?</strong> La variante queda visible, pero bloqueada para
-          compra.
+          <strong>¿Los precios y existencias son definitivos?</strong> Aún son referenciales.
+          Confirmaremos el catálogo oficial antes de recibir pedidos.
         </p>
       </div>
     </InfoPage>

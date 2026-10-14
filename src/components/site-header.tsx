@@ -10,7 +10,6 @@ const navItems = [
   { href: "/guia-de-tallas", label: "Tallas" },
   { href: "/the-boss", label: "The Boss" },
   { href: "/envios", label: "Envios" },
-  { href: "/admin", label: "Admin" },
 ];
 
 export function SiteHeader() {
@@ -19,6 +18,9 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#E5DED4] bg-[#FBF7F1]/95 backdrop-blur">
+      <div className="bg-[#243C3A] px-4 py-2 text-center text-xs font-semibold text-white">
+        Sitio en preparación · Productos, precios y existencias referenciales · Compras aún no habilitadas
+      </div>
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-3" aria-label="Ir al inicio">
           <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#243C3A] text-sm font-black text-[#F9D36B]">
@@ -29,7 +31,7 @@ export function SiteHeader() {
               Bobby&apos;s Pet Shop
             </span>
             <span className="block text-xs font-semibold uppercase tracking-[0.18em] text-[#B6633A]">
-              Ropa para mascotas
+              Ropa y accesorios para perros
             </span>
           </span>
         </Link>

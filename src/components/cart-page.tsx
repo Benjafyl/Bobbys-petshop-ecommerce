@@ -15,7 +15,7 @@ export function CartPage() {
     return (
       <section className="mx-auto max-w-3xl px-4 py-16 text-center sm:px-6 lg:px-8">
         <h1 className="text-4xl font-black text-[#243C3A]">Tu carrito esta vacio</h1>
-        <p className="mt-3 text-[#52615D]">Agrega una parka o chaleco para continuar al checkout.</p>
+        <p className="mt-3 text-[#52615D]">Agrega ropa o accesorios para ver un resumen.</p>
         <Link
           href="/tienda"
           className="mt-6 inline-flex h-12 items-center justify-center rounded-md bg-[#B6633A] px-5 text-sm font-black text-white"
@@ -90,14 +90,14 @@ export function CartPage() {
             </div>
             <div className="flex justify-between">
               <span>Despacho</span>
-              <strong>Se calcula en checkout</strong>
+              <strong>Por confirmar</strong>
             </div>
           </div>
           <Link
             href="/checkout"
             className="mt-5 inline-flex h-12 w-full items-center justify-center rounded-md bg-[#B6633A] px-5 text-sm font-black text-white"
           >
-            Continuar al checkout
+            Ver resumen
           </Link>
         </aside>
       </div>

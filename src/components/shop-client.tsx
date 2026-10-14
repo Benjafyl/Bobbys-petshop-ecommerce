@@ -54,11 +54,12 @@ export function ShopClient() {
         </p>
         <div className="mt-4 grid gap-4">
           <label className="grid gap-2 text-sm font-bold text-[#243C3A]">
-            Tipo de prenda
+            Categoría
             <select value={category} onChange={(event) => setCategory(event.target.value as ProductCategory | "all")}>
               <option value="all">Todas</option>
               <option value="parka-impermeable">Parkas impermeables</option>
               <option value="chaleco">Chalecos</option>
+              <option value="accesorio">Accesorios</option>
             </select>
           </label>
           <label className="grid gap-2 text-sm font-bold text-[#243C3A]">

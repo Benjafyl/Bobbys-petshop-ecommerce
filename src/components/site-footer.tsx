@@ -8,8 +8,8 @@ export function SiteFooter() {
         <div>
           <p className="text-lg font-black">Bobby&apos;s Pet Shop</p>
           <p className="mt-3 max-w-md text-sm leading-6 text-[#E5DED4]">
-            Parkas impermeables y chalecos para mascotas en Chile. La primera version
-            esta preparada para operar con transferencia, retiro y despacho nacional.
+            Ropa y accesorios para perros en Chile. Estamos preparando nuestro catálogo
+            y las opciones de compra y entrega.
           </p>
         </div>
         <div>
@@ -19,7 +19,7 @@ export function SiteFooter() {
           <div className="mt-3 grid gap-2 text-sm text-[#E5DED4]">
             <Link href="/preguntas-frecuentes">Preguntas frecuentes</Link>
             <Link href="/cambios-y-devoluciones">Cambios y devoluciones</Link>
-            <Link href="/seguimiento">Seguimiento de pedido</Link>
+            <Link href="/contacto">Contacto</Link>
           </div>
         </div>
         <div>
@@ -27,10 +27,10 @@ export function SiteFooter() {
             Contacto
           </p>
           <div className="mt-3 flex gap-2">
-            <Link className="rounded-full bg-white/10 p-2" href="/contacto" aria-label="WhatsApp">
+            <Link className="rounded-full bg-white/10 p-2" href="/contacto" aria-label="Contacto">
               <MessageCircle size={18} />
             </Link>
-            <Link className="rounded-full bg-white/10 p-2" href="/contacto" aria-label="Correo">
+            <Link className="rounded-full bg-white/10 p-2" href="/contacto" aria-label="Información de contacto">
               <Mail size={18} />
             </Link>
             <Link className="rounded-full bg-white/10 p-2" href="/sobre-bobbys" aria-label="Redes sociales">
@@ -40,7 +40,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-white/10 px-4 py-4 text-center text-xs text-[#C8D2CC]">
-        Datos bancarios y secretos se configuran por ambiente. No se publican en el repositorio.
+        Sitio en preparación. Productos, precios y existencias referenciales; compras aún no habilitadas.
       </div>
     </footer>
   );

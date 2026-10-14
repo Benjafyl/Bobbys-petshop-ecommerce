@@ -25,7 +25,7 @@ export default function AccountPage() {
         ))}
       </div>
       <Link className="mt-6 inline-flex rounded-md bg-[#B6633A] px-5 py-3 text-sm font-black text-white" href="/tienda">
-        Comprar como invitado
+        Explorar la tienda
       </Link>
     </section>
   );

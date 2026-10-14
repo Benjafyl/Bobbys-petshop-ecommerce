@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, BadgeCheck, PackageCheck, Ruler, Truck } from "lucide-react";
+import { ArrowRight, BadgeCheck, Heart, Ruler, Truck } from "lucide-react";
 import { ProductCard } from "@/components/product-card";
 import { products } from "@/lib/catalog";
-import { formatPrice, getProductStock } from "@/lib/commerce";
+import { formatPrice } from "@/lib/commerce";
 
 const benefits = [
   {
@@ -12,20 +12,19 @@ const benefits = [
     copy: "Medidas de cuello, pecho y espalda antes de elegir cada variante.",
   },
   {
-    icon: PackageCheck,
-    title: "Stock real",
-    copy: "Disponibilidad por SKU para evitar vender tallas agotadas.",
+    icon: Heart,
+    title: "Para cada paseo",
+    copy: "Ropa y accesorios cómodos para salir con personalidad.",
   },
   {
     icon: Truck,
     title: "Retiro o despacho",
-    copy: "Preparado para retiro en Vina del Mar y envio nacional configurable.",
+    copy: "Estamos preparando las opciones de entrega para Chile.",
   },
 ];
 
 export default function Home() {
   const featuredProducts = products.filter((product) => product.featured);
-  const totalStock = products.reduce((total, product) => total + getProductStock(product), 0);
 
   return (
     <>
@@ -40,8 +39,8 @@ export default function Home() {
               Bobby&apos;s Pet Shop
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-[#52615D]">
-              Parkas impermeables y chalecos para perros, con tallas faciles de comparar,
-              stock visible y compra por transferencia para operar desde Chile.
+              Ropa y accesorios para perros con estilo, comodidad y una guía simple para encontrar
+              la talla adecuada. Estamos preparando nuestra primera colección.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
@@ -58,7 +57,7 @@ export default function Home() {
                 Guia de tallas
               </Link>
             </div>
-            <div className="mt-8 grid max-w-lg grid-cols-3 gap-3">
+            <div className="mt-8 grid max-w-lg grid-cols-2 gap-3">
               <div className="rounded-lg border border-[#E5DED4] bg-white p-4">
                 <p className="text-2xl font-black">{products.length}</p>
                 <p className="mt-1 text-xs font-bold uppercase tracking-[0.12em] text-[#52615D]">
@@ -66,15 +65,9 @@ export default function Home() {
                 </p>
               </div>
               <div className="rounded-lg border border-[#E5DED4] bg-white p-4">
-                <p className="text-2xl font-black">{totalStock}</p>
-                <p className="mt-1 text-xs font-bold uppercase tracking-[0.12em] text-[#52615D]">
-                  Unidades
-                </p>
-              </div>
-              <div className="rounded-lg border border-[#E5DED4] bg-white p-4">
                 <p className="text-2xl font-black">CL</p>
                 <p className="mt-1 text-xs font-bold uppercase tracking-[0.12em] text-[#52615D]">
-                  Operacion
+                  Hecho para Chile
                 </p>
               </div>
             </div>
@@ -90,10 +83,10 @@ export default function Home() {
             />
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#243C3A] via-[#243C3A]/80 to-transparent p-6 text-white">
               <p className="text-sm font-black uppercase tracking-[0.18em] text-[#F9D36B]">
-                Primer drop invierno
+                Primera colección
               </p>
               <p className="mt-2 max-w-sm text-2xl font-black leading-tight">
-                Parkas desde {formatPrice(19990)} con stock por talla y color.
+                Parkas desde {formatPrice(19990)}. Precios referenciales.
               </p>
             </div>
           </div>

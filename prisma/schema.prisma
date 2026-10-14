@@ -15,6 +15,7 @@ enum UserRole {
 enum ProductCategory {
   PARKA_IMPERMEABLE
   CHALECO
+  ACCESORIO
 }
 
 enum OrderStatus {

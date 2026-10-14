@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { Heart, Ruler, ShoppingBag, Zap } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useStore } from "@/components/store-provider";
-import { type Product } from "@/lib/catalog";
+import { categoryLabels, type Product } from "@/lib/catalog";
 import { formatPrice, getStockLabel } from "@/lib/commerce";
 
 const QUICK_BUY_KEY = "bobbys-quick-buy-v1";
@@ -48,7 +48,7 @@ export function ProductDetail({ product }: { product: Product }) {
 
       <div>
         <p className="text-sm font-black uppercase tracking-[0.18em] text-[#B6633A]">
-          {product.category === "parka-impermeable" ? "Parka impermeable" : "Chaleco"}
+          {categoryLabels[product.category]}
         </p>
         <h1 className="mt-3 text-4xl font-black leading-tight text-[#243C3A]">{product.name}</h1>
         <p className="mt-3 text-lg leading-8 text-[#52615D]">{product.description}</p>
@@ -86,7 +86,7 @@ export function ProductDetail({ product }: { product: Product }) {
                     />
                   </span>
                   <span className="mt-2 block text-xs font-bold text-[#52615D]">
-                    {getStockLabel(variant.stock, variant.lowStockThreshold)} · SKU {variant.sku}
+                    Disponibilidad referencial: {getStockLabel(variant.stock, variant.lowStockThreshold)} · SKU {variant.sku}
                   </span>
                 </button>
               );
@@ -111,7 +111,7 @@ export function ProductDetail({ product }: { product: Product }) {
             className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-[#B6633A] px-5 text-sm font-black text-white transition hover:bg-[#96502E] disabled:cursor-not-allowed disabled:bg-[#C9B8A8]"
           >
             <Zap size={18} />
-            Comprar ahora
+            Ver resumen
           </button>
         </div>
 
@@ -123,10 +123,10 @@ export function ProductDetail({ product }: { product: Product }) {
                 Cuello <strong className="block">{selectedVariant.neckCm} cm</strong>
               </span>
               <span className="rounded-md bg-[#F4E8D8] p-3">
-                Pecho <strong className="block">{selectedVariant.chestCm} cm</strong>
+                Pecho <strong className="block">{selectedVariant.chestCm === "—" ? "No aplica" : `${selectedVariant.chestCm} cm`}</strong>
               </span>
               <span className="rounded-md bg-[#F4E8D8] p-3">
-                Espalda <strong className="block">{selectedVariant.backCm} cm</strong>
+                Espalda <strong className="block">{selectedVariant.backCm === "—" ? "No aplica" : `${selectedVariant.backCm} cm`}</strong>
               </span>
             </div>
           </div>

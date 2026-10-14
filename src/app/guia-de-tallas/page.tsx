@@ -25,7 +25,7 @@ export default function SizeGuidePage() {
           <article key={category} className="overflow-hidden rounded-lg border border-[#E5DED4] bg-white">
             <div className="border-b border-[#E5DED4] bg-[#243C3A] px-5 py-4 text-white">
               <h2 className="text-xl font-black">
-                {category === "parka-impermeable" ? "Parkas impermeables" : "Chalecos"}
+                {category === "parka-impermeable" ? "Parkas impermeables" : category === "chaleco" ? "Chalecos" : "Accesorios (referencial)"}
               </h2>
             </div>
             <div className="overflow-x-auto">
@@ -42,9 +42,9 @@ export default function SizeGuidePage() {
                   {rows.map((row) => (
                     <tr key={row.size} className="border-t border-[#E5DED4]">
                       <td className="px-4 py-3 font-black">{row.size}</td>
-                      <td className="px-4 py-3">{row.neck} cm</td>
-                      <td className="px-4 py-3">{row.chest} cm</td>
-                      <td className="px-4 py-3">{row.back} cm</td>
+                      <td className="px-4 py-3">{row.neck === "—" ? "—" : `${row.neck} cm`}</td>
+                      <td className="px-4 py-3">{row.chest === "—" ? "—" : `${row.chest} cm`}</td>
+                      <td className="px-4 py-3">{row.back === "—" ? "—" : `${row.back} cm`}</td>
                     </tr>
                   ))}
                 </tbody>

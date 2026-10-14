@@ -18,14 +18,14 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   title: {
-    default: "Bobby's Pet Shop | Ropa para mascotas en Chile",
+    default: "Bobby's Pet Shop | Ropa y accesorios para perros",
     template: "%s | Bobby's Pet Shop",
   },
   description:
-    "E-commerce de parkas impermeables y chalecos para perros, con tallas claras, stock por variante y checkout por transferencia.",
+    "Colección inicial de ropa y accesorios para perros en Chile. Sitio en preparación.",
   openGraph: {
     title: "Bobby's Pet Shop",
-    description: "Parkas impermeables y chalecos para mascotas en Chile.",
+    description: "Ropa y accesorios para perros. Sitio en preparación.",
     images: ["/images/hero-raincoat.jpg"],
   },
 };

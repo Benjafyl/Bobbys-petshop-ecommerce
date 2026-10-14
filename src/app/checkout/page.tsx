@@ -3,8 +3,8 @@ import { Suspense } from "react";
 import { CheckoutPage } from "@/components/checkout-page";
 
 export const metadata: Metadata = {
-  title: "Checkout",
-  description: "Checkout de Bobby's Pet Shop con entrega y transferencia bancaria.",
+  title: "Resumen de selección",
+  description: "Resumen referencial de productos seleccionados en Bobby's Pet Shop.",
 };
 
 export default function CheckoutRoute() {

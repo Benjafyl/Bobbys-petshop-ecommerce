@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ShoppingBag } from "lucide-react";
 import { useStore } from "@/components/store-provider";
-import { type Product } from "@/lib/catalog";
+import { categoryLabels, type Product } from "@/lib/catalog";
 import { formatPrice, getProductStock, getRecommendedVariant, getStockLabel } from "@/lib/commerce";
 
 export function ProductCard({ product }: { product: Product }) {
@@ -32,10 +32,10 @@ export function ProductCard({ product }: { product: Product }) {
         <div>
           <div className="mb-2 flex items-center justify-between gap-3">
             <p className="text-xs font-black uppercase tracking-[0.16em] text-[#B6633A]">
-              {product.category === "parka-impermeable" ? "Parka" : "Chaleco"}
+              {categoryLabels[product.category]}
             </p>
             <p className="text-xs font-bold text-[#52615D]">
-              {getStockLabel(stock)}
+              Stock referencial: {getStockLabel(stock)}
             </p>
           </div>
           <Link href={`/producto/${product.slug}`}>

@@ -1,4 +1,10 @@
-export type ProductCategory = "parka-impermeable" | "chaleco";
+export type ProductCategory = "parka-impermeable" | "chaleco" | "accesorio";
+
+export const categoryLabels: Record<ProductCategory, string> = {
+  "parka-impermeable": "Parka impermeable",
+  chaleco: "Chaleco",
+  accesorio: "Accesorio",
+};
 
 export type ProductVariant = {
   id: string;
@@ -247,6 +253,44 @@ export const products: Product[] = [
       },
     ],
   },
+  {
+    slug: "bandana-terracota",
+    category: "accesorio",
+    name: "Bandana Terracota",
+    tagline: "Un toque de color para cada paseo.",
+    description: "Bandana de algodón suave con amarre ajustable para uso diario.",
+    care: "Lavar a mano con agua fría y secar a la sombra.",
+    price: 8990,
+    cost: 3500,
+    image: "/images/bandana-terracota.webp",
+    alt: "Perro pequeño con bandana terracota",
+    badge: "Accesorio",
+    featured: true,
+    createdAt: "2026-10-13",
+    variants: [
+      { id: "bandana-terracota-s", sku: "BPS-ACC-001-TER-S", colorName: "Terracota", colorHex: "#B6633A", size: "S", neckCm: "24-34", chestCm: "—", backCm: "—", stock: 5, lowStockThreshold: 2 },
+      { id: "bandana-terracota-m", sku: "BPS-ACC-001-TER-M", colorName: "Terracota", colorHex: "#B6633A", size: "M", neckCm: "34-46", chestCm: "—", backCm: "—", stock: 5, lowStockThreshold: 2 },
+    ],
+  },
+  {
+    slug: "arnes-paseo-bosque",
+    category: "accesorio",
+    name: "Arnés de Paseo Bosque",
+    tagline: "Ajuste cómodo para salir a explorar.",
+    description: "Arnés ajustable de paseo con correa a juego y hebillas seguras.",
+    care: "Limpiar con paño húmedo y dejar secar al aire.",
+    price: 18990,
+    cost: 8000,
+    image: "/images/arnes-bosque.webp",
+    alt: "Perro pequeño con arnés y correa verde bosque",
+    badge: "Accesorio",
+    featured: false,
+    createdAt: "2026-10-12",
+    variants: [
+      { id: "arnes-bosque-s", sku: "BPS-ACC-002-BOS-S", colorName: "Bosque", colorHex: "#2F6849", size: "S", neckCm: "24-32", chestCm: "34-46", backCm: "—", stock: 4, lowStockThreshold: 2 },
+      { id: "arnes-bosque-m", sku: "BPS-ACC-002-BOS-M", colorName: "Bosque", colorHex: "#2F6849", size: "M", neckCm: "30-40", chestCm: "44-60", backCm: "—", stock: 4, lowStockThreshold: 2 },
+    ],
+  },
 ];
 
 export const sizeGuides = {
@@ -263,6 +307,10 @@ export const sizeGuides = {
     { size: "M", neck: "29-34", chest: "42-50", back: "33-38" },
     { size: "L", neck: "34-39", chest: "50-58", back: "39-45" },
     { size: "XL", neck: "39-45", chest: "58-66", back: "46-53" },
+  ],
+  accesorio: [
+    { size: "S", neck: "24-34", chest: "34-46", back: "—" },
+    { size: "M", neck: "34-46", chest: "44-60", back: "—" },
   ],
 } satisfies Record<ProductCategory, { size: string; neck: string; chest: string; back: string }[]>;
 

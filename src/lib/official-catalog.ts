@@ -151,9 +151,9 @@ const catalogProducts: OfficialProduct[] = [
     slug: "traje-calabaza",
     name: "Traje calabaza",
     category: "halloween",
-    description: "Traje naranja sin mangas con rostro de calabaza y pañuelo de fantasmas para Halloween.",
+    description: "Traje naranja sin mangas con rostro de calabaza para Halloween. En la foto se muestra combinado con un pañuelo que se vende por separado.",
     images: [
-      image("traje-calabaza-modelo", "Perro con traje naranja de calabaza y pañuelo de fantasmas"),
+      image("traje-calabaza-modelo", "Perro con traje naranja de calabaza, combinado con un pañuelo vendido por separado"),
       image("traje-calabaza-producto", "Traje naranja de calabaza, vista de producto"),
     ],
   },

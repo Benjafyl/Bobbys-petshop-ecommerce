@@ -93,7 +93,7 @@ export function OfficialProductDetail({ product }: { product: OfficialProduct })
               <p className="mt-2 leading-7 text-[#52615D]">Precio, tallas y disponibilidad por confirmar. Por ahora puedes explorar las fotografías oficiales de este producto; todavía no recibimos compras en el sitio.</p>
             </div>
           )}
-          {!product.slug.startsWith("collar-") && (
+          {product.category !== "accesorios" && (
             <Link href="/guia-de-tallas" className="mt-5 inline-flex items-center gap-2 text-sm font-black text-[#B6633A]">
               <Ruler size={17} /> {product.category === "abrigos" ? "Ver tabla de medidas de parkas" : "Cómo medir a tu perro"}
             </Link>

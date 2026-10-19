@@ -185,7 +185,11 @@ const catalogProducts: OfficialProduct[] = [
     name: "Collar calabaza para gatos",
     category: "accesorios",
     description: "Collar XS para gatos, morado con lazo naranja, alas decorativas y calabaza.",
-    images: [image("collar-calabaza-producto", "Collar morado y naranja con calabaza y alas")],
+    images: [
+      image("collar-calabaza-gato-perfil", "Gato gris con collar de calabaza visto de perfil"),
+      image("collar-calabaza-gato-dorso", "Gato gris con el lazo naranja y las alas del collar de calabaza"),
+      image("collar-calabaza-producto", "Collar morado y naranja con calabaza y alas"),
+    ],
   },
 ];
 

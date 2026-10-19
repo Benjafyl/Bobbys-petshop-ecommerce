@@ -7,6 +7,12 @@ import { ArrowLeft, Ruler } from "lucide-react";
 import { officialCategoryLabels, type OfficialProduct } from "@/lib/official-catalog";
 import { formatClp, getMinimumPrice, getTotalUnits, hasMultiplePrices, inventoryAsOf, publicInventoryBySlug } from "@/lib/public-inventory";
 
+function galleryImageClassName(image: OfficialProduct["images"][number]) {
+  if (image.crop === "left") return "object-cover object-left";
+  if (image.crop === "right") return "object-cover object-right";
+  return "object-contain";
+}
+
 export function OfficialProductDetail({ product }: { product: OfficialProduct }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const active = product.images[activeIndex];
@@ -21,23 +27,23 @@ export function OfficialProductDetail({ product }: { product: OfficialProduct })
         <div>
           <div className="relative aspect-[4/5] overflow-hidden rounded-lg bg-[#F4E8D8]">
             {active ? (
-              <Image src={active.src} alt={active.alt} fill priority sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
+              <Image src={active.src} alt={active.alt} fill priority sizes="(min-width: 1024px) 50vw, 100vw" className={galleryImageClassName(active)} />
             ) : (
               <div className="flex h-full items-center justify-center px-8 text-center text-base font-bold uppercase tracking-[0.16em] text-[#52615D]">Fotografía del producto pendiente</div>
             )}
           </div>
           {product.images.length > 1 && (
-            <div className="mt-3 grid grid-cols-5 gap-2">
+            <div className={`mt-3 grid gap-2 ${product.images.length === 4 ? "grid-cols-4" : "grid-cols-5"}`}>
               {product.images.map((image, index) => (
                 <button
-                  key={image.src}
+                  key={`${image.src}-${index}`}
                   type="button"
                   onClick={() => setActiveIndex(index)}
                   aria-label={`Ver foto ${index + 1} de ${product.name}`}
                   aria-pressed={activeIndex === index}
                   className={`relative aspect-square overflow-hidden rounded-md border-2 bg-[#F4E8D8] ${activeIndex === index ? "border-[#B6633A]" : "border-transparent"}`}
                 >
-                  <Image src={image.src} alt="" fill sizes="120px" className="object-cover" />
+                  <Image src={image.src} alt="" fill sizes="120px" className={galleryImageClassName(image)} />
                 </button>
               ))}
             </div>

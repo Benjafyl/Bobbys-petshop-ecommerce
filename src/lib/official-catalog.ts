@@ -8,7 +8,7 @@ export type OfficialProduct = {
   category: OfficialCategory;
   description: string;
   fit?: string;
-  images: { src: string; alt: string }[];
+  images: { src: string; alt: string; crop?: "left" | "right" }[];
   video?: { src: string; poster: string; label: string };
   featured?: boolean;
 };
@@ -29,10 +29,10 @@ const catalogProducts: OfficialProduct[] = [
     category: "abrigos",
     description: "Parka acolchada gris y negra con cierre en la espalda y anillas para correa. Mira las fotos de producto y cómo luce puesta.",
     images: [
+      image("parka-gris-modelo-cerca", "Perro con parka gris y negra, detalle"),
       image("parka-gris-producto", "Parka bicolor gris y negra, vista de producto"),
       image("parka-gris-modelo-lateral", "Perro con parka gris y negra, vista lateral"),
       image("parka-gris-frente-dorso", "Parka gris y negra por ambos lados"),
-      image("parka-gris-modelo-cerca", "Perro con parka gris y negra, detalle"),
       image("parka-gris-modelo-superior", "Parka gris y negra puesta, vista superior"),
       image("parka-gris-paseo-nieve", "Perro con parka gris y negra durante un paseo en la nieve"),
     ],
@@ -50,7 +50,9 @@ const catalogProducts: OfficialProduct[] = [
     description: "Parka acolchada beige y negra con cierre en la espalda y anillas para correa.",
     images: [
       image("parka-beige-modelo", "Perro con parka beige y negra"),
-      image("parka-beige-frente-dorso", "Parka beige y negra por ambos lados"),
+      { ...image("parka-beige-frente-dorso", "Parka beige y negra, vista exterior"), crop: "left" },
+      { ...image("parka-beige-frente-dorso", "Parka beige y negra, vista interior"), crop: "right" },
+      image("parka-beige-en-casa", "Perro con parka beige y negra en casa"),
     ],
     featured: true,
   },

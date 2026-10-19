@@ -1,17 +1,28 @@
-# Cruce de inventario con el catálogo
+# Inventario público vigente · 19 de octubre de 2026
 
-Fuente privada revisada: `Planilla General Bobbys Petshop.xlsx`, hojas `Inventario` y `Lista_Precios`, recibida el 13 de octubre de 2026. El archivo original no se sube al repositorio porque incluye costos, ventas y márgenes. Solo se publican precio de lista y tallas de productos que pudieron vincularse con fotografías.
+La lista enviada por la tienda el 19 de octubre de 2026 reemplaza por completo los datos de la planilla anterior. `src/lib/public-inventory.ts` es la fuente del catálogo publicado. El archivo financiero original no se incorpora al repositorio.
 
-| Producto del sitio | Filas de Inventario | Criterio | Precio de lista | Tallas disponibles en el registro |
-| --- | --- | --- | ---: | --- |
-| Parka bicolor gris | 6, 15–16, 29–30 | `gris con negro`, `negro con gris` y `negra con gris`; la hoja `Lista_Precios` las trata como equivalentes. | $16.000 | XL, 3XL |
-| Parka bicolor beige | 5, 17–20, 31–32 | `negro con beige` y `beige con negro`; la hoja `Lista_Precios` las trata como equivalentes. | $16.000 | S, XL, XXL, 3XL |
-| Parka rosa metalizada | 2, 21 | `rosada`; única parka rosa fotografiada en el material recibido. | $14.000 | S, M |
-| Polerón corazones rosa | 22 | `Chaleco`, `rosado con corazones blancos`; coincidencia visual de diseño. | $6.500 | S |
-| Chaleco rosado con patitas | 23 | `Chaleco`, `rosado con patitas`; correspondencia con la foto confirmada por el usuario. | $6.500 | S |
-| Chaleco animal print blanco | 24 | `Chaleco`, `animal print blanco`; correspondencia con la foto confirmada por el usuario. | $6.500 | L |
-| Chaleco azul con dinosaurios | 26 | `Chaleco`, `azul con dinosaurios`; correspondencia con la foto confirmada por el usuario. | $6.500 | L |
+| Producto | Talla, unidades y precio | Fotografía |
+| --- | --- | --- |
+| Parka gris | M: 2 × $16.000; L: 1 × $16.000; XL: 1 × $18.000 | Sí |
+| Parka beige | M: 2 × $16.000; L: 1 × $16.000; XL: 2 × $18.000 | Sí |
+| Parka rosa metalizada | S: 1 × $12.000 | Sí |
+| Parka militar | M: 1 × $12.000 | Sí, fotos nuevas |
+| Parka azul | L: 1 × $12.000 | Sí, foto nueva |
+| Chaleco rosado con corazones | S: 1 × $5.500 | Sí |
+| Chaleco rosado con patitas | S: 1 × $5.500 | Sí |
+| Chaleco de ositos | M: 1 × $5.500 | Sí |
+| Chaleco animal print blanco | M: 1 × $5.500 | Sí |
+| Chaleco azul con dinosaurios | M: 1 × $5.500 | Sí |
+| Chaleco gris jaspeado | M: 1 × $5.500 | Sí |
+| Vestido murciélago | M-L: 1 × $5.990 | Sí |
+| Vestido calabazas | M-L: 1 × $5.990 | Sí, con huesitos y calabaza |
+| Traje huesitos | M-L: 1 × $4.000 | Sí |
+| Traje calabaza | M-L: 1 × $4.000 | Pendiente |
+| Pañuelos | 3 diseños, talla única: 1 de cada uno × $4.000 | Solo el rosado de Halloween; faltan 2 fotos |
+| Collar murciélago para gatos | XS: 1 × $3.500 | Sí |
+| Collar calabaza para gatos | XS: 1 × $3.500 | Sí |
 
-Se excluyeron unidades con estado `Vendido` o `Canje` y las marcadas `Pedido personalizado`. La disponibilidad es una fotografía del inventario de la fecha indicada; debe confirmarse antes de recibir una compra. La planilla no contiene medidas en centímetros para las tallas.
+Total informado: **27 unidades** repartidas en 18 fichas de producto. Los diseños de los dos pañuelos sin foto se identifican provisionalmente como «Diseño 2» y «Diseño 3». Se actualizarán cuando lleguen sus imágenes y nombres.
 
-Quedan por vincular otras prendas fotografiadas. Hay artículos del inventario sin fotografía publicable y fotos de Halloween sin registro correspondiente en el inventario.
+La parka negra y roja visible en `materials/reference/parkas-video-2026-10-19.mp4` **no está a la venta** según confirmación de la tienda. No aparece en el catálogo ni se usa el video en la web. La planilla del 13 de octubre queda como referencia histórica y no debe reintroducir tallas, cantidades o precios antiguos.

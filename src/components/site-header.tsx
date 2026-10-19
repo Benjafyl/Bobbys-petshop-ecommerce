@@ -18,14 +18,14 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-[#E5DED4] bg-[#FBF7F1]/95 backdrop-blur">
       <div className="bg-[#243C3A] px-4 py-2 text-center text-xs font-semibold text-white">
-        Catálogo oficial · Precios y tallas verificados en productos seleccionados · Compras aún no habilitadas
+        Inventario actualizado · Precios y existencias por talla · Compras aún no habilitadas
       </div>
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-3" aria-label="Ir al inicio">
           <span className="relative block h-12 w-24 overflow-hidden rounded-sm bg-[#F8F0E3] sm:w-32">
             <Image src="/images/official/logo-bobbys-pet-shop.jpg" alt="Bobby's Pet Shop" fill sizes="128px" className="object-cover" />
           </span>
-          <span className="hidden text-xs font-semibold uppercase tracking-[0.18em] text-[#B6633A] sm:block">Ropa y accesorios<br />para perros</span>
+          <span className="hidden text-xs font-semibold uppercase tracking-[0.18em] text-[#B6633A] sm:block">Ropa para perros<br />y collares para gatos</span>
         </Link>
 
         <nav className="hidden items-center gap-6 text-sm font-semibold text-[#354642] lg:flex">

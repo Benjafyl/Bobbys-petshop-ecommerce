@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { officialCategoryLabels, type OfficialProduct } from "@/lib/official-catalog";
-import { formatClp, publicInventoryBySlug } from "@/lib/public-inventory";
+import { formatClp, getMinimumPrice, getTotalUnits, hasMultiplePrices, publicInventoryBySlug } from "@/lib/public-inventory";
 
 export function OfficialProductCard({ product, headingLevel = "h3" }: { product: OfficialProduct; headingLevel?: "h3" | "h4" }) {
   const Heading = headingLevel;
@@ -11,13 +11,17 @@ export function OfficialProductCard({ product, headingLevel = "h3" }: { product:
     <article className="group overflow-hidden rounded-lg border border-[#E5DED4] bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
       <Link href={`/producto/${product.slug}`} className="block" aria-label={`Ver ${product.name}`}>
         <div className="relative aspect-[4/5] overflow-hidden bg-[#F4E8D8]">
-          <Image
-            src={product.images[0].src}
-            alt={product.images[0].alt}
-            fill
-            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-            className="object-cover transition duration-500 group-hover:scale-105"
-          />
+          {product.images[0] ? (
+            <Image
+              src={product.images[0].src}
+              alt={product.images[0].alt}
+              fill
+              sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+              className="object-cover transition duration-500 group-hover:scale-105"
+            />
+          ) : (
+            <div className="flex h-full items-center justify-center px-6 text-center text-sm font-bold uppercase tracking-[0.16em] text-[#52615D]">Foto pendiente</div>
+          )}
           <span className="absolute left-3 top-3 rounded-full bg-white/95 px-3 py-1 text-xs font-black uppercase tracking-[0.12em] text-[#243C3A]">
             {officialCategoryLabels[product.category]}
           </span>
@@ -27,8 +31,9 @@ export function OfficialProductCard({ product, headingLevel = "h3" }: { product:
             <Heading className="text-lg font-black leading-tight text-[#243C3A]">{product.name}</Heading>
             {inventory ? (
               <>
-                <p className="mt-1 text-base font-black text-[#B6633A]">{formatClp(inventory.priceClp)}</p>
-                <p className="mt-1 text-xs text-[#52615D]">Tallas registradas: {inventory.sizes.join(" · ")}</p>
+                <p className="mt-1 text-base font-black text-[#B6633A]">{hasMultiplePrices(inventory) ? "Desde " : ""}{formatClp(getMinimumPrice(inventory))}</p>
+                <p className="mt-1 text-xs text-[#52615D]">Tallas: {[...new Set(inventory.variants.map((variant) => variant.size))].join(" · ")}</p>
+                <p className="mt-1 text-xs font-semibold text-[#52615D]">{getTotalUnits(inventory)} {getTotalUnits(inventory) === 1 ? "unidad" : "unidades"} en inventario</p>
               </>
             ) : <p className="mt-1 text-sm text-[#52615D]">Precio y tallas por confirmar</p>}
           </div>

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { ArrowLeft, Ruler } from "lucide-react";
 import { officialCategoryLabels, type OfficialProduct } from "@/lib/official-catalog";
-import { formatClp, inventoryAsOf, publicInventoryBySlug } from "@/lib/public-inventory";
+import { formatClp, getMinimumPrice, getTotalUnits, hasMultiplePrices, inventoryAsOf, publicInventoryBySlug } from "@/lib/public-inventory";
 
 export function OfficialProductDetail({ product }: { product: OfficialProduct }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -20,7 +20,11 @@ export function OfficialProductDetail({ product }: { product: OfficialProduct })
       <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">
         <div>
           <div className="relative aspect-[4/5] overflow-hidden rounded-lg bg-[#F4E8D8]">
-            <Image src={active.src} alt={active.alt} fill priority sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
+            {active ? (
+              <Image src={active.src} alt={active.alt} fill priority sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
+            ) : (
+              <div className="flex h-full items-center justify-center px-8 text-center text-base font-bold uppercase tracking-[0.16em] text-[#52615D]">Fotografía del producto pendiente</div>
+            )}
           </div>
           {product.images.length > 1 && (
             <div className="mt-3 grid grid-cols-5 gap-2">
@@ -45,13 +49,19 @@ export function OfficialProductDetail({ product }: { product: OfficialProduct })
           <p className="mt-4 text-lg leading-8 text-[#52615D]">{product.description}</p>
           {inventory ? (
             <div className="mt-8 rounded-lg border border-[#E5DED4] bg-white p-6">
-              <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#B6633A]">Precio de lista</p>
-              <p className="mt-1 text-3xl font-black text-[#243C3A]">{formatClp(inventory.priceClp)}</p>
-              <h2 className="mt-6 text-lg font-black">Tallas registradas</h2>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {inventory.sizes.map((size) => <span key={size} className="rounded-md border border-[#E5DED4] bg-[#FBF7F1] px-4 py-2 text-sm font-bold">{size}</span>)}
+              <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#B6633A]">{hasMultiplePrices(inventory) ? "Precio desde" : "Precio"}</p>
+              <p className="mt-1 text-3xl font-black text-[#243C3A]">{formatClp(getMinimumPrice(inventory))}</p>
+              <h2 className="mt-6 text-lg font-black">Tallas, precios y existencias</h2>
+              <div className="mt-3 divide-y divide-[#E5DED4] rounded-md border border-[#E5DED4]">
+                {inventory.variants.map((variant, index) => (
+                  <div key={`${variant.size}-${variant.design ?? index}`} className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 text-sm">
+                    <div className="font-bold text-[#243C3A]">{variant.design ? `${variant.design} · ` : ""}Talla {variant.size}</div>
+                    <div className="flex items-center gap-4"><span className="font-black text-[#B6633A]">{formatClp(variant.priceClp)}</span><span className="text-[#52615D]">{variant.units} {variant.units === 1 ? "unidad" : "unidades"}</span></div>
+                  </div>
+                ))}
               </div>
-              <p className="mt-5 text-sm leading-6 text-[#52615D]">Según inventario del {inventoryAsOf}. Confirma la disponibilidad actual antes de comprar; la tienda aún no recibe pedidos en línea.</p>
+              <p className="mt-4 text-sm font-semibold text-[#243C3A]">{getTotalUnits(inventory)} {getTotalUnits(inventory) === 1 ? "unidad" : "unidades"} en inventario</p>
+              <p className="mt-3 text-sm leading-6 text-[#52615D]">Inventario informado el {inventoryAsOf}. Las existencias pueden cambiar; confirma disponibilidad antes de comprar. La tienda aún no recibe pedidos en línea.</p>
             </div>
           ) : (
             <div className="mt-8 rounded-lg border border-[#E5DED4] bg-white p-6">

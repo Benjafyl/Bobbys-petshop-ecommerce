@@ -1,3 +1,5 @@
+import { publicInventoryBySlug } from "@/lib/public-inventory";
+
 export type OfficialCategory = "abrigos" | "polerones" | "halloween" | "accesorios";
 
 export type OfficialProduct = {
@@ -11,14 +13,14 @@ export type OfficialProduct = {
 
 export const officialCategoryLabels: Record<OfficialCategory, string> = {
   abrigos: "Abrigos",
-  polerones: "Polerones y chalecos",
+  polerones: "Chalecos",
   halloween: "Halloween",
   accesorios: "Accesorios",
 };
 
 const image = (name: string, alt: string) => ({ src: `/images/official/${name}.jpg`, alt });
 
-export const officialProducts: OfficialProduct[] = [
+const catalogProducts: OfficialProduct[] = [
   {
     slug: "parka-bicolor-gris",
     name: "Parka bicolor gris",
@@ -52,11 +54,28 @@ export const officialProducts: OfficialProduct[] = [
     images: [image("parka-rosa-metalizada-producto", "Parka acolchada rosa metalizada")],
   },
   {
+    slug: "parka-militar",
+    name: "Parka militar",
+    category: "abrigos",
+    description: "Parka acolchada con estampado de camuflaje azul, amarillo y turquesa, cierre en la espalda y anillas para correa.",
+    images: [
+      image("parka-militar-producto", "Parka militar de colores, vista de producto"),
+      image("parka-militar-modelo", "Perro junto a la parka militar de colores"),
+    ],
+  },
+  {
+    slug: "parka-azul",
+    name: "Parka azul",
+    category: "abrigos",
+    description: "Parka acolchada negra y turquesa con cuello alto y anilla para correa.",
+    images: [image("parka-azul-modelo", "Perro con parka negra y turquesa")],
+  },
+  {
     slug: "poleron-ositos",
-    name: "Polerón de ositos",
+    name: "Chaleco de ositos",
     category: "polerones",
-    description: "Polerón suave en tonos beige y crema con diseño de ositos.",
-    images: [image("poleron-ositos-producto", "Polerón beige y crema con ositos")],
+    description: "Chaleco suave en tonos beige y crema con diseño de ositos.",
+    images: [image("poleron-ositos-producto", "Chaleco beige y crema con ositos")],
     featured: true,
   },
   {
@@ -75,10 +94,10 @@ export const officialProducts: OfficialProduct[] = [
   },
   {
     slug: "poleron-corazones-rosa",
-    name: "Polerón corazones rosa",
+    name: "Chaleco rosado con corazones",
     category: "polerones",
-    description: "Polerón rosa suave con corazones blancos.",
-    images: [image("poleron-corazones-rosa-producto", "Polerón rosa con corazones blancos")],
+    description: "Chaleco rosado suave con corazones blancos.",
+    images: [image("poleron-corazones-rosa-producto", "Chaleco rosado con corazones blancos")],
   },
   {
     slug: "poleron-dinosaurios",
@@ -89,16 +108,16 @@ export const officialProducts: OfficialProduct[] = [
   },
   {
     slug: "poleron-gris-jaspeado",
-    name: "Polerón gris jaspeado",
+    name: "Chaleco gris jaspeado",
     category: "polerones",
-    description: "Polerón gris jaspeado de cuello alto. Fotografiado en un perro para mostrar su calce.",
-    images: [image("poleron-gris-modelo", "Perro blanco con polerón gris jaspeado")],
+    description: "Chaleco gris jaspeado de cuello alto. Fotografiado en un perro para mostrar su calce.",
+    images: [image("poleron-gris-modelo", "Perro blanco con chaleco gris jaspeado")],
   },
   {
     slug: "polera-esqueleto",
-    name: "Polera esqueleto",
+    name: "Traje huesitos",
     category: "halloween",
-    description: "Polera negra sin mangas con diseño de esqueleto blanco y corazón rojo.",
+    description: "Prenda negra sin mangas con diseño de huesitos blancos y corazón rojo.",
     images: [
       image("polera-esqueleto-modelo", "Perro con polera negra de esqueleto"),
       image("polera-esqueleto-producto", "Polera negra con esqueleto y corazón rojo"),
@@ -106,9 +125,9 @@ export const officialProducts: OfficialProduct[] = [
   },
   {
     slug: "vestido-esqueleto",
-    name: "Vestido esqueleto",
+    name: "Vestido calabazas",
     category: "halloween",
-    description: "Vestido negro con falda de tul y estampado de esqueleto con motivos de Halloween.",
+    description: "Vestido negro con falda de tul y estampado de huesitos y calabaza para Halloween.",
     images: [
       image("vestido-esqueleto-modelo", "Perro con vestido negro de esqueleto"),
       image("vestido-esqueleto-producto", "Vestido negro con falda de tul y diseño de esqueleto"),
@@ -116,23 +135,30 @@ export const officialProducts: OfficialProduct[] = [
   },
   {
     slug: "vestido-vampirita",
-    name: "Vestido vampirita",
+    name: "Vestido murciélago",
     category: "halloween",
-    description: "Vestido negro y rojo con alas decorativas y falda de tul.",
-    images: [image("vestido-vampirita-producto", "Vestido negro y rojo con alas decorativas")],
+    description: "Vestido negro y rojo con alas de murciélago decorativas y falda de tul.",
+    images: [image("vestido-vampirita-producto", "Vestido negro y rojo con alas de murciélago")],
+  },
+  {
+    slug: "traje-calabaza",
+    name: "Traje calabaza",
+    category: "halloween",
+    description: "Traje de calabaza para Halloween. Fotografía pendiente de recibir.",
+    images: [],
   },
   {
     slug: "bandana-halloween",
-    name: "Bandana Halloween",
+    name: "Pañuelos",
     category: "accesorios",
-    description: "Bandana rosa con ilustraciones de temporada, fotografiada en un perro.",
+    description: "Tres diseños de pañuelos, uno de cada uno. La foto muestra el modelo rosado de Halloween; las otras dos fotos están pendientes.",
     images: [image("bandana-halloween-modelo", "Perro con bandana rosa de Halloween")],
   },
   {
     slug: "collar-murcielago",
-    name: "Collar murciélago",
+    name: "Collar murciélago para gatos",
     category: "accesorios",
-    description: "Collar con lazo de telarañas, alas negras decorativas y colgante de temporada.",
+    description: "Collar XS para gatos con lazo de telarañas, alas negras decorativas y colgante de temporada.",
     images: [
       image("collar-murcielago-producto", "Collar con lazo blanco y alas negras de murciélago"),
       image("accesorios-halloween-conjunto", "Accesorios de Halloween con lazos y alas"),
@@ -140,12 +166,17 @@ export const officialProducts: OfficialProduct[] = [
   },
   {
     slug: "collar-calabaza",
-    name: "Collar calabaza",
+    name: "Collar calabaza para gatos",
     category: "accesorios",
-    description: "Collar morado con lazo naranja, alas decorativas y calabaza.",
+    description: "Collar XS para gatos, morado con lazo naranja, alas decorativas y calabaza.",
     images: [image("collar-calabaza-producto", "Collar morado y naranja con calabaza y alas")],
   },
 ];
+
+// Only items with confirmed, positive stock belong in the live catalog.
+export const officialProducts = catalogProducts.filter((product) =>
+  publicInventoryBySlug[product.slug]?.variants.some((variant) => variant.units > 0),
+);
 
 export function getOfficialProduct(slug: string) {
   return officialProducts.find((product) => product.slug === slug);

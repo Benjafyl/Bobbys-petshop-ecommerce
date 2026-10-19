@@ -12,8 +12,8 @@ export default function FaqPage() {
           específicas de cada prenda cuando estén confirmadas.
         </p>
         <p>
-          <strong>¿Ya hay precios y tallas?</strong> Algunos productos muestran precio de lista y
-          tallas registradas en el inventario. La disponibilidad actual debe confirmarse antes de comprar.
+          <strong>¿Ya hay precios y tallas?</strong> Cada producto del catálogo muestra precio,
+          talla y unidades informadas el 19 de octubre de 2026. Confirma disponibilidad antes de comprar.
         </p>
       </div>
     </InfoPage>

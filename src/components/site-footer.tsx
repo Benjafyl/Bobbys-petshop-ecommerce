@@ -8,8 +8,8 @@ export function SiteFooter() {
         <div>
           <p className="text-lg font-black">Bobby&apos;s Pet Shop</p>
           <p className="mt-3 max-w-md text-sm leading-6 text-[#E5DED4]">
-            Ropa y accesorios para perros. Explora el catálogo con fotos oficiales mientras
-            incorporamos precios, tallas y opciones de compra.
+            Ropa para perros y collares para gatos. Explora las prendas y existencias
+            disponibles mientras preparamos las opciones de compra.
           </p>
         </div>
         <div>
@@ -40,7 +40,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-white/10 px-4 py-4 text-center text-xs text-[#C8D2CC]">
-        Catálogo visual oficial. Algunos precios y tallas ya están publicados; compras aún no habilitadas.
+        Inventario publicado con precios y existencias por talla; compras aún no habilitadas.
       </div>
     </footer>
   );

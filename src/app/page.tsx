@@ -7,6 +7,9 @@ import {
   officialProducts,
   type OfficialCategory,
 } from "@/lib/official-catalog";
+import { getTotalUnits, publicInventoryBySlug } from "@/lib/public-inventory";
+
+const availableUnits = Object.values(publicInventoryBySlug).reduce((total, inventory) => total + getTotalUnits(inventory), 0);
 
 const categorySections: {
   id: OfficialCategory;
@@ -25,14 +28,14 @@ const categorySections: {
   {
     id: "polerones",
     image: "/images/official/poleron-ositos-producto.jpg",
-    alt: "Polerón de ositos para perro",
+    alt: "Chaleco de ositos para perro",
     caption: "Para días de regaloneo",
     intro: "Diseños suaves, estampados y llenos de color.",
   },
   {
     id: "halloween",
     image: "/images/official/vestido-esqueleto-modelo.jpg",
-    alt: "Perro con vestido de esqueleto",
+    alt: "Perro con vestido de calabazas y huesitos",
     caption: "Para celebrar",
     intro: "Looks de Halloween que no pasan desapercibidos.",
   },
@@ -58,7 +61,7 @@ export default function Home() {
               Que cada paseo tenga su propio look.
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-8 text-[#52615D]">
-              Abrigos, polerones y accesorios para perros con mucha personalidad. Mira toda la colección aquí mismo, con fotografías oficiales.
+              Abrigos, chalecos, disfraces y pañuelos para perros, además de collares XS para gatos. Mira aquí mismo lo disponible, con precio y talla.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link href="#coleccion" className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-[#B6633A] px-5 text-sm font-black text-white transition hover:bg-[#96502E]">
@@ -68,7 +71,7 @@ export default function Home() {
                 Explorar por categoría
               </Link>
             </div>
-            <p className="mt-6 text-sm leading-6 text-[#52615D]">Algunos productos ya muestran precio y tallas del inventario. Compras aún no habilitadas.</p>
+            <p className="mt-6 text-sm leading-6 text-[#52615D]">Inventario informado el 19 de octubre de 2026, con existencias por talla. Compras aún no habilitadas.</p>
           </div>
           <div className="relative min-h-[520px] overflow-hidden rounded-lg bg-[#F4E8D8]">
             <Image src="/images/official/parka-beige-modelo.jpg" alt="Perro con parka beige y negra de Bobby's Pet Shop" fill priority sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
@@ -116,12 +119,12 @@ export default function Home() {
             <p className="mt-4 max-w-lg leading-7 text-[#DDE5DF]">Del abrigo para el paseo a los detalles de una celebración. Descubre las prendas puestas y mira sus fotos de cerca antes de elegir.</p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Link href="/producto/parka-bicolor-gris" className="rounded-md bg-white px-4 py-3 text-sm font-black text-[#243C3A]">Ver la parka gris</Link>
-              <Link href="/producto/vestido-esqueleto" className="rounded-md border border-white/50 px-4 py-3 text-sm font-black text-white">Ver el vestido esqueleto</Link>
+              <Link href="/producto/vestido-esqueleto" className="rounded-md border border-white/50 px-4 py-3 text-sm font-black text-white">Ver el vestido calabazas</Link>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-[#F4E8D8]"><Image src="/images/official/parka-gris-modelo-lateral.jpg" alt="Perro con parka bicolor gris" fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover" /></div>
-            <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-[#F4E8D8]"><Image src="/images/official/vestido-esqueleto-modelo.jpg" alt="Perro con vestido de esqueleto" fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover" /></div>
+            <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-[#F4E8D8]"><Image src="/images/official/vestido-esqueleto-modelo.jpg" alt="Perro con vestido de calabazas y huesitos" fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover" /></div>
           </div>
         </div>
       </section>
@@ -130,7 +133,7 @@ export default function Home() {
         <div className="mb-10 max-w-3xl">
           <p className="text-sm font-black uppercase tracking-[0.18em] text-[#B6633A]">Todos los productos</p>
           <h2 className="mt-2 text-3xl font-black text-[#243C3A] sm:text-4xl">Toda la colección, aquí mismo.</h2>
-          <p className="mt-3 leading-7 text-[#52615D]">Explora los {officialProducts.length} productos sin salir del inicio. Abre cualquier ficha para ver más fotografías.</p>
+          <p className="mt-3 leading-7 text-[#52615D]">Explora {officialProducts.length} fichas y {availableUnits} unidades informadas sin salir del inicio. Abre una ficha para ver sus tallas, precio y fotos disponibles.</p>
         </div>
         <div className="space-y-14">
           {categorySections.map((category) => {
@@ -165,7 +168,7 @@ export default function Home() {
 
       <section className="border-t border-[#E5DED4] bg-[#F4E8D8]">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-5 px-4 py-10 sm:px-6 md:flex-row md:items-center lg:px-8">
-          <div className="flex items-start gap-3"><Heart className="mt-1 shrink-0 text-[#B6633A]" size={24} /><div><h2 className="text-xl font-black">La colección sigue creciendo</h2><p className="mt-1 max-w-xl text-sm leading-6 text-[#52615D]">Ya puedes conocer los diseños oficiales. Seguimos completando precios, tallas y disponibilidad antes de habilitar compras.</p></div></div>
+          <div className="flex items-start gap-3"><Heart className="mt-1 shrink-0 text-[#B6633A]" size={24} /><div><h2 className="text-xl font-black">Elige entre las unidades disponibles</h2><p className="mt-1 max-w-xl text-sm leading-6 text-[#52615D]">Consulta el precio y las existencias por talla en cada ficha. Algunas fotos están pendientes y las compras en línea aún no están habilitadas.</p></div></div>
           <Link href="/tienda" className="inline-flex shrink-0 items-center gap-2 rounded-md bg-[#243C3A] px-5 py-3 text-sm font-black text-white">Explorar con filtros <ArrowRight size={17} /></Link>
         </div>
       </section>

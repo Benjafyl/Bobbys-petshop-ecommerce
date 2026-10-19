@@ -1,12 +1,11 @@
 # Bobby's Pet Shop E-commerce
 
-Primera base del e-commerce de Bobby's Pet Shop. El sitio publicado muestra el catálogo visual
-con fotografías oficiales. Algunos productos muestran precios y tallas del inventario; aún no recibe pedidos ni pagos.
+Primera base del e-commerce de Bobby's Pet Shop. El sitio publicado muestra las 27 unidades informadas el 19 de octubre de 2026, con precios y existencias por talla. Algunas fotografías siguen pendientes; aún no recibe pedidos ni pagos.
 
 ## Incluido
 
 - Storefront responsive con inicio, tienda, detalle de producto y guía para medir al perro.
-- Catálogo visual oficial de abrigos, polerones y accesorios, con precios y tallas publicados solo cuando se pudieron vincular al inventario.
+- Catálogo de parkas, chalecos, disfraces, pañuelos y collares para gatos, con precios y existencias por talla.
 - Fotografías oficiales organizadas en `public/images/official/` y espacio de entrada en `materials/inbox/`.
 - Carrito y checkout inactivos hasta completar los datos comerciales.
 - Modelo Prisma para Postgres con usuarios, productos, variantes, pedidos, pagos, reviews, stock y auditoria.
@@ -40,7 +39,7 @@ npm run build
 
 ## Siguiente fase
 
-1. Confirmar nombres comerciales, precios, tallas, medidas, existencias y canales de contacto reales.
+1. Incorporar las fotos y nombres de los dos pañuelos pendientes y del traje calabaza; confirmar medidas por talla y canales de contacto reales.
 2. Conectar autenticación y roles reales.
 3. Reemplazar catálogo estático por APIs con Prisma/Postgres.
 4. Implementar pedidos, reserva de stock, pagos y correos transaccionales.

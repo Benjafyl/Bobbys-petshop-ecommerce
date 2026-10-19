@@ -18,14 +18,14 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   title: {
-    default: "Bobby's Pet Shop | Ropa y accesorios para perros",
+    default: "Bobby's Pet Shop | Ropa para perros y collares para gatos",
     template: "%s | Bobby's Pet Shop",
   },
   description:
-    "Colección inicial de ropa y accesorios para perros en Chile. Sitio en preparación.",
+    "Inventario de ropa para perros y collares para gatos en Chile, con precios y existencias por talla.",
   openGraph: {
     title: "Bobby's Pet Shop",
-    description: "Ropa y accesorios para perros. Sitio en preparación.",
+    description: "Ropa para perros y collares para gatos, con precios y existencias por talla.",
     images: ["/images/official/parka-beige-modelo.jpg"],
   },
 };

@@ -49,8 +49,8 @@ const catalogProducts: OfficialProduct[] = [
     category: "abrigos",
     description: "Parka acolchada beige y negra con cierre en la espalda y anillas para correa.",
     images: [
+      image("parka-beige-producto", "Parka bicolor beige y negra, vista exterior"),
       image("parka-beige-modelo", "Perro con parka beige y negra"),
-      { ...image("parka-beige-frente-dorso", "Parka beige y negra, vista exterior"), crop: "left" },
       { ...image("parka-beige-frente-dorso", "Parka beige y negra, vista interior"), crop: "right" },
       image("parka-beige-en-casa", "Perro con parka beige y negra en casa"),
     ],

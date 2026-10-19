@@ -27,7 +27,7 @@ export function SiteHeader() {
           <span className="relative block h-12 w-24 overflow-hidden rounded-sm bg-[#F8F0E3] sm:w-32">
             <Image src="/images/official/logo-bobbys-pet-shop.jpg" alt="Bobby's Pet Shop" fill sizes="128px" className="object-cover" />
           </span>
-          <span className="hidden text-sm font-black text-[#243C3A] sm:block">Bobby&apos;s Pet Shop</span>
+          <span className="block max-w-[84px] text-xs font-black leading-tight text-[#243C3A] sm:max-w-none sm:text-sm">Bobby&apos;s Pet Shop</span>
         </Link>
 
         <nav className="hidden items-center gap-6 text-sm font-semibold text-[#354642] lg:flex">

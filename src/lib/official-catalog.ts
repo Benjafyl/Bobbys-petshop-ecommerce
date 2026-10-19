@@ -115,13 +115,6 @@ const catalogProducts: OfficialProduct[] = [
     images: [image("poleron-dinosaurios-gris-producto", "Chaleco gris y azul con dinosaurios")],
   },
   {
-    slug: "poleron-gris-jaspeado",
-    name: "Chaleco gris jaspeado",
-    category: "polerones",
-    description: "Chaleco gris jaspeado de cuello alto. Fotografiado en un perro para mostrar su calce.",
-    images: [image("poleron-gris-modelo", "Perro blanco con chaleco gris jaspeado")],
-  },
-  {
     slug: "polera-esqueleto",
     name: "Traje huesitos",
     category: "halloween",

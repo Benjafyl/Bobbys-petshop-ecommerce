@@ -53,9 +53,6 @@ export const publicInventoryBySlug: Record<string, PublicInventory> = {
   "poleron-dinosaurios": {
     variants: [{ size: "M", units: 1, priceClp: 5500 }],
   },
-  "poleron-gris-jaspeado": {
-    variants: [{ size: "M", units: 1, priceClp: 5500 }],
-  },
   "vestido-vampirita": {
     variants: [{ size: "M-L", units: 1, priceClp: 5990 }],
   },

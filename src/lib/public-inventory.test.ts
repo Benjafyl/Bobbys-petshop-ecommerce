@@ -5,13 +5,13 @@ import { officialProducts } from "@/lib/official-catalog";
 import { getTotalUnits, publicInventoryBySlug } from "@/lib/public-inventory";
 
 describe("inventario público del 19 de octubre", () => {
-  it("publica exactamente las 27 unidades informadas y todas tienen ficha", () => {
+  it("publica exactamente las 26 unidades vigentes y todas tienen ficha", () => {
     const published = officialProducts.map((product) => product.slug);
     const recorded = Object.keys(publicInventoryBySlug);
 
-    expect(published).toHaveLength(18);
+    expect(published).toHaveLength(17);
     expect(new Set(published)).toEqual(new Set(recorded));
-    expect(recorded.reduce((total, slug) => total + getTotalUnits(publicInventoryBySlug[slug]), 0)).toBe(27);
+    expect(recorded.reduce((total, slug) => total + getTotalUnits(publicInventoryBySlug[slug]), 0)).toBe(26);
   });
 
   it("cada variante tiene talla, precio y stock positivos", () => {

@@ -1,6 +1,6 @@
 # Bobby's Pet Shop E-commerce
 
-Primera base del e-commerce de Bobby's Pet Shop. El sitio publicado muestra las 27 unidades informadas el 19 de octubre de 2026, con fotografías, precios y existencias por talla. Aún no recibe pedidos ni pagos.
+Primera base del e-commerce de Bobby's Pet Shop. El sitio publicado muestra las 26 unidades vigentes al 19 de octubre de 2026, con fotografías, precios y existencias por talla. Aún no recibe pedidos ni pagos.
 
 ## Incluido
 

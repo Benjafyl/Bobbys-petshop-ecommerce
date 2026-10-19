@@ -14,7 +14,6 @@ La lista enviada por la tienda el 19 de octubre de 2026 reemplaza por completo l
 | Chaleco de ositos | M: 1 × $5.500 | Sí |
 | Chaleco animal print blanco | M: 1 × $5.500 | Sí |
 | Chaleco azul con dinosaurios | M: 1 × $5.500 | Sí |
-| Chaleco gris jaspeado | M: 1 × $5.500 | Sí |
 | Vestido murciélago | M-L: 1 × $5.990 | Sí |
 | Vestido calabazas | M-L: 1 × $5.990 | Sí, con huesitos y calabaza |
 | Traje huesitos | M-L: 1 × $4.000 | Sí |
@@ -23,6 +22,6 @@ La lista enviada por la tienda el 19 de octubre de 2026 reemplaza por completo l
 | Collar murciélago para gatos | XS: 1 × $3.500 | Sí, puesto en gato y de producto |
 | Collar calabaza para gatos | XS: 1 × $3.500 | Sí, puesto en gato y de producto |
 
-Total informado: **27 unidades** repartidas en 18 fichas de producto. Las fotos recibidas después del inventario completan las fichas sin cambiar cantidades, tallas ni precios.
+Total vigente: **26 unidades** repartidas en 17 fichas de producto. El chaleco gris jaspeado se retiró del catálogo por indicación de la tienda el 19 de octubre de 2026.
 
 La parka negra y roja visible en `materials/reference/parkas-video-2026-10-19.mp4` **no está a la venta** según confirmación de la tienda. No aparece en el catálogo ni se usa el video en la web. La planilla del 13 de octubre queda como referencia histórica y no debe reintroducir tallas, cantidades o precios antiguos.

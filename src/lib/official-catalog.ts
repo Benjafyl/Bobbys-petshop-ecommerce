@@ -29,8 +29,8 @@ const catalogProducts: OfficialProduct[] = [
     category: "abrigos",
     description: "Parka acolchada gris y negra con cierre en la espalda y anillas para correa. Mira las fotos de producto y cómo luce puesta.",
     images: [
-      image("parka-gris-modelo-lateral", "Perro con parka gris y negra, vista lateral"),
       image("parka-gris-producto", "Parka bicolor gris y negra, vista de producto"),
+      image("parka-gris-modelo-lateral", "Perro con parka gris y negra, vista lateral"),
       image("parka-gris-frente-dorso", "Parka gris y negra por ambos lados"),
       image("parka-gris-modelo-cerca", "Perro con parka gris y negra, detalle"),
       image("parka-gris-modelo-superior", "Parka gris y negra puesta, vista superior"),
@@ -147,8 +147,8 @@ const catalogProducts: OfficialProduct[] = [
     category: "halloween",
     description: "Traje naranja sin mangas con rostro de calabaza para Halloween. En la foto se muestra combinado con un pañuelo que se vende por separado.",
     images: [
-      image("traje-calabaza-modelo", "Perro con traje naranja de calabaza, combinado con un pañuelo vendido por separado"),
       image("traje-calabaza-producto", "Traje naranja de calabaza, vista de producto"),
+      image("traje-calabaza-modelo", "Perro con traje naranja de calabaza, combinado con un pañuelo vendido por separado"),
     ],
   },
   {
@@ -181,9 +181,9 @@ const catalogProducts: OfficialProduct[] = [
     category: "accesorios",
     description: "Collar XS para gatos, morado con lazo naranja, alas decorativas y calabaza.",
     images: [
+      image("collar-calabaza-producto", "Collar morado y naranja con calabaza y alas"),
       image("collar-calabaza-gato-perfil", "Gato gris con collar de calabaza visto de perfil"),
       image("collar-calabaza-gato-dorso", "Gato gris con el lazo naranja y las alas del collar de calabaza"),
-      image("collar-calabaza-producto", "Collar morado y naranja con calabaza y alas"),
     ],
   },
 ];

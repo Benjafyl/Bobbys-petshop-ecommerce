@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown, ArrowRight, Heart, Ruler, Sparkles } from "lucide-react";
+import { ArrowDown, ArrowRight, Heart, Play, Ruler, Sparkles } from "lucide-react";
 import { InstagramIcon } from "@/components/instagram-icon";
 import { OfficialProductCard } from "@/components/official-product-card";
 import {
@@ -8,10 +8,7 @@ import {
   officialProducts,
   type OfficialCategory,
 } from "@/lib/official-catalog";
-import { getTotalUnits, publicInventoryBySlug } from "@/lib/public-inventory";
 import { instagramProfileUrl, instagramReels } from "@/lib/social";
-
-const availableUnits = Object.values(publicInventoryBySlug).reduce((total, inventory) => total + getTotalUnits(inventory), 0);
 
 const categorySections: {
   id: OfficialCategory;
@@ -22,8 +19,8 @@ const categorySections: {
 }[] = [
   {
     id: "abrigos",
-    image: "/images/official/parka-gris-modelo-cerca.jpg",
-    alt: "Perro con parka gris y negra",
+    image: "/images/official/parka-gris-producto.jpg",
+    alt: "Parka gris y negra, vista de producto",
     caption: "Para salir abrigados",
     intro: "Parkas para paseos con personalidad.",
   },
@@ -36,8 +33,8 @@ const categorySections: {
   },
   {
     id: "halloween",
-    image: "/images/official/traje-calabaza-modelo.jpg",
-    alt: "Perro con traje naranja de calabaza",
+    image: "/images/official/traje-calabaza-producto.jpg",
+    alt: "Traje naranja de calabaza, vista de producto",
     caption: "Para celebrar",
     intro: "Looks de Halloween que no pasan desapercibidos.",
   },
@@ -63,7 +60,7 @@ export default function Home() {
               Que cada paseo tenga su propio look.
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-8 text-[#52615D]">
-              Abrigos, chalecos, disfraces y pañuelos para perros, además de collares XS para gatos. Mira aquí mismo lo disponible, con precio y talla.
+              Abrigos, chalecos, disfraces y pañuelos para perros. Mira aquí mismo lo disponible, con precio y talla.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link href="#coleccion" className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-[#B6633A] px-5 text-sm font-black text-white transition hover:bg-[#96502E]">
@@ -76,7 +73,7 @@ export default function Home() {
             <p className="mt-6 text-sm leading-6 text-[#52615D]">Inventario informado el 19 de octubre de 2026, con existencias por talla. Compras aún no habilitadas.</p>
           </div>
           <div className="relative min-h-[520px] overflow-hidden rounded-lg bg-[#F4E8D8]">
-            <Image src="/images/official/parka-beige-modelo.jpg" alt="Perro con parka beige y negra de Bobby's Pet Shop" fill priority sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
+            <Image src="/images/official/parka-militar-modelo.jpg" alt="Perro junto a la parka militar de Bobby's Pet Shop" fill priority sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#243C3A]/90 to-transparent p-6 pt-20 text-white">
               <p className="text-xs font-black uppercase tracking-[0.18em] text-[#F9D36B]">La colección</p>
               <p className="mt-2 max-w-sm text-2xl font-black leading-tight">Prendas que se ven tan bien como se sienten.</p>
@@ -91,7 +88,7 @@ export default function Home() {
             <div className="max-w-2xl">
               <p className="flex items-center gap-2 text-sm font-black uppercase tracking-[0.18em] text-[#B6633A]"><InstagramIcon size={19} /> En Instagram</p>
               <h2 id="instagram-heading" className="mt-3 text-3xl font-black leading-tight text-[#243C3A] sm:text-4xl">Bobby&apos;s también se vive en redes.</h2>
-              <p className="mt-3 leading-7 text-[#52615D]">Mira nuestros reels, conoce las prendas en movimiento y acompaña a la comunidad de Bobby&apos;s.</p>
+              <p className="mt-3 leading-7 text-[#52615D]">Un vistazo a nuestra comunidad. Abre cada reel para verlo en Instagram.</p>
             </div>
             <a href={instagramProfileUrl} target="_blank" rel="noopener noreferrer" className="inline-flex shrink-0 items-center justify-center gap-2 rounded-md bg-[#243C3A] px-5 py-3 text-sm font-black text-white transition hover:bg-[#35544F]">
               <InstagramIcon size={18} /> Seguir a @bobbys.cl <ArrowRight size={17} />
@@ -99,21 +96,17 @@ export default function Home() {
           </div>
           <div className="grid grid-flow-col auto-cols-[minmax(260px,82vw)] gap-4 overflow-x-auto pb-3 snap-x snap-mandatory sm:auto-cols-[minmax(300px,48vw)] lg:grid-flow-row lg:grid-cols-3 lg:overflow-visible lg:pb-0">
             {instagramReels.map((reel) => (
-              <article key={reel.id} className="min-w-0 snap-start overflow-hidden rounded-lg border border-[#E5DED4] bg-white shadow-sm">
-                <iframe
-                  src={reel.embedUrl}
-                  title={reel.label}
-                  loading="lazy"
-                  allow="encrypted-media; picture-in-picture; clipboard-write"
-                  className="block aspect-[9/16] w-full border-0"
-                />
-                <a href={reel.url} target="_blank" rel="noopener noreferrer" className="flex min-h-12 items-center justify-between gap-2 border-t border-[#E5DED4] px-4 text-sm font-black text-[#B6633A] hover:text-[#96502E]">
-                  <span className="inline-flex items-center gap-2"><InstagramIcon size={17} /> Ver reel en Instagram</span> <ArrowRight size={16} />
-                </a>
-              </article>
+              <a key={reel.id} href={reel.url} target="_blank" rel="noopener noreferrer" aria-label={`Ver ${reel.label}`} className="group min-w-0 snap-start overflow-hidden rounded-lg border border-[#E5DED4] bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+                <div className="relative aspect-[3/4] overflow-hidden bg-[#F4E8D8]">
+                  <Image src={reel.cover} alt={reel.label} fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 48vw, 82vw" className="object-cover transition duration-500 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#243C3A]/55 via-transparent to-transparent" />
+                  <span className="absolute inset-0 flex items-center justify-center"><span className="flex h-16 w-16 items-center justify-center rounded-full bg-white/95 text-[#243C3A] shadow-lg transition group-hover:scale-110"><Play size={28} fill="currentColor" /></span></span>
+                  <span className="absolute bottom-4 left-4 rounded-full bg-white/95 px-3 py-1 text-xs font-black uppercase tracking-[0.12em] text-[#243C3A]">@bobbys.cl</span>
+                </div>
+                <span className="flex min-h-14 items-center justify-between gap-2 px-4 text-sm font-black text-[#B6633A] group-hover:text-[#96502E]"><span className="inline-flex items-center gap-2"><InstagramIcon size={17} /> Ver reel en Instagram</span><ArrowRight size={16} /></span>
+              </a>
             ))}
           </div>
-          <p className="mt-3 text-xs leading-5 text-[#52615D]">Contenido publicado en Instagram. Si un video no carga aquí, puedes abrirlo con el enlace de su tarjeta.</p>
         </div>
       </section>
 
@@ -157,18 +150,13 @@ export default function Home() {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3">
-            <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-[#F4E8D8]"><Image src="/images/official/parka-gris-paseo-nieve.jpg" alt="Perro con parka bicolor gris en un paseo por la nieve" fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover" /></div>
-            <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-[#F4E8D8]"><Image src="/images/official/traje-calabaza-modelo.jpg" alt="Perro con traje naranja de calabaza" fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover" /></div>
+            <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-[#F4E8D8]"><video autoPlay muted loop playsInline controls preload="metadata" poster="/images/official/parka-gris-modelo-lateral.jpg" aria-label="Parka gris puesta en movimiento" className="h-full w-full object-cover"><source src="/videos/official/parka-gris-en-movimiento.mp4" type="video/mp4" />Tu navegador no puede reproducir este video.</video></div>
+            <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-[#F4E8D8]"><Image src="/images/official/vestido-vampirita-producto.jpg" alt="Vestido negro y rojo de murciélago" fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover" /></div>
           </div>
         </div>
       </section>
 
-      <section id="coleccion" className="scroll-mt-28 mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-        <div className="mb-10 max-w-3xl">
-          <p className="text-sm font-black uppercase tracking-[0.18em] text-[#B6633A]">Todos los productos</p>
-          <h2 className="mt-2 text-3xl font-black text-[#243C3A] sm:text-4xl">Toda la colección, aquí mismo.</h2>
-          <p className="mt-3 leading-7 text-[#52615D]">Explora {officialProducts.length} fichas y {availableUnits} unidades informadas sin salir del inicio. Abre una ficha para ver sus tallas, precio y fotos disponibles.</p>
-        </div>
+      <section id="coleccion" aria-label="Productos disponibles" className="scroll-mt-28 mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="space-y-14">
           {categorySections.map((category) => {
             const products = officialProducts.filter((product) => product.category === category.id);
@@ -189,7 +177,7 @@ export default function Home() {
 
       <section className="border-t border-[#E5DED4] bg-white">
         <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[1fr_1fr] lg:px-8">
-          <div className="relative min-h-[370px] overflow-hidden rounded-lg bg-[#F4E8D8]"><Image src="/images/official/parka-gris-modelo-superior.jpg" alt="Vista superior de un perro con parka gris" fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" /></div>
+          <div className="relative min-h-[370px] overflow-hidden rounded-lg bg-[#F4E8D8]"><Image src="/images/official/parka-gris-modelo-lateral.jpg" alt="Perro de cuerpo entero con la parka gris" fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-contain" /></div>
           <div>
             <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#F9D36B]"><Ruler size={21} /></span>
             <p className="mt-5 text-sm font-black uppercase tracking-[0.18em] text-[#B6633A]">Antes de elegir</p>

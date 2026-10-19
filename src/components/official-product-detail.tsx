@@ -42,6 +42,23 @@ export function OfficialProductDetail({ product }: { product: OfficialProduct })
               ))}
             </div>
           )}
+          {product.video && (
+            <div className="mt-8">
+              <h2 className="mb-3 text-lg font-black text-[#243C3A]">Mírala en movimiento</h2>
+              <video
+                controls
+                playsInline
+                loop
+                preload="none"
+                poster={product.video.poster}
+                aria-label={product.video.label}
+                className="max-h-[520px] w-full rounded-lg bg-[#243C3A] object-contain"
+              >
+                <source src={product.video.src} type="video/mp4" />
+                Tu navegador no puede reproducir este video.
+              </video>
+            </div>
+          )}
         </div>
         <div className="self-start lg:sticky lg:top-32">
           <p className="text-sm font-black uppercase tracking-[0.18em] text-[#B6633A]">{officialCategoryLabels[product.category]}</p>
@@ -55,7 +72,14 @@ export function OfficialProductDetail({ product }: { product: OfficialProduct })
               <div className="mt-3 divide-y divide-[#E5DED4] rounded-md border border-[#E5DED4]">
                 {inventory.variants.map((variant, index) => (
                   <div key={`${variant.size}-${variant.design ?? index}`} className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 text-sm">
-                    <div className="font-bold text-[#243C3A]">{variant.design ? `${variant.design} · ` : ""}Talla {variant.size}</div>
+                    <div className="flex items-center gap-3 font-bold text-[#243C3A]">
+                      {variant.imageSrc && (
+                        <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-md bg-[#F4E8D8]">
+                          <Image src={variant.imageSrc} alt="" fill sizes="48px" className="object-cover" />
+                        </span>
+                      )}
+                      <span>{variant.design ? `${variant.design} · ` : ""}Talla {variant.size}</span>
+                    </div>
                     <div className="flex items-center gap-4"><span className="font-black text-[#B6633A]">{formatClp(variant.priceClp)}</span><span className="text-[#52615D]">{variant.units} {variant.units === 1 ? "unidad" : "unidades"}</span></div>
                   </div>
                 ))}

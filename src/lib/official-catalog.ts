@@ -8,6 +8,7 @@ export type OfficialProduct = {
   category: OfficialCategory;
   description: string;
   images: { src: string; alt: string }[];
+  video?: { src: string; poster: string; label: string };
   featured?: boolean;
 };
 
@@ -32,7 +33,13 @@ const catalogProducts: OfficialProduct[] = [
       image("parka-gris-frente-dorso", "Parka gris y negra por ambos lados"),
       image("parka-gris-modelo-cerca", "Perro con parka gris y negra, detalle"),
       image("parka-gris-modelo-superior", "Parka gris y negra puesta, vista superior"),
+      image("parka-gris-paseo-nieve", "Perro con parka gris y negra durante un paseo en la nieve"),
     ],
+    video: {
+      src: "/videos/official/parka-gris-en-movimiento.mp4",
+      poster: "/images/official/parka-gris-modelo-lateral.jpg",
+      label: "Parka gris puesta en un perro, video corto",
+    },
     featured: true,
   },
   {
@@ -144,15 +151,23 @@ const catalogProducts: OfficialProduct[] = [
     slug: "traje-calabaza",
     name: "Traje calabaza",
     category: "halloween",
-    description: "Traje de calabaza para Halloween. Fotografía pendiente de recibir.",
-    images: [],
+    description: "Traje naranja sin mangas con rostro de calabaza y pañuelo de fantasmas para Halloween.",
+    images: [
+      image("traje-calabaza-modelo", "Perro con traje naranja de calabaza y pañuelo de fantasmas"),
+      image("traje-calabaza-producto", "Traje naranja de calabaza, vista de producto"),
+    ],
   },
   {
     slug: "bandana-halloween",
     name: "Pañuelos",
     category: "accesorios",
-    description: "Tres diseños de pañuelos, uno de cada uno. La foto muestra el modelo rosado de Halloween; las otras dos fotos están pendientes.",
-    images: [image("bandana-halloween-modelo", "Perro con bandana rosa de Halloween")],
+    description: "Tres pañuelos de Halloween, uno de cada diseño: rosado, crema con fantasmas y murciélagos, y negro con estampado Boo!",
+    images: [
+      image("bandanas-halloween-tres-disenos", "Los tres pañuelos de Halloween: rosado, negro y crema"),
+      image("bandana-halloween-modelo", "Perro con pañuelo rosado de Halloween"),
+      image("bandana-fantasmas-murcielagos-producto", "Pañuelo crema con fantasmas y murciélagos"),
+      image("bandana-boo-producto", "Pañuelo negro con fantasmas y letras Boo!"),
+    ],
   },
   {
     slug: "collar-murcielago",
@@ -160,6 +175,7 @@ const catalogProducts: OfficialProduct[] = [
     category: "accesorios",
     description: "Collar XS para gatos con lazo de telarañas, alas negras decorativas y colgante de temporada.",
     images: [
+      image("collar-murcielago-gato", "Gato negro con collar de murciélago y colgante de telaraña"),
       image("collar-murcielago-producto", "Collar con lazo blanco y alas negras de murciélago"),
       image("accesorios-halloween-conjunto", "Accesorios de Halloween con lazos y alas"),
     ],

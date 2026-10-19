@@ -5,6 +5,7 @@ export type StockedVariant = {
   units: number;
   priceClp: number;
   design?: string;
+  imageSrc?: string;
 };
 
 export type PublicInventory = {
@@ -69,9 +70,9 @@ export const publicInventoryBySlug: Record<string, PublicInventory> = {
   },
   "bandana-halloween": {
     variants: [
-      { design: "Halloween rosado", size: "Única", units: 1, priceClp: 4000 },
-      { design: "Diseño 2 · foto pendiente", size: "Única", units: 1, priceClp: 4000 },
-      { design: "Diseño 3 · foto pendiente", size: "Única", units: 1, priceClp: 4000 },
+      { design: "Halloween rosado", size: "Única", units: 1, priceClp: 4000, imageSrc: "/images/official/bandana-halloween-modelo.jpg" },
+      { design: "Fantasmas y murciélagos", size: "Única", units: 1, priceClp: 4000, imageSrc: "/images/official/bandana-fantasmas-murcielagos-producto.jpg" },
+      { design: "Boo! negro", size: "Única", units: 1, priceClp: 4000, imageSrc: "/images/official/bandana-boo-producto.jpg" },
     ],
   },
   "collar-murcielago": {

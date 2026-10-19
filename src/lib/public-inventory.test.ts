@@ -21,6 +21,9 @@ describe("inventario público del 19 de octubre", () => {
         expect(variant.size.length).toBeGreaterThan(0);
         expect(variant.priceClp).toBeGreaterThan(0);
         expect(variant.units).toBeGreaterThan(0);
+        if (variant.imageSrc) {
+          expect(existsSync(join(process.cwd(), "public", variant.imageSrc.slice(1))), variant.imageSrc).toBe(true);
+        }
       }
     }
   });
@@ -29,6 +32,9 @@ describe("inventario público del 19 de octubre", () => {
     for (const product of officialProducts) {
       for (const image of product.images) {
         expect(existsSync(join(process.cwd(), "public", image.src.slice(1))), image.src).toBe(true);
+      }
+      if (product.video) {
+        expect(existsSync(join(process.cwd(), "public", product.video.src.slice(1))), product.video.src).toBe(true);
       }
     }
   });

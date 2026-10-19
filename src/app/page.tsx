@@ -34,15 +34,15 @@ const categorySections: {
   },
   {
     id: "halloween",
-    image: "/images/official/vestido-esqueleto-modelo.jpg",
-    alt: "Perro con vestido de calabazas y huesitos",
+    image: "/images/official/traje-calabaza-modelo.jpg",
+    alt: "Perro con traje naranja de calabaza",
     caption: "Para celebrar",
     intro: "Looks de Halloween que no pasan desapercibidos.",
   },
   {
     id: "accesorios",
-    image: "/images/official/bandana-halloween-modelo.jpg",
-    alt: "Perro con bandana rosa de Halloween",
+    image: "/images/official/bandanas-halloween-tres-disenos.jpg",
+    alt: "Los tres pañuelos de Halloween disponibles",
     caption: "Para el detalle final",
     intro: "Bandanas y collares para completar el look.",
   },
@@ -119,12 +119,12 @@ export default function Home() {
             <p className="mt-4 max-w-lg leading-7 text-[#DDE5DF]">Del abrigo para el paseo a los detalles de una celebración. Descubre las prendas puestas y mira sus fotos de cerca antes de elegir.</p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Link href="/producto/parka-bicolor-gris" className="rounded-md bg-white px-4 py-3 text-sm font-black text-[#243C3A]">Ver la parka gris</Link>
-              <Link href="/producto/vestido-esqueleto" className="rounded-md border border-white/50 px-4 py-3 text-sm font-black text-white">Ver el vestido calabazas</Link>
+              <Link href="/producto/traje-calabaza" className="rounded-md border border-white/50 px-4 py-3 text-sm font-black text-white">Ver el traje calabaza</Link>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3">
-            <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-[#F4E8D8]"><Image src="/images/official/parka-gris-modelo-lateral.jpg" alt="Perro con parka bicolor gris" fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover" /></div>
-            <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-[#F4E8D8]"><Image src="/images/official/vestido-esqueleto-modelo.jpg" alt="Perro con vestido de calabazas y huesitos" fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover" /></div>
+            <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-[#F4E8D8]"><Image src="/images/official/parka-gris-paseo-nieve.jpg" alt="Perro con parka bicolor gris en un paseo por la nieve" fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover" /></div>
+            <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-[#F4E8D8]"><Image src="/images/official/traje-calabaza-modelo.jpg" alt="Perro con traje naranja de calabaza" fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover" /></div>
           </div>
         </div>
       </section>
@@ -168,7 +168,7 @@ export default function Home() {
 
       <section className="border-t border-[#E5DED4] bg-[#F4E8D8]">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-5 px-4 py-10 sm:px-6 md:flex-row md:items-center lg:px-8">
-          <div className="flex items-start gap-3"><Heart className="mt-1 shrink-0 text-[#B6633A]" size={24} /><div><h2 className="text-xl font-black">Elige entre las unidades disponibles</h2><p className="mt-1 max-w-xl text-sm leading-6 text-[#52615D]">Consulta el precio y las existencias por talla en cada ficha. Algunas fotos están pendientes y las compras en línea aún no están habilitadas.</p></div></div>
+          <div className="flex items-start gap-3"><Heart className="mt-1 shrink-0 text-[#B6633A]" size={24} /><div><h2 className="text-xl font-black">Elige entre las unidades disponibles</h2><p className="mt-1 max-w-xl text-sm leading-6 text-[#52615D]">Consulta las fotos, el precio y las existencias por talla en cada ficha. Las compras en línea aún no están habilitadas.</p></div></div>
           <Link href="/tienda" className="inline-flex shrink-0 items-center gap-2 rounded-md bg-[#243C3A] px-5 py-3 text-sm font-black text-white">Explorar con filtros <ArrowRight size={17} /></Link>
         </div>
       </section>

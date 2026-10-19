@@ -19,7 +19,7 @@ La lista enviada por la tienda el 19 de octubre de 2026 reemplaza por completo l
 | Vestido calabazas | M-L: 1 × $5.990 | Sí, con huesitos y calabaza |
 | Traje huesitos | M-L: 1 × $4.000 | Sí |
 | Traje calabaza | M-L: 1 × $4.000 | Sí, puesto y de producto |
-| Pañuelos | 3 diseños, talla única: 1 de cada uno × $4.000 | Sí: rosado, crema con fantasmas y murciélagos, negro «Boo!» |
+| Pañuelos | 3 diseños, talla única para perros medianos a grandes: 1 de cada uno × $4.000 | Sí: rosado, crema con fantasmas y murciélagos, negro «Boo!» |
 | Collar murciélago para gatos | XS: 1 × $3.500 | Sí, puesto en gato y de producto |
 | Collar calabaza para gatos | XS: 1 × $3.500 | Sí, puesto en gato y de producto |
 

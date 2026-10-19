@@ -7,6 +7,7 @@ export type OfficialProduct = {
   name: string;
   category: OfficialCategory;
   description: string;
+  fit?: string;
   images: { src: string; alt: string }[];
   video?: { src: string; poster: string; label: string };
   featured?: boolean;
@@ -161,7 +162,8 @@ const catalogProducts: OfficialProduct[] = [
     slug: "bandana-halloween",
     name: "Pañuelos",
     category: "accesorios",
-    description: "Tres pañuelos de Halloween, uno de cada diseño: rosado, crema con fantasmas y murciélagos, y negro con estampado Boo!",
+    description: "Tres pañuelos de Halloween de talla única para perros medianos a grandes. Hay uno de cada diseño: rosado, crema con fantasmas y murciélagos, y negro con estampado Boo!",
+    fit: "Para perros medianos a grandes",
     images: [
       image("bandanas-halloween-tres-disenos", "Los tres pañuelos de Halloween: rosado, negro y crema"),
       image("bandana-halloween-modelo", "Perro con pañuelo rosado de Halloween"),

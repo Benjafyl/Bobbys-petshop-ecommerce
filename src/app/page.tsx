@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowDown, ArrowRight, Heart, Ruler, Sparkles } from "lucide-react";
+import { InstagramIcon } from "@/components/instagram-icon";
 import { OfficialProductCard } from "@/components/official-product-card";
 import {
   officialCategoryLabels,
@@ -8,6 +9,7 @@ import {
   type OfficialCategory,
 } from "@/lib/official-catalog";
 import { getTotalUnits, publicInventoryBySlug } from "@/lib/public-inventory";
+import { instagramProfileUrl, instagramReels } from "@/lib/social";
 
 const availableUnits = Object.values(publicInventoryBySlug).reduce((total, inventory) => total + getTotalUnits(inventory), 0);
 
@@ -80,6 +82,38 @@ export default function Home() {
               <p className="mt-2 max-w-sm text-2xl font-black leading-tight">Prendas que se ven tan bien como se sienten.</p>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="instagram-heading" className="border-y border-[#E5DED4] bg-[#F4E8D8]/50">
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+          <div className="mb-7 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+            <div className="max-w-2xl">
+              <p className="flex items-center gap-2 text-sm font-black uppercase tracking-[0.18em] text-[#B6633A]"><InstagramIcon size={19} /> En Instagram</p>
+              <h2 id="instagram-heading" className="mt-3 text-3xl font-black leading-tight text-[#243C3A] sm:text-4xl">Bobby&apos;s también se vive en redes.</h2>
+              <p className="mt-3 leading-7 text-[#52615D]">Mira nuestros reels, conoce las prendas en movimiento y acompaña a la comunidad de Bobby&apos;s.</p>
+            </div>
+            <a href={instagramProfileUrl} target="_blank" rel="noopener noreferrer" className="inline-flex shrink-0 items-center justify-center gap-2 rounded-md bg-[#243C3A] px-5 py-3 text-sm font-black text-white transition hover:bg-[#35544F]">
+              <InstagramIcon size={18} /> Seguir a @bobbys.cl <ArrowRight size={17} />
+            </a>
+          </div>
+          <div className="grid grid-flow-col auto-cols-[minmax(260px,82vw)] gap-4 overflow-x-auto pb-3 snap-x snap-mandatory sm:auto-cols-[minmax(300px,48vw)] lg:grid-flow-row lg:grid-cols-3 lg:overflow-visible lg:pb-0">
+            {instagramReels.map((reel) => (
+              <article key={reel.id} className="min-w-0 snap-start overflow-hidden rounded-lg border border-[#E5DED4] bg-white shadow-sm">
+                <iframe
+                  src={reel.embedUrl}
+                  title={reel.label}
+                  loading="lazy"
+                  allow="encrypted-media; picture-in-picture; clipboard-write"
+                  className="block aspect-[9/16] w-full border-0"
+                />
+                <a href={reel.url} target="_blank" rel="noopener noreferrer" className="flex min-h-12 items-center justify-between gap-2 border-t border-[#E5DED4] px-4 text-sm font-black text-[#B6633A] hover:text-[#96502E]">
+                  <span className="inline-flex items-center gap-2"><InstagramIcon size={17} /> Ver reel en Instagram</span> <ArrowRight size={16} />
+                </a>
+              </article>
+            ))}
+          </div>
+          <p className="mt-3 text-xs leading-5 text-[#52615D]">Contenido publicado en Instagram. Si un video no carga aquí, puedes abrirlo con el enlace de su tarjeta.</p>
         </div>
       </section>
 
@@ -160,8 +194,8 @@ export default function Home() {
             <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#F9D36B]"><Ruler size={21} /></span>
             <p className="mt-5 text-sm font-black uppercase tracking-[0.18em] text-[#B6633A]">Antes de elegir</p>
             <h2 className="mt-2 text-3xl font-black text-[#243C3A]">La talla empieza con una buena medida.</h2>
-            <p className="mt-4 leading-7 text-[#52615D]">Mide cuello, pecho y espalda con tu perro de pie. Publicaremos las medidas de cada prenda cuando estén confirmadas para ayudarte a escoger con confianza.</p>
-            <Link href="/guia-de-tallas" className="mt-6 inline-flex items-center gap-2 text-sm font-black text-[#B6633A]">Aprende cómo medir <ArrowRight size={17} /></Link>
+            <p className="mt-4 leading-7 text-[#52615D]">Mide cuello, pecho y espalda con tu perro de pie. Ya puedes consultar la tabla de medidas de parkas M a XXL y revisar qué tallas hay en cada ficha.</p>
+            <Link href="/guia-de-tallas" className="mt-6 inline-flex items-center gap-2 text-sm font-black text-[#B6633A]">Ver tabla de parkas <ArrowRight size={17} /></Link>
           </div>
         </div>
       </section>

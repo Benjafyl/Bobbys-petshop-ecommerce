@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Menu, Search } from "lucide-react";
 import { useState } from "react";
+import { InstagramIcon } from "@/components/instagram-icon";
+import { instagramProfileUrl } from "@/lib/social";
 
 const navItems = [
   { href: "/tienda", label: "Tienda" },
@@ -37,6 +39,15 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <a
+            href={instagramProfileUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-[#E5DED4] text-[#243C3A] transition hover:border-[#B6633A] hover:text-[#B6633A]"
+            aria-label="Instagram de Bobby's Pet Shop"
+          >
+            <InstagramIcon size={19} />
+          </a>
           <Link
             href="/tienda"
             className="hidden h-10 w-10 items-center justify-center rounded-full border border-[#E5DED4] text-[#243C3A] transition hover:bg-white sm:flex"
@@ -66,6 +77,9 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
+          <a href={instagramProfileUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-md px-2 py-2 hover:bg-white" onClick={() => setOpen(false)}>
+            <InstagramIcon size={18} /> Instagram @bobbys.cl
+          </a>
         </nav>
       ) : null}
     </header>

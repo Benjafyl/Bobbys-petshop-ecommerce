@@ -8,8 +8,8 @@ export default function FaqPage() {
           <strong>¿Cómo se paga?</strong> Los medios de pago se informarán cuando habilitemos las compras.
         </p>
         <p>
-          <strong>¿Cómo elijo talla?</strong> Mide cuello, pecho y espalda. Publicaremos las medidas
-          específicas de cada prenda cuando estén confirmadas.
+          <strong>¿Cómo elijo talla?</strong> Mide cuello, pecho y espalda. La guía incluye una tabla
+          de medidas de parkas M a XXL; revisa qué tallas están disponibles en la ficha de cada producto.
         </p>
         <p>
           <strong>¿Ya hay precios y tallas?</strong> Cada producto del catálogo muestra precio,

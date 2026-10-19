@@ -95,7 +95,7 @@ export function OfficialProductDetail({ product }: { product: OfficialProduct })
           )}
           {!product.slug.startsWith("collar-") && (
             <Link href="/guia-de-tallas" className="mt-5 inline-flex items-center gap-2 text-sm font-black text-[#B6633A]">
-              <Ruler size={17} /> Cómo medir a tu perro
+              <Ruler size={17} /> {product.category === "abrigos" ? "Ver tabla de medidas de parkas" : "Cómo medir a tu perro"}
             </Link>
           )}
         </div>

@@ -1,5 +1,7 @@
 import Link from "next/link";
-import { AtSign, Mail, MessageCircle } from "lucide-react";
+import { Mail, MessageCircle } from "lucide-react";
+import { InstagramIcon } from "@/components/instagram-icon";
+import { instagramProfileUrl } from "@/lib/social";
 
 export function SiteFooter() {
   return (
@@ -33,9 +35,9 @@ export function SiteFooter() {
             <Link className="rounded-full bg-white/10 p-2" href="/contacto" aria-label="Información de contacto">
               <Mail size={18} />
             </Link>
-            <Link className="rounded-full bg-white/10 p-2" href="/sobre-bobbys" aria-label="Redes sociales">
-              <AtSign size={18} />
-            </Link>
+            <a className="rounded-full bg-white/10 p-2 transition hover:bg-white/20" href={instagramProfileUrl} target="_blank" rel="noopener noreferrer" aria-label="Instagram de Bobby's Pet Shop">
+              <InstagramIcon size={18} />
+            </a>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown, ArrowRight, Heart, Play, Ruler, Sparkles } from "lucide-react";
+import { ArrowDown, ArrowRight, Heart, Ruler, Sparkles } from "lucide-react";
 import { InstagramIcon } from "@/components/instagram-icon";
 import { OfficialProductCard } from "@/components/official-product-card";
 import {
@@ -88,7 +88,7 @@ export default function Home() {
             <div className="max-w-2xl">
               <p className="flex items-center gap-2 text-sm font-black uppercase tracking-[0.18em] text-[#B6633A]"><InstagramIcon size={19} /> En Instagram</p>
               <h2 id="instagram-heading" className="mt-3 text-3xl font-black leading-tight text-[#243C3A] sm:text-4xl">Bobby&apos;s también se vive en redes.</h2>
-              <p className="mt-3 leading-7 text-[#52615D]">Un vistazo a nuestra comunidad. Abre cada reel para verlo en Instagram.</p>
+              <p className="mt-3 leading-7 text-[#52615D]">Un vistazo a nuestra comunidad. Mira los reels aquí mismo y encuentra más en Instagram.</p>
             </div>
             <a href={instagramProfileUrl} target="_blank" rel="noopener noreferrer" className="inline-flex shrink-0 items-center justify-center gap-2 rounded-md bg-[#243C3A] px-5 py-3 text-sm font-black text-white transition hover:bg-[#35544F]">
               <InstagramIcon size={18} /> Seguir a @bobbys.cl <ArrowRight size={17} />
@@ -96,15 +96,16 @@ export default function Home() {
           </div>
           <div className="grid grid-flow-col auto-cols-[minmax(260px,82vw)] gap-4 overflow-x-auto pb-3 snap-x snap-mandatory sm:auto-cols-[minmax(300px,48vw)] lg:grid-flow-row lg:grid-cols-3 lg:overflow-visible lg:pb-0">
             {instagramReels.map((reel) => (
-              <a key={reel.id} href={reel.url} target="_blank" rel="noopener noreferrer" aria-label={`Ver ${reel.label}`} className="group min-w-0 snap-start overflow-hidden rounded-lg border border-[#E5DED4] bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-                <div className="relative aspect-[3/4] overflow-hidden bg-[#F4E8D8]">
-                  <Image src={reel.cover} alt={reel.label} fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 48vw, 82vw" className="object-cover transition duration-500 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#243C3A]/55 via-transparent to-transparent" />
-                  <span className="absolute inset-0 flex items-center justify-center"><span className="flex h-16 w-16 items-center justify-center rounded-full bg-white/95 text-[#243C3A] shadow-lg transition group-hover:scale-110"><Play size={28} fill="currentColor" /></span></span>
-                  <span className="absolute bottom-4 left-4 rounded-full bg-white/95 px-3 py-1 text-xs font-black uppercase tracking-[0.12em] text-[#243C3A]">@bobbys.cl</span>
+              <article key={reel.id} className="min-w-0 snap-start overflow-hidden rounded-lg border border-[#E5DED4] bg-white shadow-sm">
+                <div className="relative aspect-[9/16] overflow-hidden bg-[#F4E8D8]">
+                  <video autoPlay muted loop playsInline controls preload="metadata" poster={reel.cover} aria-label={reel.label} className="h-full w-full object-cover">
+                    <source src={reel.video} type="video/mp4" />
+                    Tu navegador no puede reproducir este video.
+                  </video>
+                  <span className="pointer-events-none absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1 text-xs font-black uppercase tracking-[0.12em] text-[#243C3A]">@bobbys.cl</span>
                 </div>
-                <span className="flex min-h-14 items-center justify-between gap-2 px-4 text-sm font-black text-[#B6633A] group-hover:text-[#96502E]"><span className="inline-flex items-center gap-2"><InstagramIcon size={17} /> Ver reel en Instagram</span><ArrowRight size={16} /></span>
-              </a>
+                <a href={reel.url} target="_blank" rel="noopener noreferrer" aria-label={`Ver ${reel.label} en Instagram`} className="flex min-h-14 items-center justify-between gap-2 px-4 text-sm font-black text-[#B6633A] transition hover:text-[#96502E]"><span className="inline-flex items-center gap-2"><InstagramIcon size={17} /> Ver reel en Instagram</span><ArrowRight size={16} /></a>
+              </article>
             ))}
           </div>
         </div>

@@ -152,7 +152,7 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-[#F4E8D8]"><video autoPlay muted loop playsInline controls preload="metadata" poster="/images/official/parka-gris-modelo-lateral.jpg" aria-label="Parka gris puesta en movimiento" className="h-full w-full object-cover"><source src="/videos/official/parka-gris-en-movimiento.mp4" type="video/mp4" />Tu navegador no puede reproducir este video.</video></div>
-            <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-[#F4E8D8]"><Image src="/images/official/vestido-vampirita-producto.jpg" alt="Vestido negro y rojo de murciélago" fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover" /></div>
+            <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-[#F4E8D8]"><Image src="/images/official/traje-calabaza-producto.jpg" alt="Traje naranja de calabaza" fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover" /></div>
           </div>
         </div>
       </section>

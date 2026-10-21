@@ -18,7 +18,7 @@ export default function FaqPage() {
         </p>
         <p>
           <strong>¿Ya hay precios y tallas?</strong> Cada producto del catálogo muestra precio,
-          talla y unidades informadas el 19 de octubre de 2026. Confirma disponibilidad antes de comprar.
+          talla y unidades consultadas desde nuestro inventario. El stock puede cambiar antes del pago.
         </p>
       </div>
     </InfoPage>

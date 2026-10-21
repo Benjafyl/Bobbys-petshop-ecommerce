@@ -39,7 +39,7 @@ export function OfficialProductCard({ product, headingLevel = "h3" }: { product:
                 <p className="mt-1 text-base font-black text-[#B6633A]">{hasMultiplePrices(inventory) ? "Desde " : ""}{formatClp(getMinimumPrice(inventory))}</p>
                 <p className="mt-1 text-xs text-[#52615D]">Tallas: {[...new Set(inventory.variants.map((variant) => variant.size))].join(" · ")}</p>
                 {product.fit && <p className="mt-1 text-xs font-semibold text-[#243C3A]">{product.fit}</p>}
-                <p className="mt-1 text-xs font-semibold text-[#52615D]">{getTotalUnits(inventory) === 1 ? "Última unidad disponible" : "Disponible"}</p>
+                <p className="mt-1 text-xs font-semibold text-[#52615D]">{getTotalUnits(inventory) === 0 ? "Agotado" : getTotalUnits(inventory) === 1 ? "Última unidad disponible" : "Disponible"}</p>
               </>
             ) : <p className="mt-1 text-sm text-[#52615D]">{inventoryError ? "Disponibilidad temporalmente no disponible" : "Sin unidades disponibles"}</p>}
           </div>

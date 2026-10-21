@@ -9,6 +9,7 @@ import { getOfficialProduct } from "@/lib/official-catalog";
 function value(form: FormData, key: string) { return String(form.get(key) ?? "").trim(); }
 function number(form: FormData, key: string) { return Number(value(form, key)); }
 function message(text: string) { redirect(`/admin?mensaje=${encodeURIComponent(text)}`); }
+class ActionRejected extends Error {}
 
 export async function updateInventory(form: FormData) {
   const session = await requireShopAdmin();
@@ -17,16 +18,18 @@ export async function updateInventory(form: FormData) {
   const price = number(form, "price");
   if (!variantKey || !Number.isInteger(units) || units < 0 || units > 9999 || !Number.isInteger(price) || price < 1 || price > 1000000) message("Revisa las unidades y el precio.");
   const client = await db().connect();
+  let rejection = "";
   try {
     await client.query("begin");
     const previous = await client.query<{ stock_on_hand: number; price_clp: number }>("select stock_on_hand,price_clp from shop_inventory where variant_key=$1 for update", [variantKey]);
-    if (!previous.rowCount) { await client.query("rollback"); message("Esa talla ya no existe."); }
+    if (!previous.rowCount) throw new ActionRejected("Esa talla ya no existe.");
     await client.query("update shop_inventory set stock_on_hand=$2,price_clp=$3,updated_at=now() where variant_key=$1", [variantKey, units, price]);
     await client.query("insert into shop_stock_movements(variant_key,before_units,after_units,actor_id) values($1,$2,$3,$4)", [variantKey, previous.rows[0].stock_on_hand, units, session.user.id]);
     await client.query("insert into shop_audit_logs(actor_id,action,entity_id,before_data,after_data) values($1,'inventory.update',$2,$3,$4)", [session.user.id, variantKey, previous.rows[0], { stock_on_hand: units, price_clp: price }]);
     await client.query("commit");
-  } catch (error) { await client.query("rollback"); throw error; }
+  } catch (error) { await client.query("rollback"); if (error instanceof ActionRejected) rejection = error.message; else throw error; }
   finally { client.release(); }
+  if (rejection) message(rejection);
   revalidatePath("/admin"); revalidatePath("/", "layout");
   message("Stock y precio actualizados.");
 }
@@ -54,16 +57,18 @@ export async function updateOrderStatus(form: FormData) {
   const status = value(form, "status");
   if (!/^[0-9a-f-]{36}$/i.test(orderId) || !["PREPARING", "READY", "SHIPPED", "DELIVERED", "CANCELLED"].includes(status)) message("Estado no permitido.");
   const client = await db().connect();
+  let rejection = "";
   try {
     await client.query("begin");
     const previous = await client.query<{ status: string; payment_status: string }>("select status,payment_status from shop_orders where id=$1 for update", [orderId]);
-    if (!previous.rowCount) { await client.query("rollback"); message("Pedido no encontrado."); }
-    if (status !== "CANCELLED" && previous.rows[0].payment_status !== "PAID") { await client.query("rollback"); message("Solo se puede preparar o enviar un pedido con pago confirmado."); }
+    if (!previous.rowCount) throw new ActionRejected("Pedido no encontrado.");
+    if (status !== "CANCELLED" && previous.rows[0].payment_status !== "PAID") throw new ActionRejected("Solo se puede preparar o enviar un pedido con pago confirmado.");
     await client.query("update shop_orders set status=$2,updated_at=now() where id=$1", [orderId, status]);
     await client.query("insert into shop_audit_logs(actor_id,action,entity_id,before_data,after_data) values($1,'order.status',$2,$3,$4)", [session.user.id, orderId, previous.rows[0], { status }]);
     await client.query("commit");
-  } catch (error) { await client.query("rollback"); throw error; }
+  } catch (error) { await client.query("rollback"); if (error instanceof ActionRejected) rejection = error.message; else throw error; }
   finally { client.release(); }
+  if (rejection) message(rejection);
   revalidatePath("/admin");
   message("Estado del pedido actualizado.");
 }

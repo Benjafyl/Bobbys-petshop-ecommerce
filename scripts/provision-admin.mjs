@@ -1,9 +1,9 @@
 import { Pool } from "pg";
 import { betterAuth } from "better-auth";
-import { readFile } from "node:fs/promises";
+import { readFileSync } from "node:fs";
 
 const email = "antonelarodil@gmail.com";
-const password = process.env.BOBBYS_ADMIN_INITIAL_PASSWORD || (await readFile(0, "utf8")).trim();
+const password = process.env.BOBBYS_ADMIN_INITIAL_PASSWORD || readFileSync(0, "utf8").trim();
 if (!process.env.DATABASE_URL || !process.env.BETTER_AUTH_SECRET || !password || password.length < 16) {
   throw new Error("DATABASE_URL, BETTER_AUTH_SECRET and a 16+ character BOBBYS_ADMIN_INITIAL_PASSWORD are required");
 }

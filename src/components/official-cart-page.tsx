@@ -2,17 +2,36 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState, type FormEvent } from "react";
 import { ArrowLeft, Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
 import { useOfficialCart } from "@/components/official-cart-provider";
 import { getOfficialCartLines } from "@/lib/official-cart";
-import { formatClp, inventoryAsOf } from "@/lib/public-inventory";
+import { formatClp } from "@/lib/public-inventory";
 import { SHIPPING_FEE_CLP } from "@/lib/shipping";
 
 export function OfficialCartPage() {
   const { cart, ready, inventory, inventoryError, setQuantity, removeItem, clearCart } = useOfficialCart();
+  const [couponCode, setCouponCode] = useState("");
+  const [couponMessage, setCouponMessage] = useState("");
+  const [checkingCoupon, setCheckingCoupon] = useState(false);
+  const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discountClp: number; signature: string } | null>(null);
   const lines = getOfficialCartLines(cart, inventory);
   const subtotal = lines.reduce((total, line) => total + line.lineTotal, 0);
-  const total = subtotal + (lines.length > 0 ? SHIPPING_FEE_CLP : 0);
+  const signature = JSON.stringify(cart);
+  const discount = appliedCoupon?.signature === signature ? appliedCoupon.discountClp : 0;
+  const total = subtotal + (lines.length > 0 ? SHIPPING_FEE_CLP : 0) - discount;
+
+  async function applyCoupon(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setCheckingCoupon(true); setCouponMessage(""); setAppliedCoupon(null);
+    try {
+      const response = await fetch("/api/storefront/coupon", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ code: couponCode, cart: cart.map((line) => ({ variantId: line.variantId, quantity: line.quantity })) }) });
+      const result = await response.json() as { valid: boolean; code?: string; discountClp?: number; message?: string };
+      if (result.valid && result.code && typeof result.discountClp === "number") { setAppliedCoupon({ code: result.code, discountClp: result.discountClp, signature }); setCouponMessage(`Código ${result.code} aplicado al cálculo.`); }
+      else setCouponMessage(result.message ?? "No pudimos aplicar el código.");
+    } catch { setCouponMessage("No pudimos revisar el código. Inténtalo más tarde."); }
+    setCheckingCoupon(false);
+  }
 
   if (!ready) {
     return <section className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8"><h1 className="text-4xl font-black">Tu carrito</h1><p className="mt-4 text-[#52615D]">Cargando tu selección…</p></section>;
@@ -70,10 +89,12 @@ export function OfficialCartPage() {
           <h2 className="text-xl font-black text-[#243C3A]">Resumen</h2>
           <div className="mt-5 flex justify-between gap-3 text-sm"><span>Productos ({lines.reduce((count, line) => count + line.quantity, 0)})</span><strong>{formatClp(subtotal)}</strong></div>
           <div className="mt-3 flex justify-between gap-3 border-b border-[#E5DED4] pb-4 text-sm"><span>Envío a todo Chile</span><strong>{formatClp(SHIPPING_FEE_CLP)}</strong></div>
+          <form onSubmit={applyCoupon} className="mt-4"><label htmlFor="shop-coupon" className="text-sm font-bold">Código de descuento</label><div className="mt-2 flex gap-2"><input id="shop-coupon" value={couponCode} onChange={(event) => setCouponCode(event.target.value)} maxLength={32} placeholder="Tu código" className="min-w-0 flex-1 rounded-md border border-[#D8CEC1] px-3 py-2 text-sm" /><button disabled={checkingCoupon || !couponCode.trim()} className="rounded-md border border-[#B6633A] px-3 py-2 text-sm font-black text-[#B6633A] disabled:opacity-50">Aplicar</button></div><p role="status" className="mt-2 text-xs text-[#52615D]">{couponMessage}</p></form>
+          {discount > 0 && <div className="mt-3 flex justify-between gap-3 text-sm text-[#245C43]"><span>Descuento {appliedCoupon?.code}</span><strong>−{formatClp(discount)}</strong></div>}
           <div className="mt-4 flex items-center justify-between text-lg font-black"><span>Total</span><span>{formatClp(total)}</span></div>
           <p className="mt-4 text-sm leading-6 text-[#52615D]">El envío cuesta {formatClp(SHIPPING_FEE_CLP)} por pedido, sin importar el destino dentro de Chile. Agregar al carrito no reserva stock.</p>
           <button type="button" disabled className="mt-6 flex min-h-12 w-full items-center justify-center rounded-md bg-[#D8CEC1] px-4 text-sm font-black text-[#52615D]">Pago en línea próximamente</button>
-          <p className="mt-3 text-xs leading-5 text-[#52615D]">Disponibilidad informada el {inventoryAsOf}. Confirma disponibilidad antes de comprar.</p>
+          <p className="mt-3 text-xs leading-5 text-[#52615D]">El stock se consulta al abrir la tienda y puede cambiar antes del pago.</p>
           <Link href="/#coleccion" className="mt-5 flex min-h-11 items-center justify-center rounded-md border border-[#D8CEC1] text-sm font-black text-[#243C3A]">Seguir comprando</Link>
         </aside>
       </div>

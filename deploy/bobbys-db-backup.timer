@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily Bobby's Pet Shop database backup
+
+[Timer]
+OnCalendar=*-*-* 03:20:00
+Persistent=true
+Unit=bobbys-db-backup.service
+
+[Install]
+WantedBy=timers.target

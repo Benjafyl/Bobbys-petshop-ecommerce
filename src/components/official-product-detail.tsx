@@ -7,7 +7,7 @@ import { ArrowLeft, Minus, Plus, Ruler, ShoppingBag, Truck } from "lucide-react"
 import { useOfficialCart } from "@/components/official-cart-provider";
 import { officialCategoryLabels, type OfficialProduct } from "@/lib/official-catalog";
 import { getOfficialVariantId } from "@/lib/official-cart";
-import { formatClp, inventoryAsOf } from "@/lib/public-inventory";
+import { formatClp } from "@/lib/public-inventory";
 import { SHIPPING_FEE_CLP } from "@/lib/shipping";
 
 function galleryImageClassName(image: OfficialProduct["images"][number]) {
@@ -60,7 +60,7 @@ export function OfficialProductDetail({ product }: { product: OfficialProduct })
             <div className="mt-6 rounded-xl border border-[#E5DED4] bg-white p-5 shadow-sm sm:p-7">
               <div className="flex flex-wrap items-end justify-between gap-3 border-b border-[#E5DED4] pb-5">
                 <div><p className="text-xs font-black uppercase tracking-[0.14em] text-[#52615D]">Precio</p><p className="mt-1 text-3xl font-black text-[#243C3A]" aria-live="polite">{selectedVariant ? formatClp(selectedVariant.priceClp) : "—"}</p></div>
-                <span className="rounded-full bg-[#EAF3EB] px-3 py-1.5 text-xs font-bold text-[#245C43]">{ready && availableToAdd === 0 ? "En tu carrito" : "Disponible"}</span>
+                <span className="rounded-full bg-[#EAF3EB] px-3 py-1.5 text-xs font-bold text-[#245C43]">{selectedVariant?.units === 0 ? "Agotado" : ready && availableToAdd === 0 ? "En tu carrito" : "Disponible"}</span>
               </div>
               <div className="mt-6">
                 <h2 className="text-base font-black text-[#243C3A]">{hasDesignChoices ? "Elige tu diseño" : "Elige tu talla"}</h2>
@@ -74,7 +74,7 @@ export function OfficialProductDetail({ product }: { product: OfficialProduct })
                       <button key={variantId} type="button" aria-pressed={selected} onClick={() => { setSelectedVariantId(variantId); setQuantity(1); setNotice(""); if (variant.imageSrc) { const photoIndex = product.images.findIndex((image) => image.src === variant.imageSrc); if (photoIndex >= 0) setActiveIndex(photoIndex); } }} className={`min-h-16 rounded-lg border-2 px-3 py-2 text-left transition-colors duration-200 ${selected ? "border-[#B6633A] bg-[#FCF3EA]" : "border-[#E5DED4] bg-white hover:border-[#B6633A]"}`}>
                         <span className="flex items-center gap-3">
                           {variant.imageSrc && <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-md bg-[#F4E8D8]"><Image src={variant.imageSrc} alt="" fill sizes="48px" className="object-cover" /></span>}
-                          <span className="min-w-0"><span className="block text-sm font-black text-[#243C3A]">{variant.design ?? variant.size}</span><span className="block text-xs font-semibold text-[#52615D]">{hasDesignChoices ? `Talla ${variant.size} · ` : ""}{formatClp(variant.priceClp)}</span><span className="block text-[11px] text-[#52615D]">{remaining === 0 ? "En tu carrito" : remaining === 1 ? "Última unidad" : `${remaining} disponibles`}</span></span>
+                          <span className="min-w-0"><span className="block text-sm font-black text-[#243C3A]">{variant.design ?? variant.size}</span><span className="block text-xs font-semibold text-[#52615D]">{hasDesignChoices ? `Talla ${variant.size} · ` : ""}{formatClp(variant.priceClp)}</span><span className="block text-[11px] text-[#52615D]">{variant.units === 0 ? "Agotado" : remaining === 0 ? "En tu carrito" : remaining === 1 ? "Última unidad" : `${remaining} disponibles`}</span></span>
                         </span>
                       </button>
                     );
@@ -90,11 +90,11 @@ export function OfficialProductDetail({ product }: { product: OfficialProduct })
                     <button type="button" className="flex h-12 w-11 items-center justify-center disabled:opacity-40" aria-label="Sumar unidad" disabled={!ready || quantity >= availableToAdd} onClick={() => setQuantity((value) => Math.min(value + 1, availableToAdd))}><Plus size={17} /></button>
                   </div>
                   <button type="button" disabled={!ready} onClick={() => { if (!selectedVariant) return; const amount = Math.min(quantity, availableToAdd); addItem(product.slug, effectiveVariantId, amount); setQuantity(1); setNotice(`${amount} ${amount === 1 ? "unidad agregada" : "unidades agregadas"} al carrito`); }} className="inline-flex h-12 min-w-48 flex-1 items-center justify-center gap-2 rounded-lg bg-[#B6633A] px-5 text-sm font-black text-white transition-colors duration-200 hover:bg-[#96502E] disabled:cursor-not-allowed disabled:opacity-50"><ShoppingBag size={18} /> Agregar al carrito</button>
-                </div> : <Link href="/carrito" className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-[#243C3A] px-5 text-sm font-black text-white hover:bg-[#31514E]"><ShoppingBag size={18} /> Ver en mi carrito</Link>}
-                <p className="mt-3 text-sm text-[#52615D]" aria-live="polite">{notice || (availableToAdd === 0 ? "Ya agregaste todas las unidades disponibles de esta opción." : hasDesignChoices ? "Selecciona tu diseño y agrégalo al carrito." : "Selecciona tu talla y agrégala al carrito.")}</p>
+                </div> : selectedVariant?.units === 0 ? <p className="text-sm font-bold text-[#52615D]">Esta opción está agotada.</p> : <Link href="/carrito" className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-[#243C3A] px-5 text-sm font-black text-white hover:bg-[#31514E]"><ShoppingBag size={18} /> Ver en mi carrito</Link>}
+                <p className="mt-3 text-sm text-[#52615D]" aria-live="polite">{notice || (selectedVariant?.units === 0 ? "Elige otra opción disponible." : availableToAdd === 0 ? "Ya agregaste todas las unidades disponibles de esta opción." : hasDesignChoices ? "Selecciona tu diseño y agrégalo al carrito." : "Selecciona tu talla y agrégala al carrito.")}</p>
               </div>
               <div className="mt-5 flex items-start gap-3 rounded-lg bg-[#F6F3EC] px-4 py-3 text-sm text-[#243C3A]"><Truck size={18} className="mt-0.5 shrink-0 text-[#B6633A]" /><p><strong>Envío a todo Chile por {formatClp(SHIPPING_FEE_CLP)}.</strong> <Link href="/envios" className="underline underline-offset-2">Ver información de envíos</Link></p></div>
-              <p className="mt-4 text-xs leading-5 text-[#697873]">Stock informado el {inventoryAsOf}. Agregar al carrito no reserva la prenda. El pago en línea estará disponible próximamente.</p>
+              <p className="mt-4 text-xs leading-5 text-[#697873]">Stock consultado al abrir la tienda. Agregar al carrito no reserva la prenda. El pago en línea estará disponible próximamente.</p>
             </div>
           ) : <div className="mt-8 rounded-lg border border-[#E5DED4] bg-white p-6"><h2 className="text-lg font-black">{inventoryError ? "Disponibilidad temporalmente no disponible" : "Producto agotado"}</h2><p className="mt-2 leading-7 text-[#52615D]">{inventoryError ? "Vuelve a intentarlo en un momento." : "Puedes explorar las fotografías de este producto mientras reponemos stock."}</p></div>}
         </div>

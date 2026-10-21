@@ -93,7 +93,7 @@ export default function Home() {
               <Link href="#explora" className="inline-flex h-12 items-center justify-center rounded-md border border-[#C9B8A8] bg-white px-5 text-sm font-black text-[#243C3A]">Explorar por categoría</Link>
             </div>
           </div>
-          <p className="mt-5 text-xs leading-5 text-[#52615D]">Inventario informado el 19 de octubre de 2026. El carrito no reserva unidades; pago en línea próximamente.</p>
+          <p className="mt-5 text-xs leading-5 text-[#52615D]">Consulta el stock por talla al explorar la tienda. El carrito no reserva unidades; pago en línea próximamente.</p>
         </div>
       </section>
 

@@ -1,0 +1,11 @@
+[Unit]
+Description=Backup Bobby's Pet Shop PostgreSQL database
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+User=benjafyl
+Group=benjafyl
+WorkingDirectory=/home/benjafyl/apps/bobbys-petshop
+ExecStart=/bin/bash /home/benjafyl/apps/bobbys-petshop/deploy/backup-db.sh

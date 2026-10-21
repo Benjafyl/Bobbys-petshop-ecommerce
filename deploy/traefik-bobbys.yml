@@ -1,10 +1,23 @@
 http:
   routers:
     bobbys-petshop-router:
-      rule: Host(`bobbyspetshop.cl`) || Host(`www.bobbyspetshop.cl`)
+      rule: Host(`bobbyspetshop.cl`)
       entryPoints:
         - web
       service: bobbys-petshop-service
+    bobbys-petshop-www-router:
+      rule: Host(`www.bobbyspetshop.cl`)
+      entryPoints:
+        - web
+      middlewares:
+        - bobbys-petshop-www-redirect
+      service: bobbys-petshop-service
+  middlewares:
+    bobbys-petshop-www-redirect:
+      redirectRegex:
+        regex: ^https?://www\.bobbyspetshop\.cl/(.*)
+        replacement: https://bobbyspetshop.cl/${1}
+        permanent: true
   services:
     bobbys-petshop-service:
       loadBalancer:

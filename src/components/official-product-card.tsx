@@ -1,13 +1,17 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { OfficialQuickAdd } from "@/components/official-quick-add";
 import { officialCategoryLabels, type OfficialProduct } from "@/lib/official-catalog";
-import { formatClp, getMinimumPrice, getTotalUnits, hasMultiplePrices, publicInventoryBySlug } from "@/lib/public-inventory";
+import { formatClp, getMinimumPrice, getTotalUnits, hasMultiplePrices } from "@/lib/public-inventory";
+import { useOfficialCart } from "@/components/official-cart-provider";
 
 export function OfficialProductCard({ product, headingLevel = "h3" }: { product: OfficialProduct; headingLevel?: "h3" | "h4" }) {
   const Heading = headingLevel;
-  const inventory = publicInventoryBySlug[product.slug];
+  const { inventory: liveInventory, inventoryError } = useOfficialCart();
+  const inventory = liveInventory[product.slug];
   const primaryImage = product.images[0];
   const alternateImage = product.images[1];
   return (
@@ -37,7 +41,7 @@ export function OfficialProductCard({ product, headingLevel = "h3" }: { product:
                 {product.fit && <p className="mt-1 text-xs font-semibold text-[#243C3A]">{product.fit}</p>}
                 <p className="mt-1 text-xs font-semibold text-[#52615D]">{getTotalUnits(inventory) === 1 ? "Última unidad disponible" : "Disponible"}</p>
               </>
-            ) : <p className="mt-1 text-sm text-[#52615D]">Precio y tallas por confirmar</p>}
+            ) : <p className="mt-1 text-sm text-[#52615D]">{inventoryError ? "Disponibilidad temporalmente no disponible" : "Sin unidades disponibles"}</p>}
           </div>
           <ArrowUpRight className="shrink-0 text-[#B6633A]" size={20} />
         </div>

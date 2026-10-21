@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, Search, ShoppingBag } from "lucide-react";
+import { Menu, Search, ShoppingBag, UserRound } from "lucide-react";
 import { useState } from "react";
 import { useOfficialCart } from "@/components/official-cart-provider";
 import { InstagramIcon } from "@/components/instagram-icon";
@@ -41,6 +41,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <Link href="/cuenta" className="flex h-10 w-10 items-center justify-center rounded-full border border-[#E5DED4] text-[#243C3A] transition hover:border-[#B6633A]" aria-label="Mi cuenta"><UserRound size={19} /></Link>
           <a
             href={instagramProfileUrl}
             target="_blank"

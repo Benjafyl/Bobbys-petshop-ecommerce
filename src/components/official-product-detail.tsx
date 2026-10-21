@@ -7,7 +7,7 @@ import { ArrowLeft, Minus, Plus, Ruler, ShoppingBag, Truck } from "lucide-react"
 import { useOfficialCart } from "@/components/official-cart-provider";
 import { officialCategoryLabels, type OfficialProduct } from "@/lib/official-catalog";
 import { getOfficialVariantId } from "@/lib/official-cart";
-import { formatClp, inventoryAsOf, publicInventoryBySlug } from "@/lib/public-inventory";
+import { formatClp, inventoryAsOf } from "@/lib/public-inventory";
 import { SHIPPING_FEE_CLP } from "@/lib/shipping";
 
 function galleryImageClassName(image: OfficialProduct["images"][number]) {
@@ -19,13 +19,14 @@ function galleryImageClassName(image: OfficialProduct["images"][number]) {
 export function OfficialProductDetail({ product }: { product: OfficialProduct }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const active = product.images[activeIndex];
-  const inventory = publicInventoryBySlug[product.slug];
-  const { cart, ready, addItem } = useOfficialCart();
-  const [selectedVariantId, setSelectedVariantId] = useState(() => inventory?.variants[0] ? getOfficialVariantId(product.slug, inventory.variants[0]) : "");
+  const { cart, ready, addItem, inventory: liveInventory, inventoryError } = useOfficialCart();
+  const inventory = liveInventory[product.slug];
+  const [selectedVariantId, setSelectedVariantId] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [notice, setNotice] = useState("");
-  const selectedVariant = inventory?.variants.find((variant) => getOfficialVariantId(product.slug, variant) === selectedVariantId);
-  const inCart = cart.find((item) => item.variantId === selectedVariantId)?.quantity ?? 0;
+  const effectiveVariantId = selectedVariantId || (inventory?.variants[0] ? getOfficialVariantId(product.slug, inventory.variants[0]) : "");
+  const selectedVariant = inventory?.variants.find((variant) => getOfficialVariantId(product.slug, variant) === effectiveVariantId);
+  const inCart = cart.find((item) => item.variantId === effectiveVariantId)?.quantity ?? 0;
   const availableToAdd = Math.max(0, (selectedVariant?.units ?? 0) - inCart);
   const hasDesignChoices = inventory?.variants.some((variant) => Boolean(variant.design)) ?? false;
 
@@ -66,7 +67,7 @@ export function OfficialProductDetail({ product }: { product: OfficialProduct })
                 <div className={`mt-3 grid gap-2 ${hasDesignChoices ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-3 sm:grid-cols-4"}`} aria-label={hasDesignChoices ? "Diseños disponibles" : "Tallas disponibles"}>
                   {inventory.variants.map((variant) => {
                     const variantId = getOfficialVariantId(product.slug, variant);
-                    const selected = selectedVariantId === variantId;
+                    const selected = effectiveVariantId === variantId;
                     const variantInCart = cart.find((item) => item.variantId === variantId)?.quantity ?? 0;
                     const remaining = Math.max(0, variant.units - variantInCart);
                     return (
@@ -88,14 +89,14 @@ export function OfficialProductDetail({ product }: { product: OfficialProduct })
                     <span className="w-9 text-center text-sm font-black" aria-live="polite">{Math.min(quantity, availableToAdd)}</span>
                     <button type="button" className="flex h-12 w-11 items-center justify-center disabled:opacity-40" aria-label="Sumar unidad" disabled={!ready || quantity >= availableToAdd} onClick={() => setQuantity((value) => Math.min(value + 1, availableToAdd))}><Plus size={17} /></button>
                   </div>
-                  <button type="button" disabled={!ready} onClick={() => { if (!selectedVariant) return; const amount = Math.min(quantity, availableToAdd); addItem(product.slug, selectedVariantId, amount); setQuantity(1); setNotice(`${amount} ${amount === 1 ? "unidad agregada" : "unidades agregadas"} al carrito`); }} className="inline-flex h-12 min-w-48 flex-1 items-center justify-center gap-2 rounded-lg bg-[#B6633A] px-5 text-sm font-black text-white transition-colors duration-200 hover:bg-[#96502E] disabled:cursor-not-allowed disabled:opacity-50"><ShoppingBag size={18} /> Agregar al carrito</button>
+                  <button type="button" disabled={!ready} onClick={() => { if (!selectedVariant) return; const amount = Math.min(quantity, availableToAdd); addItem(product.slug, effectiveVariantId, amount); setQuantity(1); setNotice(`${amount} ${amount === 1 ? "unidad agregada" : "unidades agregadas"} al carrito`); }} className="inline-flex h-12 min-w-48 flex-1 items-center justify-center gap-2 rounded-lg bg-[#B6633A] px-5 text-sm font-black text-white transition-colors duration-200 hover:bg-[#96502E] disabled:cursor-not-allowed disabled:opacity-50"><ShoppingBag size={18} /> Agregar al carrito</button>
                 </div> : <Link href="/carrito" className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-[#243C3A] px-5 text-sm font-black text-white hover:bg-[#31514E]"><ShoppingBag size={18} /> Ver en mi carrito</Link>}
                 <p className="mt-3 text-sm text-[#52615D]" aria-live="polite">{notice || (availableToAdd === 0 ? "Ya agregaste todas las unidades disponibles de esta opción." : hasDesignChoices ? "Selecciona tu diseño y agrégalo al carrito." : "Selecciona tu talla y agrégala al carrito.")}</p>
               </div>
               <div className="mt-5 flex items-start gap-3 rounded-lg bg-[#F6F3EC] px-4 py-3 text-sm text-[#243C3A]"><Truck size={18} className="mt-0.5 shrink-0 text-[#B6633A]" /><p><strong>Envío a todo Chile por {formatClp(SHIPPING_FEE_CLP)}.</strong> <Link href="/envios" className="underline underline-offset-2">Ver información de envíos</Link></p></div>
               <p className="mt-4 text-xs leading-5 text-[#697873]">Stock informado el {inventoryAsOf}. Agregar al carrito no reserva la prenda. El pago en línea estará disponible próximamente.</p>
             </div>
-          ) : <div className="mt-8 rounded-lg border border-[#E5DED4] bg-white p-6"><h2 className="text-lg font-black">Colección en preparación</h2><p className="mt-2 leading-7 text-[#52615D]">Precio, tallas y disponibilidad por confirmar. Por ahora puedes explorar las fotografías oficiales de este producto; todavía no recibimos compras en el sitio.</p></div>}
+          ) : <div className="mt-8 rounded-lg border border-[#E5DED4] bg-white p-6"><h2 className="text-lg font-black">{inventoryError ? "Disponibilidad temporalmente no disponible" : "Producto agotado"}</h2><p className="mt-2 leading-7 text-[#52615D]">{inventoryError ? "Vuelve a intentarlo en un momento." : "Puedes explorar las fotografías de este producto mientras reponemos stock."}</p></div>}
         </div>
       </div>
     </section>

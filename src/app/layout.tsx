@@ -38,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang="es-CL" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="min-h-full bg-[#FBF7F1] text-[#243C3A]">
-        <OfficialCartProvider>
+        <OfficialCartProvider liveInventoryEnabled={Boolean(process.env.DATABASE_URL)}>
           <SiteHeader />
           <main>{children}</main>
           <SiteFooter />

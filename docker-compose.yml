@@ -1,30 +1,46 @@
+name: bobbys-petshop
 services:
   postgres:
     image: postgres:16-alpine
+    restart: unless-stopped
     environment:
       POSTGRES_DB: bobbys_petshop
-      POSTGRES_USER: bobbys
-      POSTGRES_PASSWORD: bobbys_dev_password
-    ports:
-      - "5432:5432"
+      POSTGRES_USER: bobbys_app
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in a private server .env file}
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks: [private]
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U bobbys -d bobbys_petshop"]
+      test: ["CMD-SHELL", "pg_isready -U bobbys_app -d bobbys_petshop"]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 10
 
   web:
-    build: .
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_SITE_URL: https://bobbyspetshop.cl
+    restart: unless-stopped
     depends_on:
       postgres:
         condition: service_healthy
     environment:
-      DATABASE_URL: postgresql://bobbys:bobbys_dev_password@postgres:5432/bobbys_petshop?schema=public
-      NEXT_PUBLIC_SITE_URL: http://localhost:3000
-    ports:
-      - "3000:3000"
+      DATABASE_URL: postgresql://bobbys_app:${POSTGRES_PASSWORD}@postgres:5432/bobbys_petshop
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:?Set BETTER_AUTH_SECRET in a private server .env file}
+      BETTER_AUTH_URL: https://bobbyspetshop.cl
+      NEXT_PUBLIC_SITE_URL: https://bobbyspetshop.cl
+      ENABLE_CUSTOMER_SIGNUP: ${ENABLE_CUSTOMER_SIGNUP:-false}
+      ENABLE_PAID_CHECKOUT: "false"
+      ORDER_NOTIFICATION_EMAIL: antonelarodil@gmail.com
+    networks:
+      - private
+      - dokploy-network
+
+networks:
+  private:
+  dokploy-network:
+    external: true
 
 volumes:
   postgres_data:

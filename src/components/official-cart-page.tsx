@@ -9,14 +9,16 @@ import { formatClp, inventoryAsOf } from "@/lib/public-inventory";
 import { SHIPPING_FEE_CLP } from "@/lib/shipping";
 
 export function OfficialCartPage() {
-  const { cart, ready, setQuantity, removeItem, clearCart } = useOfficialCart();
-  const lines = getOfficialCartLines(cart);
+  const { cart, ready, inventory, inventoryError, setQuantity, removeItem, clearCart } = useOfficialCart();
+  const lines = getOfficialCartLines(cart, inventory);
   const subtotal = lines.reduce((total, line) => total + line.lineTotal, 0);
   const total = subtotal + (lines.length > 0 ? SHIPPING_FEE_CLP : 0);
 
   if (!ready) {
     return <section className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8"><h1 className="text-4xl font-black">Tu carrito</h1><p className="mt-4 text-[#52615D]">Cargando tu selección…</p></section>;
   }
+
+  if (inventoryError) return <section className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8"><h1 className="text-4xl font-black">Tu carrito</h1><p className="mt-4 text-[#52615D]">No pudimos consultar el stock actual. Tu selección sigue guardada; recarga la página en unos minutos.</p></section>;
 
   if (lines.length === 0) {
     return (

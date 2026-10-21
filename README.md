@@ -1,34 +1,42 @@
-# Bobby's Pet Shop E-commerce
+# Bobby's Pet Shop
 
-Primera base del e-commerce de Bobby's Pet Shop. El sitio publicado muestra las 26 unidades vigentes al 19 de octubre de 2026, con fotografías, precios y existencias por talla. Aún no recibe pedidos ni pagos.
+Tienda Next.js para `bobbyspetshop.cl`, alojada en Servidor-BYL con Docker, PostgreSQL 16 dedicado y el Cloudflare Tunnel existente.
 
-## Incluido
+## Estado comercial
 
-- Storefront responsive con inicio, tienda, detalle de producto y guía para medir al perro.
-- Catálogo de parkas, chalecos, disfraces, pañuelos y collares para gatos, con precios y existencias por talla.
-- Fotografías oficiales organizadas en `public/images/official/`, video de la parka gris en `public/videos/official/` y espacio de entrada en `materials/inbox/`.
-- Carrito y checkout inactivos hasta completar los datos comerciales.
-- Modelo Prisma para Postgres con usuarios, productos, variantes, pedidos, pagos, reviews, stock y auditoria.
-- Dockerfile y docker-compose para correr con Postgres.
+El catálogo y carrito muestran el stock y precios por talla. El pago en línea todavía no está conectado y la web no crea pedidos ni marca pagos como recibidos. El envío informado es de $5.000 a todo Chile. No actives `ENABLE_PAID_CHECKOUT` hasta integrar y verificar un proveedor de pagos con notificaciones auténticas.
 
-## Desarrollo local
+## Componentes
+
+- `web`: aplicación Next.js; acceso de clientes con Better Auth, panel protegido de Antonela, catálogo y carrito.
+- `postgres`: base exclusiva `bobbys_petshop`, sin puerto PostgreSQL público.
+- `db/shop.sql`: tablas de inventario, pedidos, cupones y auditoría; carga inicial de 23 variantes. No sobrescribe el stock al reiniciar.
+- `scripts/migrate.mjs`: crea tablas de autenticación y aplica el esquema de tienda antes de iniciar la web.
+- `docker-compose.yml`: conecta la web a `dokploy-network`, que usa Traefik. La base permanece en la red privada del proyecto.
+
+## Desarrollo
 
 ```bash
-npm install
-cp .env.example .env
+npm ci
 npm run dev
 ```
 
-## Base de datos
+Para usar cuentas y stock vivo se requiere `DATABASE_URL`, `BETTER_AUTH_SECRET` de 32 caracteres o más y `BETTER_AUTH_URL`. Si faltan, el catálogo muestra la última instantánea confirmada y el acceso queda deshabilitado. El esquema se crea con `npm run db:migrate`.
+
+## Servidor
+
+Crear un archivo `.env` **solo en el servidor** junto al proyecto con `POSTGRES_PASSWORD` y `BETTER_AUTH_SECRET` aleatorios. El primero debe ser URL-safe (por ejemplo, hexadecimal). `ENABLE_CUSTOMER_SIGNUP=false` hasta haber creado y probado la cuenta de Antonela. No versionar este archivo ni secretos.
 
 ```bash
-npm run db:generate
-npm run db:migrate
+docker compose up -d --build
+docker compose ps
 ```
 
-Los datos bancarios, SMTP, dirección de retiro y WhatsApp deben cargarse como variables de entorno o secretos del servidor. No deben versionarse.
+Traefik debe dirigir `bobbyspetshop.cl` y `www.bobbyspetshop.cl` a `http://bobbys-web:3000` por `dokploy-network`; Cloudflare Tunnel debe publicar ambos nombres hacia Traefik en `localhost:80`. Configurar DNS en la zona de Cloudflare para apuntar al túnel. Probar `/api/health/db` antes de retirar cualquier publicación anterior.
 
-## Validacion
+El administrador se autoriza por **ID de usuario**, correo `antonelarodil@gmail.com` y una fila explícita en `shop_admin_accounts`. Las cuentas de clientes nunca reciben acceso por registrarse con un nombre o correo parecido. `shop_admin_accounts` se aprovisiona solo desde el servidor después de crear y verificar la cuenta de Antonela.
+
+## Verificación
 
 ```bash
 npm run lint
@@ -36,11 +44,3 @@ npm run typecheck
 npm run test
 npm run build
 ```
-
-## Siguiente fase
-
-1. Confirmar medidas por talla y canales de contacto reales.
-2. Conectar autenticación y roles reales.
-3. Reemplazar catálogo estático por APIs con Prisma/Postgres.
-4. Implementar pedidos, reserva de stock, pagos y correos transaccionales.
-5. Validar despacho, retiro y políticas comerciales antes de habilitar compras.

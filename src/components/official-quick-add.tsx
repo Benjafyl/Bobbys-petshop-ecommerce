@@ -4,11 +4,10 @@ import Link from "next/link";
 import { ArrowRight, ShoppingBag } from "lucide-react";
 import { useOfficialCart } from "@/components/official-cart-provider";
 import { getOfficialVariantId } from "@/lib/official-cart";
-import { publicInventoryBySlug } from "@/lib/public-inventory";
 
 export function OfficialQuickAdd({ productSlug }: { productSlug: string }) {
-  const { cart, ready, addItem } = useOfficialCart();
-  const inventory = publicInventoryBySlug[productSlug];
+  const { cart, ready, addItem, inventory: liveInventory } = useOfficialCart();
+  const inventory = liveInventory[productSlug];
   if (!inventory) return null;
 
   if (inventory.variants.length !== 1) {
@@ -16,6 +15,7 @@ export function OfficialQuickAdd({ productSlug }: { productSlug: string }) {
   }
 
   const variant = inventory.variants[0];
+  if (variant.units <= 0) return <span className="block py-2 text-center text-sm font-bold text-[#52615D]">Agotado</span>;
   const variantId = getOfficialVariantId(productSlug, variant);
   const inCart = cart.find((item) => item.variantId === variantId)?.quantity ?? 0;
   if (ready && inCart >= variant.units) {

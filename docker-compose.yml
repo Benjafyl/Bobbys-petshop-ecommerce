@@ -34,7 +34,7 @@ services:
       ENABLE_PAID_CHECKOUT: "false"
       ORDER_NOTIFICATION_EMAIL: antonelarodil@gmail.com
     networks:
-      - private
+      private: {}
       dokploy-network:
         aliases:
           - bobbys-web

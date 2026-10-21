@@ -3,8 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { ArrowLeft, Ruler } from "lucide-react";
+import { ArrowLeft, Minus, Plus, Ruler, ShoppingBag } from "lucide-react";
+import { useOfficialCart } from "@/components/official-cart-provider";
 import { officialCategoryLabels, type OfficialProduct } from "@/lib/official-catalog";
+import { getOfficialVariantId } from "@/lib/official-cart";
 import { formatClp, getMinimumPrice, getTotalUnits, hasMultiplePrices, inventoryAsOf, publicInventoryBySlug } from "@/lib/public-inventory";
 
 function galleryImageClassName(image: OfficialProduct["images"][number]) {
@@ -17,6 +19,13 @@ export function OfficialProductDetail({ product }: { product: OfficialProduct })
   const [activeIndex, setActiveIndex] = useState(0);
   const active = product.images[activeIndex];
   const inventory = publicInventoryBySlug[product.slug];
+  const { cart, ready, addItem } = useOfficialCart();
+  const [selectedVariantId, setSelectedVariantId] = useState(() => inventory?.variants[0] ? getOfficialVariantId(product.slug, inventory.variants[0]) : "");
+  const [quantity, setQuantity] = useState(1);
+  const [notice, setNotice] = useState("");
+  const selectedVariant = inventory?.variants.find((variant) => getOfficialVariantId(product.slug, variant) === selectedVariantId);
+  const inCart = cart.find((item) => item.variantId === selectedVariantId)?.quantity ?? 0;
+  const availableToAdd = Math.max(0, (selectedVariant?.units ?? 0) - inCart);
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
@@ -90,8 +99,48 @@ export function OfficialProductDetail({ product }: { product: OfficialProduct })
                   </div>
                 ))}
               </div>
+              <div className="mt-6 border-t border-[#E5DED4] pt-5">
+                <label htmlFor="cart-variant" className="block text-sm font-black text-[#243C3A]">Elige talla o diseño</label>
+                <select
+                  id="cart-variant"
+                  className="mt-2"
+                  value={selectedVariantId}
+                  onChange={(event) => { setSelectedVariantId(event.target.value); setQuantity(1); setNotice(""); }}
+                >
+                  {inventory.variants.map((variant) => (
+                    <option key={getOfficialVariantId(product.slug, variant)} value={getOfficialVariantId(product.slug, variant)}>
+                      {variant.design ? `${variant.design} · ` : ""}Talla {variant.size} · {formatClp(variant.priceClp)}
+                    </option>
+                  ))}
+                </select>
+                <div className="mt-4 flex flex-wrap items-center gap-3">
+                  <div className="inline-flex h-12 items-center overflow-hidden rounded-md border border-[#D8CEC1]" aria-label="Cantidad a agregar">
+                    <button type="button" className="flex h-12 w-11 items-center justify-center disabled:opacity-40" aria-label="Restar unidad" disabled={quantity <= 1} onClick={() => setQuantity((value) => Math.max(1, value - 1))}><Minus size={17} /></button>
+                    <span className="w-9 text-center text-sm font-black" aria-live="polite">{Math.min(quantity, Math.max(1, availableToAdd))}</span>
+                    <button type="button" className="flex h-12 w-11 items-center justify-center disabled:opacity-40" aria-label="Sumar unidad" disabled={!ready || quantity >= availableToAdd} onClick={() => setQuantity((value) => Math.min(value + 1, availableToAdd))}><Plus size={17} /></button>
+                  </div>
+                  <button
+                    type="button"
+                    disabled={!ready || availableToAdd === 0}
+                    onClick={() => {
+                      if (!selectedVariant || availableToAdd === 0) return;
+                      const amount = Math.min(quantity, availableToAdd);
+                      addItem(product.slug, selectedVariantId, amount);
+                      setQuantity(1);
+                      setNotice(`${amount} ${amount === 1 ? "unidad agregada" : "unidades agregadas"} al carrito`);
+                    }}
+                    className="inline-flex h-12 flex-1 items-center justify-center gap-2 rounded-md bg-[#B6633A] px-5 text-sm font-black text-white transition hover:bg-[#96502E] disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    <ShoppingBag size={18} /> {availableToAdd === 0 && ready ? "Máximo disponible en carrito" : "Agregar al carrito"}
+                  </button>
+                </div>
+                <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+                  <p className="text-[#52615D]" aria-live="polite">{notice || "Puedes ajustar la cantidad en tu carrito."}</p>
+                  <Link href="/carrito" className="font-black text-[#B6633A] underline underline-offset-4">Ver carrito</Link>
+                </div>
+              </div>
               <p className="mt-4 text-sm font-semibold text-[#243C3A]">{getTotalUnits(inventory)} {getTotalUnits(inventory) === 1 ? "unidad" : "unidades"} en inventario</p>
-              <p className="mt-3 text-sm leading-6 text-[#52615D]">Inventario informado el {inventoryAsOf}. Las existencias pueden cambiar; confirma disponibilidad antes de comprar. La tienda aún no recibe pedidos en línea.</p>
+              <p className="mt-3 text-sm leading-6 text-[#52615D]">Inventario informado el {inventoryAsOf}. El carrito no reserva unidades; confirma disponibilidad antes de comprar. Pago en línea aún no habilitado.</p>
             </div>
           ) : (
             <div className="mt-8 rounded-lg border border-[#E5DED4] bg-white p-6">

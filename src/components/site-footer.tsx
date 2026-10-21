@@ -12,7 +12,7 @@ export function SiteFooter() {
           <p className="text-lg font-black">Bobby&apos;s Pet Shop</p>
           <p className="mt-3 max-w-md text-sm leading-6 text-[#E5DED4]">
             Ropa para perros y collares para gatos. Explora las prendas y existencias
-            disponibles mientras preparamos las opciones de compra.
+            disponibles, elige tu talla y arma tu carrito.
           </p>
         </div>
         <div>
@@ -44,7 +44,7 @@ export function SiteFooter() {
       </div>
       <div className="border-t border-white/10 px-4 py-4 text-xs text-[#C8D2CC] sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 text-center sm:flex-row sm:text-left">
-          <p>Inventario publicado con precios y existencias por talla; compras aún no habilitadas.</p>
+          <p>Carrito disponible; pago en línea próximamente. Agregar prendas no reserva stock.</p>
           <a
             className="byl-credit inline-flex shrink-0 items-center gap-2 rounded-md px-2 py-1 hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F9D36B]"
             href="https://byl-software.vercel.app/"

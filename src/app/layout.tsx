@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { StoreProvider } from "@/components/store-provider";
+import { OfficialCartProvider } from "@/components/official-cart-provider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -38,11 +38,11 @@ export default function RootLayout({
   return (
     <html lang="es-CL" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="min-h-full bg-[#FBF7F1] text-[#243C3A]">
-        <StoreProvider>
+        <OfficialCartProvider>
           <SiteHeader />
           <main>{children}</main>
           <SiteFooter />
-        </StoreProvider>
+        </OfficialCartProvider>
       </body>
     </html>
   );

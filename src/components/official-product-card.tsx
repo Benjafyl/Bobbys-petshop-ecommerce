@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import { OfficialQuickAdd } from "@/components/official-quick-add";
 import { officialCategoryLabels, type OfficialProduct } from "@/lib/official-catalog";
 import { formatClp, getMinimumPrice, getTotalUnits, hasMultiplePrices, publicInventoryBySlug } from "@/lib/public-inventory";
 
@@ -41,6 +42,7 @@ export function OfficialProductCard({ product, headingLevel = "h3" }: { product:
           <ArrowUpRight className="shrink-0 text-[#B6633A]" size={20} />
         </div>
       </Link>
+      {inventory && <div className="border-t border-[#E5DED4] p-3"><OfficialQuickAdd productSlug={product.slug} /></div>}
     </article>
   );
 }

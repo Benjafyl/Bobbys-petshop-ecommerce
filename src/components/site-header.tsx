@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, Search } from "lucide-react";
+import { Menu, Search, ShoppingBag } from "lucide-react";
 import { useState } from "react";
+import { useOfficialCart } from "@/components/official-cart-provider";
 import { InstagramIcon } from "@/components/instagram-icon";
 import { instagramProfileUrl } from "@/lib/social";
 
@@ -16,11 +17,12 @@ const navItems = [
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const { cartCount } = useOfficialCart();
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#E5DED4] bg-[#FBF7F1]/95 backdrop-blur">
       <div className="bg-[#243C3A] px-4 py-2 text-center text-xs font-semibold text-white">
-        Inventario actualizado · Precios y existencias por talla · Compras aún no habilitadas
+        Inventario por talla · Arma tu carrito · Pago en línea próximamente
       </div>
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-3" aria-label="Ir al inicio">
@@ -54,6 +56,14 @@ export function SiteHeader() {
             aria-label="Buscar productos"
           >
             <Search size={18} />
+          </Link>
+          <Link
+            href="/carrito"
+            className="relative flex h-10 w-10 items-center justify-center rounded-full border border-[#E5DED4] text-[#243C3A] transition hover:border-[#B6633A] hover:text-[#B6633A]"
+            aria-label={`Carrito${cartCount > 0 ? `, ${cartCount} ${cartCount === 1 ? "producto" : "productos"}` : " vacío"}`}
+          >
+            <ShoppingBag size={19} />
+            {cartCount > 0 && <span className="absolute -right-1 -top-1 flex min-h-5 min-w-5 items-center justify-center rounded-full bg-[#B6633A] px-1 text-[10px] font-black text-white">{cartCount}</span>}
           </Link>
           <button
             className="flex h-10 w-10 items-center justify-center rounded-full border border-[#E5DED4] text-[#243C3A] lg:hidden"

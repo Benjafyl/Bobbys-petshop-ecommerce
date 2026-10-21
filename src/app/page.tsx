@@ -47,38 +47,53 @@ const categorySections: {
   },
 ];
 
+const heroPhotos = [
+  { src: "/images/official/parka-gris-modelo-lateral.jpg", alt: "Perro usando la parka bicolor gris", position: "object-[45%_center]" },
+  { src: "/images/official/traje-calabaza-modelo.jpg", alt: "Perro usando el traje de calabaza", position: "object-[46%_center]" },
+  { src: "/images/official/collar-calabaza-gato-perfil.jpg", alt: "Gato usando el collar de calabaza", position: "object-[52%_center]" },
+];
+
+// Esta selección muestra productos fotografiados. Se reemplazará por fotos enviadas por clientes.
+const communityPreview = [
+  { src: "/images/official/parka-azul-modelo.jpg", alt: "Parka azul puesta en un perro", label: "Parka azul" },
+  { src: "/images/official/collar-murcielago-gato.jpg", alt: "Collar de murciélago puesto en un gato", label: "Collar de murciélago" },
+  { src: "/images/official/traje-calabaza-modelo.jpg", alt: "Traje de calabaza puesto en un perro", label: "Traje de calabaza" },
+];
+
 export default function Home() {
   return (
     <>
       <section className="bg-[#FBF7F1]">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-10 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-8 lg:py-16">
-          <div>
-            <p className="inline-flex items-center gap-2 rounded-full border border-[#E5DED4] bg-white px-3 py-2 text-xs font-black uppercase tracking-[0.16em] text-[#B6633A]">
-              <Sparkles size={15} /> Bobby&apos;s Pet Shop
-            </p>
-            <h1 className="mt-6 max-w-3xl text-5xl font-black leading-[1.02] text-[#243C3A] sm:text-6xl">
-              Que cada paseo tenga su propio look.
-            </h1>
-            <p className="mt-5 max-w-xl text-lg leading-8 text-[#52615D]">
-              Abrigos, chalecos, disfraces y pañuelos para perros. Mira aquí mismo lo disponible, con precio y talla.
-            </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link href="#coleccion" className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-[#B6633A] px-5 text-sm font-black text-white transition hover:bg-[#96502E]">
-                Ver toda la colección <ArrowDown size={18} />
-              </Link>
-              <Link href="#explora" className="inline-flex h-12 items-center justify-center rounded-md border border-[#C9B8A8] bg-white px-5 text-sm font-black text-[#243C3A] transition hover:border-[#B6633A]">
-                Explorar por categoría
-              </Link>
+        <div className="mx-auto max-w-[1600px] px-4 pb-8 pt-4 sm:px-6 lg:px-8 lg:pb-12 lg:pt-6">
+          <div className="relative overflow-hidden rounded-xl bg-[#F4E8D8]">
+            <div className="grid h-[420px] grid-cols-[1.15fr_1fr] grid-rows-2 gap-1 sm:h-[520px] lg:h-[610px] lg:grid-cols-3 lg:grid-rows-1">
+              {heroPhotos.map((photo, index) => (
+                <div key={photo.src} className={`relative overflow-hidden ${index === 0 ? "row-span-2 lg:row-span-1" : ""}`}>
+                  <Image src={photo.src} alt={photo.alt} fill priority sizes="(min-width: 1024px) 33vw, 55vw" className={`object-cover ${photo.position}`} />
+                </div>
+              ))}
             </div>
-            <p className="mt-6 text-sm leading-6 text-[#52615D]">Inventario informado el 19 de octubre de 2026, con existencias por talla. Compras aún no habilitadas.</p>
-          </div>
-          <div className="relative min-h-[520px] overflow-hidden rounded-lg bg-[#F4E8D8]">
-            <Image src="/images/official/parka-militar-modelo.jpg" alt="Perro junto a la parka militar de Bobby's Pet Shop" fill priority sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#243C3A]/90 to-transparent p-6 pt-20 text-white">
-              <p className="text-xs font-black uppercase tracking-[0.18em] text-[#F9D36B]">La colección</p>
-              <p className="mt-2 max-w-sm text-2xl font-black leading-tight">Prendas que se ven tan bien como se sienten.</p>
+            <div className="pointer-events-none absolute inset-0 hidden bg-gradient-to-t from-[#182E2C]/90 via-[#182E2C]/30 to-transparent lg:block" />
+            <div className="hidden lg:absolute lg:inset-x-0 lg:bottom-0 lg:z-10 lg:block lg:px-12 lg:pb-12">
+              <p className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-[#F9D36B]"><Sparkles size={16} /> Bobby&apos;s Pet Shop</p>
+              <h1 className="mt-3 max-w-3xl text-5xl font-black leading-[1.04] text-white xl:text-6xl">Su estilo, en cada aventura.</h1>
+              <p className="mt-4 max-w-2xl text-lg leading-7 text-white/90">Abrigos, chalecos, disfraces y accesorios para perros y gatos. Elige entre las prendas disponibles y arma tu carrito.</p>
+              <div className="mt-6 flex gap-3">
+                <Link href="#coleccion" className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-[#B6633A] px-5 text-sm font-black text-white transition hover:bg-[#96502E]">Comprar la colección <ArrowDown size={18} /></Link>
+                <Link href="#explora" className="inline-flex h-12 items-center justify-center rounded-md border border-white/70 bg-white/95 px-5 text-sm font-black text-[#243C3A] transition hover:bg-white">Explorar por categoría</Link>
+              </div>
             </div>
           </div>
+          <div className="pt-7 lg:hidden">
+            <p className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.18em] text-[#B6633A]"><Sparkles size={15} /> Bobby&apos;s Pet Shop</p>
+            <h1 className="mt-3 max-w-xl text-4xl font-black leading-[1.05] text-[#243C3A] sm:text-5xl">Su estilo, en cada aventura.</h1>
+            <p className="mt-4 max-w-xl leading-7 text-[#52615D]">Abrigos, chalecos, disfraces y accesorios para perros y gatos. Elige entre las prendas disponibles y arma tu carrito.</p>
+            <div className="mt-5 flex flex-wrap gap-3">
+              <Link href="#coleccion" className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-[#B6633A] px-5 text-sm font-black text-white">Comprar la colección <ArrowDown size={18} /></Link>
+              <Link href="#explora" className="inline-flex h-12 items-center justify-center rounded-md border border-[#C9B8A8] bg-white px-5 text-sm font-black text-[#243C3A]">Explorar por categoría</Link>
+            </div>
+          </div>
+          <p className="mt-5 text-xs leading-5 text-[#52615D]">Inventario informado el 19 de octubre de 2026. El carrito no reserva unidades; pago en línea próximamente.</p>
         </div>
       </section>
 
@@ -176,6 +191,28 @@ export default function Home() {
         </div>
       </section>
 
+      <section aria-labelledby="community-heading" className="border-t border-[#E5DED4] bg-[#F4E8D8]/45">
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+          <div className="mb-7 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+            <div className="max-w-2xl">
+              <p className="text-xs font-black uppercase tracking-[0.2em] text-[#B6633A]">Nuestra comunidad</p>
+              <h2 id="community-heading" className="mt-2 text-3xl font-black leading-tight text-[#243C3A] sm:text-4xl">Pronto, sus looks favoritos aquí.</h2>
+              <p className="mt-3 leading-7 text-[#52615D]">Estamos preparando una galería con fotos y reseñas reales de clientes. Por ahora, mira estas prendas de Bobby&apos;s puestas en nuestros modelos.</p>
+            </div>
+            <a href={instagramProfileUrl} target="_blank" rel="noopener noreferrer" className="inline-flex shrink-0 items-center gap-2 text-sm font-black text-[#B6633A] hover:text-[#96502E]"><InstagramIcon size={18} /> Conoce @bobbys.cl <ArrowRight size={17} /></a>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-3">
+            {communityPreview.map((photo) => (
+              <figure key={photo.src} className="overflow-hidden rounded-lg border border-[#E5DED4] bg-white shadow-sm">
+                <div className="relative aspect-[4/4] overflow-hidden bg-[#F4E8D8] sm:aspect-[4/5]"><Image src={photo.src} alt={photo.alt} fill sizes="(min-width: 640px) 33vw, 100vw" className="object-cover" /></div>
+                <figcaption className="px-4 py-3 text-sm font-bold text-[#243C3A]">En uso · {photo.label}</figcaption>
+              </figure>
+            ))}
+          </div>
+          <p className="mt-5 rounded-md border border-dashed border-[#C9B8A8] bg-white/70 px-4 py-3 text-sm text-[#52615D]">Espacio reservado para fotos y opiniones compartidas por clientes. Las imágenes de arriba muestran prendas fotografiadas por Bobby&apos;s.</p>
+        </div>
+      </section>
+
       <section className="border-t border-[#E5DED4] bg-white">
         <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[1fr_1fr] lg:px-8">
           <div className="relative min-h-[370px] overflow-hidden rounded-lg bg-[#F4E8D8]"><Image src="/images/official/parka-gris-modelo-lateral.jpg" alt="Perro de cuerpo entero con la parka gris" fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-contain" /></div>
@@ -191,7 +228,7 @@ export default function Home() {
 
       <section className="border-t border-[#E5DED4] bg-[#F4E8D8]">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-5 px-4 py-10 sm:px-6 md:flex-row md:items-center lg:px-8">
-          <div className="flex items-start gap-3"><Heart className="mt-1 shrink-0 text-[#B6633A]" size={24} /><div><h2 className="text-xl font-black">Elige entre las unidades disponibles</h2><p className="mt-1 max-w-xl text-sm leading-6 text-[#52615D]">Consulta las fotos, el precio y las existencias por talla en cada ficha. Las compras en línea aún no están habilitadas.</p></div></div>
+          <div className="flex items-start gap-3"><Heart className="mt-1 shrink-0 text-[#B6633A]" size={24} /><div><h2 className="text-xl font-black">Elige entre las unidades disponibles</h2><p className="mt-1 max-w-xl text-sm leading-6 text-[#52615D]">Consulta fotos, precios y existencias por talla. Agrega tus favoritos al carrito; el pago en línea llegará en una próxima etapa.</p></div></div>
           <Link href="/tienda" className="inline-flex shrink-0 items-center gap-2 rounded-md bg-[#243C3A] px-5 py-3 text-sm font-black text-white">Explorar con filtros <ArrowRight size={17} /></Link>
         </div>
       </section>

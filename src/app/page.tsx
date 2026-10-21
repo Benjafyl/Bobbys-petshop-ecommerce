@@ -49,8 +49,8 @@ const categorySections: {
 
 const heroPhotos = [
   { src: "/images/official/parka-gris-modelo-lateral.jpg", alt: "Perro usando la parka bicolor gris", position: "object-[45%_center]" },
-  { src: "/images/official/traje-calabaza-modelo.jpg", alt: "Perro usando el traje de calabaza", position: "object-[46%_center]" },
-  { src: "/images/official/collar-calabaza-gato-perfil.jpg", alt: "Gato usando el collar de calabaza", position: "object-[52%_center]" },
+  { src: "/images/official/poleron-flores-rosa-producto.jpg", alt: "Chaleco rosado con patitas", position: "object-center" },
+  { src: "/images/official/parka-militar-producto.jpg", alt: "Parka militar de colores", position: "object-center" },
 ];
 
 // Esta selección muestra productos fotografiados. Se reemplazará por fotos enviadas por clientes.

@@ -46,15 +46,14 @@ export function SiteFooter() {
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 text-center sm:flex-row sm:text-left">
           <p>Inventario publicado con precios y existencias por talla; compras aún no habilitadas.</p>
           <a
-            className="inline-flex shrink-0 items-center gap-2 rounded-md px-2 py-1 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F9D36B]"
+            className="byl-credit inline-flex shrink-0 items-center gap-2 rounded-md px-2 py-1 hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F9D36B]"
             href="https://byl-software.vercel.app/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Sitio desarrollado por BYL. Abre su sitio web en otra pestaña."
           >
-            <span>Desarrollado por</span>
-            <Image src="/byl-icon.svg" alt="" width={24} height={24} unoptimized />
-            <span className="font-black tracking-wide text-white">BYL</span>
+            <Image src="/byl-icon.svg" alt="" width={30} height={30} unoptimized />
+            <span>Desarrollado por <strong className="font-black tracking-wide text-white">BYL</strong></span>
           </a>
         </div>
       </div>

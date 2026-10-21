@@ -42,6 +42,36 @@ textarea::placeholder {
   color: #87938e;
 }
 
+.byl-credit {
+  transition: color 200ms ease-out, background-color 200ms ease-out, transform 200ms ease-out;
+}
+
+.byl-credit img {
+  transition: transform 200ms ease-out;
+}
+
+@media (hover: hover) {
+  .byl-credit:hover img {
+    transform: rotate(-5deg);
+  }
+}
+
+.byl-credit:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .byl-credit,
+  .byl-credit img {
+    transition: none;
+  }
+
+  .byl-credit:active,
+  .byl-credit:hover img {
+    transform: none;
+  }
+}
+
 ::selection {
   background: #f9d36b;
   color: #243c3a;

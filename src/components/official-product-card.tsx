@@ -8,24 +8,24 @@ import { formatClp, getMinimumPrice, getTotalUnits, hasMultiplePrices, publicInv
 export function OfficialProductCard({ product, headingLevel = "h3" }: { product: OfficialProduct; headingLevel?: "h3" | "h4" }) {
   const Heading = headingLevel;
   const inventory = publicInventoryBySlug[product.slug];
+  const primaryImage = product.images[0];
+  const alternateImage = product.images[1];
   return (
-    <article className="group overflow-hidden rounded-lg border border-[#E5DED4] bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-      <Link href={`/producto/${product.slug}`} className="block" aria-label={`Ver ${product.name}`}>
+    <article className="overflow-hidden rounded-lg border border-[#E5DED4] bg-white shadow-sm transition-shadow duration-200 hover:shadow-md">
+      <Link href={`/producto/${product.slug}`} className={`${alternateImage ? "catalog-photo " : ""}block focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B6633A]`} aria-label={`Ver ${product.name} y sus fotos`}>
         <div className="relative aspect-[4/5] overflow-hidden bg-[#F4E8D8]">
-          {product.images[0] ? (
-            <Image
-              src={product.images[0].src}
-              alt={product.images[0].alt}
-              fill
-              sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-              className="object-cover transition duration-500 group-hover:scale-105"
-            />
+          {primaryImage ? (
+            <>
+              <Image src={primaryImage.src} alt={primaryImage.alt} fill sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" className="catalog-photo-primary object-cover" />
+              {alternateImage && <Image src={alternateImage.src} alt="" aria-hidden="true" fill sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" className="catalog-photo-secondary object-cover" />}
+            </>
           ) : (
             <div className="flex h-full items-center justify-center px-6 text-center text-sm font-bold uppercase tracking-[0.16em] text-[#52615D]">Foto pendiente</div>
           )}
           <span className="absolute left-3 top-3 rounded-full bg-white/95 px-3 py-1 text-xs font-black uppercase tracking-[0.12em] text-[#243C3A]">
             {officialCategoryLabels[product.category]}
           </span>
+          {alternateImage && <span className="absolute bottom-3 right-3 rounded-full bg-white/95 px-3 py-1 text-xs font-bold text-[#243C3A]">+ fotos</span>}
         </div>
         <div className="flex items-center justify-between gap-3 p-4">
           <div>
@@ -35,7 +35,7 @@ export function OfficialProductCard({ product, headingLevel = "h3" }: { product:
                 <p className="mt-1 text-base font-black text-[#B6633A]">{hasMultiplePrices(inventory) ? "Desde " : ""}{formatClp(getMinimumPrice(inventory))}</p>
                 <p className="mt-1 text-xs text-[#52615D]">Tallas: {[...new Set(inventory.variants.map((variant) => variant.size))].join(" · ")}</p>
                 {product.fit && <p className="mt-1 text-xs font-semibold text-[#243C3A]">{product.fit}</p>}
-                <p className="mt-1 text-xs font-semibold text-[#52615D]">{getTotalUnits(inventory)} {getTotalUnits(inventory) === 1 ? "unidad" : "unidades"} en inventario</p>
+                <p className="mt-1 text-xs font-semibold text-[#52615D]">{getTotalUnits(inventory) === 1 ? "Última unidad disponible" : "Disponible"}</p>
               </>
             ) : <p className="mt-1 text-sm text-[#52615D]">Precio y tallas por confirmar</p>}
           </div>

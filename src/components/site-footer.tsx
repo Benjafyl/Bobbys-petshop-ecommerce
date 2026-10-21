@@ -11,8 +11,8 @@ export function SiteFooter() {
         <div>
           <p className="text-lg font-black">Bobby&apos;s Pet Shop</p>
           <p className="mt-3 max-w-md text-sm leading-6 text-[#E5DED4]">
-            Ropa para perros y collares para gatos. Explora las prendas y existencias
-            disponibles, elige tu talla y arma tu carrito.
+            Ropa para perros y collares para gatos. Descubre la colección,
+            elige su talla y arma tu carrito.
           </p>
         </div>
         <div>

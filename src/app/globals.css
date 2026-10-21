@@ -5,6 +5,33 @@
   --foreground: #243c3a;
 }
 
+.catalog-photo-primary,
+.catalog-photo-secondary {
+  transition: opacity 200ms ease-out;
+}
+
+.catalog-photo-secondary {
+  opacity: 0;
+}
+
+@media (hover: hover) {
+  .catalog-photo:hover .catalog-photo-primary {
+    opacity: 0;
+  }
+
+  .catalog-photo:hover .catalog-photo-secondary {
+    opacity: 1;
+  }
+}
+
+.catalog-photo:focus-visible .catalog-photo-primary {
+  opacity: 0;
+}
+
+.catalog-photo:focus-visible .catalog-photo-secondary {
+  opacity: 1;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -61,6 +88,10 @@ textarea::placeholder {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .catalog-photo-primary,
+  .catalog-photo-secondary {
+    transition: none;
+  }
   .byl-credit,
   .byl-credit img {
     transition: none;

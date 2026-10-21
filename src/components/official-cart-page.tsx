@@ -71,7 +71,7 @@ export function OfficialCartPage() {
           <div className="mt-4 flex items-center justify-between text-lg font-black"><span>Total</span><span>{formatClp(total)}</span></div>
           <p className="mt-4 text-sm leading-6 text-[#52615D]">El envío cuesta {formatClp(SHIPPING_FEE_CLP)} por pedido, sin importar el destino dentro de Chile. Agregar al carrito no reserva stock.</p>
           <button type="button" disabled className="mt-6 flex min-h-12 w-full items-center justify-center rounded-md bg-[#D8CEC1] px-4 text-sm font-black text-[#52615D]">Pago en línea próximamente</button>
-          <p className="mt-3 text-xs leading-5 text-[#52615D]">Inventario informado el {inventoryAsOf}. Confirma disponibilidad antes de comprar.</p>
+          <p className="mt-3 text-xs leading-5 text-[#52615D]">Disponibilidad informada el {inventoryAsOf}. Confirma disponibilidad antes de comprar.</p>
           <Link href="/#coleccion" className="mt-5 flex min-h-11 items-center justify-center rounded-md border border-[#D8CEC1] text-sm font-black text-[#243C3A]">Seguir comprando</Link>
         </aside>
       </div>

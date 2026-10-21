@@ -29,8 +29,8 @@ const catalogProducts: OfficialProduct[] = [
     category: "abrigos",
     description: "Parka acolchada gris y negra con cierre en la espalda y anillas para correa. Mira las fotos de producto y cómo luce puesta.",
     images: [
-      image("parka-gris-modelo-cerca", "Perro con parka gris y negra, detalle"),
       image("parka-gris-producto", "Parka bicolor gris y negra, vista de producto"),
+      image("parka-gris-modelo-cerca", "Perro con parka gris y negra, detalle"),
       image("parka-gris-modelo-lateral", "Perro con parka gris y negra, vista lateral"),
       image("parka-gris-frente-dorso", "Parka gris y negra por ambos lados"),
       image("parka-gris-modelo-superior", "Parka gris y negra puesta, vista superior"),

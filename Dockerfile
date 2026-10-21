@@ -2,7 +2,7 @@ FROM node:22-alpine AS builder
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 COPY package.json package-lock.json ./
-RUN npm ci
+RUN npm install -g npm@11.6.2 && npm ci
 COPY . .
 ARG NEXT_PUBLIC_SITE_URL=https://bobbyspetshop.cl
 ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL

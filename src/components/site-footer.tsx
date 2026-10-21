@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Mail, MessageCircle } from "lucide-react";
 import { InstagramIcon } from "@/components/instagram-icon";
@@ -41,8 +42,21 @@ export function SiteFooter() {
           </div>
         </div>
       </div>
-      <div className="border-t border-white/10 px-4 py-4 text-center text-xs text-[#C8D2CC]">
-        Inventario publicado con precios y existencias por talla; compras aún no habilitadas.
+      <div className="border-t border-white/10 px-4 py-4 text-xs text-[#C8D2CC] sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 text-center sm:flex-row sm:text-left">
+          <p>Inventario publicado con precios y existencias por talla; compras aún no habilitadas.</p>
+          <a
+            className="inline-flex shrink-0 items-center gap-2 rounded-md px-2 py-1 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F9D36B]"
+            href="https://byl-software.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Sitio desarrollado por BYL. Abre su sitio web en otra pestaña."
+          >
+            <span>Desarrollado por</span>
+            <Image src="/byl-icon.svg" alt="" width={24} height={24} unoptimized />
+            <span className="font-black tracking-wide text-white">BYL</span>
+          </a>
+        </div>
       </div>
     </footer>
   );

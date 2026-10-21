@@ -12,7 +12,7 @@ const navItems = [
   { href: "/tienda", label: "Tienda" },
   { href: "/guia-de-tallas", label: "Tallas" },
   { href: "/the-boss", label: "La marca" },
-  { href: "/envios", label: "Envios" },
+  { href: "/envios", label: "Envíos" },
 ];
 
 export function SiteHeader() {
@@ -22,7 +22,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-[#E5DED4] bg-[#FBF7F1]/95 backdrop-blur">
       <div className="bg-[#243C3A] px-4 py-2 text-center text-xs font-semibold text-white">
-        Inventario por talla · Arma tu carrito · Pago en línea próximamente
+        Envíos a todo Chile por $5.000 · Arma tu carrito · Pago en línea próximamente
       </div>
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-3" aria-label="Ir al inicio">

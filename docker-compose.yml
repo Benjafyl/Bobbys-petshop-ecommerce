@@ -35,7 +35,9 @@ services:
       ORDER_NOTIFICATION_EMAIL: antonelarodil@gmail.com
     networks:
       - private
-      - dokploy-network
+      dokploy-network:
+        aliases:
+          - bobbys-web
 
 networks:
   private:

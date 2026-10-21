@@ -1,0 +1,13 @@
+http:
+  routers:
+    bobbys-petshop-router:
+      rule: Host(`bobbyspetshop.cl`) || Host(`www.bobbyspetshop.cl`)
+      entryPoints:
+        - web
+      service: bobbys-petshop-service
+  services:
+    bobbys-petshop-service:
+      loadBalancer:
+        servers:
+          - url: http://bobbys-web:3000
+        passHostHeader: true

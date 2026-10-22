@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown, ArrowRight, Heart, Ruler, Star } from "lucide-react";
+import { ArrowDown, ArrowRight, Heart, Star } from "lucide-react";
 import { InstagramIcon } from "@/components/instagram-icon";
 import { InteractiveRack } from "@/components/interactive-rack";
 import { OfficialProductCard } from "@/components/official-product-card";
@@ -238,11 +238,9 @@ export default function Home() {
         <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[1fr_1fr] lg:px-8">
           <div className="relative aspect-[3/2] overflow-hidden rounded-lg bg-[#F4E8D8]"><Image src="/images/official/guia-medidas-perro.jpeg" alt="Perro con flechas que muestran dónde medir cuello, pecho y espalda" fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-contain" /></div>
           <div>
-            <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#F9D36B]"><Ruler size={21} /></span>
-            <p className="mt-5 text-sm font-black uppercase tracking-[0.18em] text-[#B6633A]">Antes de elegir</p>
-            <h2 className="mt-2 text-3xl font-black text-[#243C3A]">La talla empieza con una buena medida.</h2>
-            <p className="mt-4 leading-7 text-[#52615D]">Mide cuello, pecho y espalda con tu perro de pie para elegir su próxima prenda. Compara las medidas con las tallas disponibles de cada producto.</p>
-            <Link href="/guia-de-tallas" className="mt-6 inline-flex items-center gap-2 text-sm font-black text-[#B6633A]">Ver medidas de prendas <ArrowRight size={17} /></Link>
+            <h2 className="text-3xl font-black text-[#243C3A]">Aprende a medir a tu perro.</h2>
+            <p className="mt-4 leading-7 text-[#52615D]">Cuello, pecho y espalda: las tres medidas para elegir su talla.</p>
+            <Link href="/guia-de-tallas" className="mt-6 inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-[#243C3A] px-5 text-sm font-black text-white transition-colors duration-200 hover:bg-[#35544F] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#243C3A]">Ver guía de tallas <ArrowRight size={17} /></Link>
           </div>
         </div>
       </section>

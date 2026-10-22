@@ -115,10 +115,7 @@
 
 .rack-scroll {
   position: relative;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scrollbar-width: thin;
-  scrollbar-color: #c8a68c transparent;
+  overflow: hidden;
 }
 
 .rack-rail {
@@ -127,7 +124,6 @@
   top: 2.7rem;
   left: 0;
   width: 100%;
-  min-width: 1090px;
   height: 0.4rem;
   border-radius: 999px;
   background: linear-gradient(180deg, #69817c, #243c3a 55%, #172b29);
@@ -138,16 +134,18 @@
   position: relative;
   z-index: 1;
   display: flex;
-  min-width: 1090px;
+  width: 100%;
+  max-width: 1520px;
+  margin-inline: auto;
   height: 22.5rem;
-  gap: 0.5rem;
-  padding: 0 1.5rem;
+  gap: 0;
+  padding: 0 1rem;
 }
 
 .rack-item {
   position: relative;
   display: block;
-  flex: 1 0 0;
+  flex: 1 1 0;
   min-width: 0;
   color: var(--rack-ink);
   text-decoration: none;
@@ -252,6 +250,30 @@
   display: none;
 }
 
+@media (min-width: 768px) and (max-width: 1023px) {
+  .rack-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .rack-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .rack-items {
+    width: max-content;
+    max-width: none;
+    gap: 0.25rem;
+    padding: 0 1.25rem;
+  }
+
+  .rack-item {
+    flex: 0 0 9.25rem;
+  }
+}
+
 @media (max-width: 767px) {
   .rack-intro {
     display: block;
@@ -268,24 +290,28 @@
   }
 
   .rack-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .rack-scroll::-webkit-scrollbar {
+    display: none;
   }
 
   .rack-items {
     min-width: 0;
     width: max-content;
+    max-width: none;
     height: 20.5rem;
-    gap: 0.4rem;
+    gap: 0.1rem;
     padding: 0 1rem;
   }
 
-  .rack-rail {
-    min-width: 0;
-    width: 100%;
-  }
-
   .rack-item {
-    flex: 0 0 9rem;
+    flex: 0 0 8.5rem;
     scroll-snap-align: center;
   }
 

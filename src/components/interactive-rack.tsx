@@ -6,8 +6,10 @@ const garments = [
   { slug: "parka-bicolor-gris", name: "Parka gris", image: "/images/rack/parka-gris.png", shape: "parka" },
   { slug: "poleron-ositos", name: "Chaleco animal print café", image: "/images/rack/chaleco-ositos.png", shape: "sweater" },
   { slug: "parka-bicolor-beige", name: "Parka beige", image: "/images/rack/parka-beige.png", shape: "parka" },
-  { slug: "poleron-corazones-rosa", name: "Chaleco corazones", image: "/images/rack/chaleco-corazones.png", shape: "sweater" },
+  { slug: "poleron-leopardo-gris", name: "Chaleco animal print blanco", image: "/images/rack/chaleco-animal-print-blanco.png", shape: "sweater" },
   { slug: "parka-azul", name: "Parka azul", image: "/images/rack/parka-azul.png", shape: "parka" },
+  { slug: "poleron-corazones-rosa", name: "Chaleco corazones", image: "/images/rack/chaleco-corazones.png", shape: "sweater" },
+  { slug: "poleron-flores-rosa", name: "Chaleco patitas", image: "/images/rack/chaleco-patitas.png", shape: "sweater" },
   { slug: "poleron-dinosaurios", name: "Chaleco dinosaurios", image: "/images/rack/chaleco-dinosaurios.png", shape: "sweater" },
 ] as const;
 
@@ -23,7 +25,7 @@ function Hanger() {
 export function InteractiveRack() {
   return (
     <section aria-labelledby="rack-heading" className="rack-section border-y border-[#E5DED4]">
-      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+      <div className="w-full px-4 py-14 sm:px-6 lg:px-8 lg:py-20 xl:px-10">
         <div className="rack-intro">
           <div>
             <p className="rack-eyebrow">El perchero de Bobby&apos;s</p>
@@ -33,8 +35,8 @@ export function InteractiveRack() {
         </div>
         <div className="rack-stage" role="group" aria-label="Parkas y chalecos para explorar">
           <div className="rack-scroll">
-            <div className="rack-rail" aria-hidden="true" />
             <div className="rack-items">
+              <div className="rack-rail" aria-hidden="true" />
               {garments.map((garment) => (
                 <Link
                   key={garment.slug}

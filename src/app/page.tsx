@@ -53,11 +53,17 @@ const heroPhotos = [
   { src: "/images/official/parka-militar-modelo.jpg", alt: "Bobby junto a la parka militar de colores", position: "object-center" },
 ];
 
-// Esta selección muestra productos fotografiados. Se reemplazará por fotos enviadas por clientes.
-const communityPreview = [
-  { src: "/images/official/parka-azul-modelo.jpg", alt: "Parka azul puesta en un perro", label: "Parka azul" },
-  { src: "/images/official/collar-murcielago-gato.jpg", alt: "Collar de murciélago puesto en un gato", label: "Collar de murciélago" },
-  { src: "/images/official/traje-calabaza-modelo.jpg", alt: "Traje de calabaza puesto en un perro", label: "Traje de calabaza" },
+const customerPhotos = [
+  {
+    src: "/images/community/cliente-parka-azul.jpeg",
+    alt: "Perro de cliente en el parque con una parka negra y turquesa de Bobby's",
+    label: "De paseo con Bobby's",
+  },
+  {
+    src: "/images/community/cliente-parka-rosa.jpeg",
+    alt: "Perro de cliente en el parque con una parka negra y rosada de Bobby's",
+    label: "Abrigo para salir juntos",
+  },
 ];
 
 const instagramComments = [
@@ -74,6 +80,14 @@ const instagramComments = [
     comment: "Mi wuawi consentido el gruñón se le da muy bien",
   },
 ];
+
+function FiveStars() {
+  return (
+    <span role="img" aria-label="5 estrellas" className="inline-flex items-center gap-0.5 text-[#B6633A]">
+      {Array.from({ length: 5 }, (_, index) => <Star key={index} size={16} fill="currentColor" aria-hidden="true" />)}
+    </span>
+  );
+}
 
 export default function Home() {
   return (
@@ -202,8 +216,8 @@ export default function Home() {
           <div className="mb-7 flex flex-col justify-between gap-5 md:flex-row md:items-end">
             <div className="max-w-2xl">
               <p className="text-xs font-black uppercase tracking-[0.2em] text-[#B6633A]">Nuestra comunidad</p>
-              <h2 id="community-heading" className="mt-2 text-3xl font-black leading-tight text-[#243C3A] sm:text-4xl">Lo que dicen en Instagram.</h2>
-              <p className="mt-3 leading-7 text-[#52615D]">Palabras que nos dejaron en @bobbys.cl.</p>
+              <h2 id="community-heading" className="mt-2 text-3xl font-black leading-tight text-[#243C3A] sm:text-4xl">Lo que dicen de Bobby&apos;s.</h2>
+              <p className="mt-3 leading-7 text-[#52615D]">Sus palabras y sus compañeros de paseo.</p>
             </div>
             <a href={instagramProfileUrl} target="_blank" rel="noopener noreferrer" className="inline-flex shrink-0 items-center gap-2 text-sm font-black text-[#B6633A] hover:text-[#96502E]"><InstagramIcon size={18} /> Conoce @bobbys.cl <ArrowRight size={17} /></a>
           </div>
@@ -211,7 +225,7 @@ export default function Home() {
             {instagramComments.map((item) => (
               <figure key={item.handle} className="flex min-h-56 flex-col rounded-lg border border-[#E5DED4] bg-white p-5 shadow-sm">
                 <div className="flex items-center justify-between gap-3">
-                  <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#F9D36B]/30 text-[#B6633A]"><Star size={18} fill="currentColor" aria-hidden="true" /></span>
+                  <FiveStars />
                   <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#52615D]"><InstagramIcon size={15} /> Comentario en Instagram</span>
                 </div>
                 <blockquote className="mt-5 flex-1 text-lg font-semibold leading-7 text-[#243C3A]">“{item.comment}”</blockquote>
@@ -220,14 +234,45 @@ export default function Home() {
             ))}
           </div>
           <div className="mb-4 mt-10 flex flex-wrap items-baseline justify-between gap-2">
-            <h3 className="text-xl font-black text-[#243C3A]">Nuestros looks en uso</h3>
-            <span className="text-xs font-semibold text-[#52615D]">Fotografías de Bobby&apos;s</span>
+            <h3 className="text-xl font-black text-[#243C3A]">Nuestros clientes en acción</h3>
+            <span className="text-xs font-semibold text-[#52615D]">Fotos y video de la comunidad</span>
           </div>
-          <div className="grid gap-4 sm:grid-cols-3">
-            {communityPreview.map((photo) => (
+          <div className="grid gap-4 lg:grid-cols-2">
+            <figure className="grid overflow-hidden rounded-lg border border-[#E5DED4] bg-white shadow-sm sm:grid-cols-[0.9fr_1.1fr]">
+              <div className="relative aspect-[9/16] overflow-hidden bg-[#F4E8D8] sm:aspect-auto sm:min-h-[440px]">
+                <video autoPlay muted loop playsInline controls preload="metadata" poster="/images/community/ivana-video-poster.png" aria-label="Yorkshire de Ivana usando una parka de Bobby's" className="absolute inset-0 h-full w-full object-cover">
+                  <source src="/videos/community/perrito-ivana.mp4" type="video/mp4" />
+                  Tu navegador no puede reproducir este video.
+                </video>
+              </div>
+              <figcaption className="flex flex-col justify-between gap-6 p-5">
+                <div>
+                  <p className="text-xs font-black uppercase tracking-[0.12em] text-[#B6633A]">El perrito de Ivana</p>
+                  <div className="mt-4"><FiveStars /></div>
+                  <blockquote className="mt-4 text-lg font-semibold leading-7 text-[#243C3A]">“Perfecta calidad, mi perrito quedó muy abrigado para este frío.”</blockquote>
+                </div>
+                <span className="border-t border-[#E5DED4] pt-4 text-sm font-black text-[#B6633A]">Ivana</span>
+              </figcaption>
+            </figure>
+            <figure className="grid overflow-hidden rounded-lg border border-[#E5DED4] bg-white shadow-sm sm:grid-cols-[0.9fr_1.1fr]">
+              <div className="relative aspect-[9/16] overflow-hidden bg-[#F4E8D8] sm:aspect-auto sm:min-h-[440px]">
+                <Image src="/images/community/galga-valeria.jpeg" alt="Galga de Valeria con un chaleco verde" fill sizes="(min-width: 1024px) 25vw, (min-width: 640px) 45vw, 100vw" className="object-cover" />
+              </div>
+              <figcaption className="flex flex-col justify-between gap-6 p-5">
+                <div>
+                  <p className="text-xs font-black uppercase tracking-[0.12em] text-[#B6633A]">La galga de Valeria</p>
+                  <div className="mt-4"><FiveStars /></div>
+                  <blockquote className="mt-4 text-lg font-semibold leading-7 text-[#243C3A]">“Excelente !!!! Muy práctico”</blockquote>
+                </div>
+                <span className="border-t border-[#E5DED4] pt-4 text-sm font-black text-[#B6633A]">Valeria Rodil · @valeriarodil</span>
+              </figcaption>
+            </figure>
+          </div>
+          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            {customerPhotos.map((photo) => (
               <figure key={photo.src} className="overflow-hidden rounded-lg border border-[#E5DED4] bg-white shadow-sm">
-                <div className="relative aspect-[4/4] overflow-hidden bg-[#F4E8D8] sm:aspect-[4/5]"><Image src={photo.src} alt={photo.alt} fill sizes="(min-width: 640px) 33vw, 100vw" className="object-cover" /></div>
-                <figcaption className="px-4 py-3 text-sm font-bold text-[#243C3A]">En uso · {photo.label}</figcaption>
+                <div className="relative aspect-[5/4] overflow-hidden bg-[#F4E8D8]"><Image src={photo.src} alt={photo.alt} fill sizes="(min-width: 640px) 50vw, 100vw" className="object-cover object-[center_62%]" /></div>
+                <figcaption className="px-4 py-3 text-sm font-bold text-[#243C3A]">{photo.label}</figcaption>
               </figure>
             ))}
           </div>

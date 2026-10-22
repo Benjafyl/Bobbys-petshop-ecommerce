@@ -47,7 +47,7 @@ export function SiteFooter() {
           <p>Carrito disponible; pago en línea próximamente. Agregar prendas no reserva stock.</p>
           <a
             className="byl-credit inline-flex shrink-0 items-center gap-2 rounded-md px-2 py-1 hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F9D36B]"
-            href="https://byl-software.vercel.app/"
+            href="https://bylsoftware.cl/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Sitio desarrollado por BYL. Abre su sitio web en otra pestaña."

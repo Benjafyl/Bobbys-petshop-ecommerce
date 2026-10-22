@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown, ArrowRight, Heart, Ruler } from "lucide-react";
+import { ArrowDown, ArrowRight, Heart, Ruler, Star } from "lucide-react";
 import { InstagramIcon } from "@/components/instagram-icon";
 import { OfficialProductCard } from "@/components/official-product-card";
 import {
@@ -58,6 +58,21 @@ const communityPreview = [
   { src: "/images/official/parka-azul-modelo.jpg", alt: "Parka azul puesta en un perro", label: "Parka azul" },
   { src: "/images/official/collar-murcielago-gato.jpg", alt: "Collar de murciélago puesto en un gato", label: "Collar de murciélago" },
   { src: "/images/official/traje-calabaza-modelo.jpg", alt: "Traje de calabaza puesto en un perro", label: "Traje de calabaza" },
+];
+
+const instagramComments = [
+  {
+    handle: "laabuelatati",
+    comment: "Siiii! Son las mejores. Mis perritas felices con sus parkas. Gracias 👏👏👏",
+  },
+  {
+    handle: "isidoravenegass",
+    comment: "ME ENCANTAAAA",
+  },
+  {
+    handle: "yaciamelia",
+    comment: "Mi wuawi consentido el gruñón se le da muy bien",
+  },
 ];
 
 export default function Home() {
@@ -187,10 +202,26 @@ export default function Home() {
           <div className="mb-7 flex flex-col justify-between gap-5 md:flex-row md:items-end">
             <div className="max-w-2xl">
               <p className="text-xs font-black uppercase tracking-[0.2em] text-[#B6633A]">Nuestra comunidad</p>
-              <h2 id="community-heading" className="mt-2 text-3xl font-black leading-tight text-[#243C3A] sm:text-4xl">Pronto, sus looks favoritos aquí.</h2>
-              <p className="mt-3 leading-7 text-[#52615D]">Estamos preparando una galería con fotos y reseñas reales de clientes. Por ahora, mira estas prendas de Bobby&apos;s puestas en nuestros modelos.</p>
+              <h2 id="community-heading" className="mt-2 text-3xl font-black leading-tight text-[#243C3A] sm:text-4xl">Lo que dicen en Instagram.</h2>
+              <p className="mt-3 leading-7 text-[#52615D]">Palabras que nos dejaron en @bobbys.cl.</p>
             </div>
             <a href={instagramProfileUrl} target="_blank" rel="noopener noreferrer" className="inline-flex shrink-0 items-center gap-2 text-sm font-black text-[#B6633A] hover:text-[#96502E]"><InstagramIcon size={18} /> Conoce @bobbys.cl <ArrowRight size={17} /></a>
+          </div>
+          <div className="grid gap-4 md:grid-cols-3">
+            {instagramComments.map((item) => (
+              <figure key={item.handle} className="flex min-h-56 flex-col rounded-lg border border-[#E5DED4] bg-white p-5 shadow-sm">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#F9D36B]/30 text-[#B6633A]"><Star size={18} fill="currentColor" aria-hidden="true" /></span>
+                  <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#52615D]"><InstagramIcon size={15} /> Comentario en Instagram</span>
+                </div>
+                <blockquote className="mt-5 flex-1 text-lg font-semibold leading-7 text-[#243C3A]">“{item.comment}”</blockquote>
+                <figcaption className="mt-5 border-t border-[#E5DED4] pt-4 text-sm font-black text-[#B6633A]">@{item.handle}</figcaption>
+              </figure>
+            ))}
+          </div>
+          <div className="mb-4 mt-10 flex flex-wrap items-baseline justify-between gap-2">
+            <h3 className="text-xl font-black text-[#243C3A]">Nuestros looks en uso</h3>
+            <span className="text-xs font-semibold text-[#52615D]">Fotografías de Bobby&apos;s</span>
           </div>
           <div className="grid gap-4 sm:grid-cols-3">
             {communityPreview.map((photo) => (
@@ -200,7 +231,6 @@ export default function Home() {
               </figure>
             ))}
           </div>
-          <p className="mt-5 rounded-md border border-dashed border-[#C9B8A8] bg-white/70 px-4 py-3 text-sm text-[#52615D]">Espacio reservado para fotos y opiniones compartidas por clientes. Las imágenes de arriba muestran prendas fotografiadas por Bobby&apos;s.</p>
         </div>
       </section>
 

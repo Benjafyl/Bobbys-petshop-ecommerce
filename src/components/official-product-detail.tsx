@@ -16,6 +16,11 @@ function galleryImageClassName(image: OfficialProduct["images"][number]) {
   return "object-contain";
 }
 
+const bicolorOptions = [
+  { slug: "parka-bicolor-gris", label: "Gris", image: "/images/official/parka-gris-producto.jpg" },
+  { slug: "parka-bicolor-beige", label: "Beige", image: "/images/official/parka-beige-producto.jpg" },
+] as const;
+
 export function OfficialProductDetail({ product }: { product: OfficialProduct }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const active = product.images[activeIndex];
@@ -56,6 +61,22 @@ export function OfficialProductDetail({ product }: { product: OfficialProduct })
           <p className="text-xs font-black uppercase tracking-[0.2em] text-[#B6633A]">{officialCategoryLabels[product.category]}</p>
           <h1 className="mt-2 text-3xl font-black leading-tight text-[#243C3A] sm:text-4xl">{product.name}</h1>
           <p className="mt-3 text-base leading-7 text-[#52615D]">{product.description}</p>
+          {bicolorOptions.some((option) => option.slug === product.slug) && (
+            <div className="mt-6">
+              <h2 className="text-base font-black text-[#243C3A]">Color</h2>
+              <div className="mt-3 flex flex-wrap gap-3" aria-label="Colores de la parka bicolor">
+                {bicolorOptions.map((option) => {
+                  const selected = option.slug === product.slug;
+                  return (
+                    <Link key={option.slug} href={`/producto/${option.slug}`} aria-current={selected ? "page" : undefined} className={`flex min-w-32 items-center gap-2 rounded-lg border-2 bg-white p-2 text-sm font-black transition-colors ${selected ? "border-[#B6633A]" : "border-[#E5DED4] hover:border-[#B6633A]"}`}>
+                      <span className="relative h-11 w-11 overflow-hidden rounded-md bg-[#F4E8D8]"><Image src={option.image} alt="" fill sizes="44px" className="object-cover" /></span>
+                      {option.label}
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          )}
           {inventory ? (
             <div className="mt-6 rounded-xl border border-[#E5DED4] bg-white p-5 shadow-sm sm:p-7">
               <div className="flex flex-wrap items-end justify-between gap-3 border-b border-[#E5DED4] pb-5">

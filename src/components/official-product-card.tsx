@@ -15,8 +15,8 @@ export function OfficialProductCard({ product, headingLevel = "h3" }: { product:
   const primaryImage = product.images[0];
   const alternateImage = product.images[1];
   return (
-    <article className="overflow-hidden rounded-lg border border-[#E5DED4] bg-white shadow-sm transition-shadow duration-200 hover:shadow-md">
-      <Link href={`/producto/${product.slug}`} className={`${alternateImage ? "catalog-photo " : ""}block focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B6633A]`} aria-label={`Ver ${product.name} y sus fotos`}>
+    <article className="flex h-full flex-col overflow-hidden rounded-lg border border-[#E5DED4] bg-white shadow-sm transition-shadow duration-200 hover:shadow-md">
+      <Link href={`/producto/${product.slug}`} className={`${alternateImage ? "catalog-photo " : ""}flex flex-1 flex-col focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B6633A]`} aria-label={`Ver ${product.name} y sus fotos`}>
         <div className="relative aspect-[4/5] overflow-hidden bg-[#F4E8D8]">
           {primaryImage ? (
             <>
@@ -31,9 +31,9 @@ export function OfficialProductCard({ product, headingLevel = "h3" }: { product:
           </span>
           {alternateImage && <span className="absolute bottom-3 right-3 rounded-full bg-white/95 px-3 py-1 text-xs font-bold text-[#243C3A]">+ fotos</span>}
         </div>
-        <div className="flex items-center justify-between gap-3 p-4">
-          <div>
-            <Heading className="text-lg font-black leading-tight text-[#243C3A]">{product.name}</Heading>
+        <div className="flex flex-1 items-start justify-between gap-3 p-4">
+          <div className="min-w-0">
+            <Heading className="min-h-[2.75rem] text-lg font-black leading-tight text-[#243C3A]">{product.name}</Heading>
             {inventory ? (
               <>
                 <p className="mt-1 text-base font-black text-[#B6633A]">{hasMultiplePrices(inventory) ? "Desde " : ""}{formatClp(getMinimumPrice(inventory))}</p>
@@ -46,7 +46,7 @@ export function OfficialProductCard({ product, headingLevel = "h3" }: { product:
           <ArrowUpRight className="shrink-0 text-[#B6633A]" size={20} />
         </div>
       </Link>
-      {inventory && <div className="border-t border-[#E5DED4] p-3"><OfficialQuickAdd productSlug={product.slug} /></div>}
+      <div className="mt-auto border-t border-[#E5DED4] p-3"><OfficialQuickAdd productSlug={product.slug} /></div>
     </article>
   );
 }

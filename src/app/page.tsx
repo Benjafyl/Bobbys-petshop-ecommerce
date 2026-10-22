@@ -186,20 +186,26 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-[#243C3A] text-white">
-        <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:px-8">
+      <section aria-labelledby="inspiration-heading" className="overflow-hidden border-y border-[#E5DED4] bg-[var(--feature-peach)] text-[var(--feature-ink)]">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 lg:px-8 lg:py-20">
           <div>
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-[#F9D36B]">Inspírate</p>
-            <h2 className="mt-3 max-w-lg text-3xl font-black leading-tight sm:text-4xl">Un look para cada momento.</h2>
-            <p className="mt-4 max-w-lg leading-7 text-[#DDE5DF]">Del abrigo para el paseo a los detalles de una celebración. Descubre las prendas puestas y mira sus fotos de cerca antes de elegir.</p>
-            <div className="mt-7 flex flex-wrap gap-3">
-              <Link href="/producto/parka-bicolor-gris" className="rounded-md bg-white px-4 py-3 text-sm font-black text-[#243C3A]">Ver la parka gris</Link>
-              <Link href="/producto/traje-calabaza" className="rounded-md border border-white/50 px-4 py-3 text-sm font-black text-white">Ver el traje calabaza</Link>
+            <p className="text-sm font-bold">Para cada paseo</p>
+            <h2 id="inspiration-heading" className="mt-4 max-w-lg text-balance text-4xl font-black leading-[1.08] sm:text-5xl">Cada paseo tiene su look.</h2>
+            <p className="mt-5 max-w-md text-base leading-7">Parkas para salir, chalecos para regalonear. Mira las prendas de cerca y elige su próximo favorito.</p>
+            <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
+              <Link href="#abrigos" className="inline-flex min-h-12 items-center gap-2 rounded-md bg-[var(--feature-ink)] px-5 text-sm font-black text-white transition-colors duration-200 hover:bg-[var(--feature-ink-hover)] focus-visible:outline-2 focus-visible:outline-offset-2">Ver parkas <ArrowRight size={17} /></Link>
+              <Link href="#polerones" className="inline-flex min-h-12 items-center gap-2 text-sm font-black underline decoration-2 underline-offset-4 transition-colors duration-200 hover:text-[var(--feature-link-hover)]">Ver chalecos <ArrowRight size={17} /></Link>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-[#F4E8D8]"><video autoPlay muted loop playsInline controls preload="metadata" poster="/images/official/parka-gris-modelo-lateral.jpg" aria-label="Parka gris puesta en movimiento" className="h-full w-full object-cover"><source src="/videos/official/parka-gris-en-movimiento.mp4" type="video/mp4" />Tu navegador no puede reproducir este video.</video></div>
-            <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-[#F4E8D8]"><Image src="/images/official/traje-calabaza-producto.jpg" alt="Traje naranja de calabaza" fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover" /></div>
+          <div className="grid grid-cols-[1.25fr_0.75fr] items-end gap-3 sm:gap-5">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border-[5px] border-[var(--feature-paper)] bg-[var(--feature-paper)] shadow-lg">
+              <video autoPlay muted loop playsInline controls preload="metadata" poster="/images/official/parka-gris-modelo-lateral.jpg" aria-label="Parka gris puesta en movimiento" className="h-full w-full object-cover"><source src="/videos/official/parka-gris-en-movimiento.mp4" type="video/mp4" />Tu navegador no puede reproducir este video.</video>
+              <span className="pointer-events-none absolute left-3 top-3 rounded-full bg-[var(--feature-paper)] px-3 py-1 text-xs font-black sm:left-4 sm:top-4">Parka en movimiento</span>
+            </div>
+            <Link href="/producto/poleron-corazones-rosa" className="group mb-5 overflow-hidden rounded-2xl border-[5px] border-[var(--feature-paper)] bg-[var(--feature-paper)] shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2">
+              <div className="relative aspect-[3/4] overflow-hidden"><Image src="/images/official/poleron-corazones-rosa-producto.jpg" alt="Chaleco rosado con corazones blancos" fill sizes="(min-width: 1024px) 20vw, 35vw" className="object-cover transition-transform duration-200 group-hover:scale-[1.03] motion-reduce:transition-none" /></div>
+              <span className="flex items-center justify-between gap-2 px-2 py-3 text-xs font-black sm:px-4 sm:text-sm">Chaleco corazones <ArrowRight size={16} className="shrink-0" /></span>
+            </Link>
           </div>
         </div>
       </section>

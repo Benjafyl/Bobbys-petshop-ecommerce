@@ -3,6 +3,11 @@
 :root {
   --background: #fbf7f1;
   --foreground: #243c3a;
+  --feature-peach: #f5c7a7;
+  --feature-ink: #243c3a;
+  --feature-ink-hover: #35544f;
+  --feature-link-hover: #704127;
+  --feature-paper: #fffaf4;
 }
 
 .announcement-marquee {

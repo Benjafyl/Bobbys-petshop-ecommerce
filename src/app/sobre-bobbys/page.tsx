@@ -1,12 +1,5 @@
-import { InfoPage } from "@/components/info-page";
+import { permanentRedirect } from "next/navigation";
 
 export default function AboutPage() {
-  return (
-    <InfoPage eyebrow="Marca" title="Sobre Bobby's">
-      <p>
-        Bobby&apos;s Pet Shop reúne ropa y accesorios para perros con identidad propia.
-        En el catálogo puedes conocer la colección mediante sus fotografías oficiales.
-      </p>
-    </InfoPage>
-  );
+  permanentRedirect("/the-boss");
 }

@@ -12,7 +12,6 @@ const navItems = [
   { href: "/tienda", label: "Tienda" },
   { href: "/guia-de-tallas", label: "Tallas" },
   { href: "/the-boss", label: "Conoce a Bobby" },
-  { href: "/envios", label: "Envíos" },
 ];
 
 export function SiteHeader() {

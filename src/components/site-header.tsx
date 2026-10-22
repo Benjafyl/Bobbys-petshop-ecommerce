@@ -11,7 +11,7 @@ import { instagramProfileUrl } from "@/lib/social";
 const navItems = [
   { href: "/tienda", label: "Tienda" },
   { href: "/guia-de-tallas", label: "Tallas" },
-  { href: "/the-boss", label: "Conoce a Bobby" },
+  { href: "/the-boss", label: "El Jefe" },
 ];
 
 export function SiteHeader() {

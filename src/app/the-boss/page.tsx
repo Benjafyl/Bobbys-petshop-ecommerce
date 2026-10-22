@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Ruler } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { InstagramIcon } from "@/components/instagram-icon";
 import { instagramProfileUrl } from "@/lib/social";
 
@@ -46,15 +46,12 @@ export default function BossPage() {
       <section id="su-historia" className="scroll-mt-28 bg-white">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 py-16 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 lg:px-8 lg:py-20">
           <div>
-            <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#F9D36B] text-[#243C3A]"><Ruler size={21} /></span>
-            <h2 className="mt-5 text-balance text-3xl font-black leading-tight text-[#243C3A] sm:text-4xl">Desde 2021, con Bobby a nuestro lado.</h2>
+            <h2 className="text-balance text-3xl font-black leading-tight text-[#243C3A] sm:text-4xl">Desde 2021, con Bobby a nuestro lado.</h2>
           </div>
           <div className="space-y-5 text-lg leading-8 text-[#52615D]">
             <p>Bobby&apos;s Pet Shop nació en 2021 con otros productos y otro logo. Esta nueva etapa renueva su imagen y colección, sobre la trayectoria de una marca que hemos consolidado desde entonces.</p>
             <p>Los salchichas tienen una contextura muy particular: cuerpo largo y patas cortas. Con Bobby descubrimos que no siempre era fácil encontrar ropa que lo abrigara y le quedara bien de largo.</p>
             <p>Al probar nuestras parkas, vimos que su largo le sentaba muy bien. Esa búsqueda nos animó a compartir la colección con otros perros, de distintas razas, que también necesitan abrigo.</p>
-            <p className="text-base">Cada perro es diferente. Antes de elegir una prenda, mide su cuello, pecho y espalda para comparar con las tallas disponibles.</p>
-            <Link href="/guia-de-tallas" className="inline-flex items-center gap-2 text-sm font-black text-[#B6633A] underline decoration-2 underline-offset-4">Aprende a medir a tu perro <ArrowRight size={17} /></Link>
           </div>
         </div>
       </section>

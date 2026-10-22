@@ -18,14 +18,14 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   title: {
-    default: "Bobby's Pet Shop | Ropa para perros y collares para gatos",
+    default: "Bobby's Pet Shop | Ropa para perros y accesorios para mascotas",
     template: "%s | Bobby's Pet Shop",
   },
   description:
-    "Inventario de ropa para perros y collares para gatos en Chile, con precios y existencias por talla.",
+    "Tienda online para mascotas en Chile: ropa para perros, parkas, chalecos y accesorios. Revisa modelos, tallas y precios con envío a todo Chile.",
   openGraph: {
     title: "Bobby's Pet Shop",
-    description: "Ropa para perros y collares para gatos, con precios y existencias por talla.",
+    description: "Ropa para perros, parkas, chalecos y accesorios para mascotas con envío a todo Chile.",
     images: ["/images/official/parka-beige-modelo.jpg"],
   },
 };

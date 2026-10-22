@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown, ArrowRight, Heart, Ruler, Sparkles } from "lucide-react";
+import { ArrowDown, ArrowRight, Heart, Ruler } from "lucide-react";
 import { InstagramIcon } from "@/components/instagram-icon";
 import { OfficialProductCard } from "@/components/official-product-card";
 import {
@@ -75,25 +75,16 @@ export default function Home() {
             </div>
             <div className="pointer-events-none absolute inset-0 hidden bg-gradient-to-t from-[#182E2C]/90 via-[#182E2C]/30 to-transparent lg:block" />
             <div className="hidden lg:absolute lg:inset-x-0 lg:bottom-0 lg:z-10 lg:block lg:px-12 lg:pb-12">
-              <p className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-[#F9D36B]"><Sparkles size={16} /> Bobby&apos;s Pet Shop</p>
-              <h1 className="mt-3 max-w-3xl text-5xl font-black leading-[1.04] text-white xl:text-6xl">Su estilo, en cada aventura.</h1>
-              <p className="mt-4 max-w-2xl text-lg leading-7 text-white/90">Abrigos, chalecos, disfraces y accesorios para perros y gatos. Elige entre las prendas disponibles y arma tu carrito.</p>
-              <div className="mt-6 flex gap-3">
-                <Link href="#coleccion" className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-[#B6633A] px-5 text-sm font-black text-white transition hover:bg-[#96502E]">Comprar la colección <ArrowDown size={18} /></Link>
-                <Link href="#explora" className="inline-flex h-12 items-center justify-center rounded-md border border-white/70 bg-white/95 px-5 text-sm font-black text-[#243C3A] transition hover:bg-white">Explorar por categoría</Link>
-              </div>
+              <h1 className="max-w-3xl text-5xl font-black leading-[1.04] text-white xl:text-6xl">Ropa para perros con estilo.</h1>
+              <p className="mt-4 max-w-2xl text-lg leading-7 text-white/90">Parkas, chalecos y accesorios para mascotas en Chile.</p>
+              <Link href="#coleccion" className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-md bg-[#B6633A] px-5 text-sm font-black text-white transition hover:bg-[#96502E]">Ver colección <ArrowDown size={18} /></Link>
             </div>
           </div>
           <div className="pt-7 lg:hidden">
-            <p className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.18em] text-[#B6633A]"><Sparkles size={15} /> Bobby&apos;s Pet Shop</p>
-            <h1 className="mt-3 max-w-xl text-4xl font-black leading-[1.05] text-[#243C3A] sm:text-5xl">Su estilo, en cada aventura.</h1>
-            <p className="mt-4 max-w-xl leading-7 text-[#52615D]">Abrigos, chalecos, disfraces y accesorios para perros y gatos. Elige entre las prendas disponibles y arma tu carrito.</p>
-            <div className="mt-5 flex flex-wrap gap-3">
-              <Link href="#coleccion" className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-[#B6633A] px-5 text-sm font-black text-white">Comprar la colección <ArrowDown size={18} /></Link>
-              <Link href="#explora" className="inline-flex h-12 items-center justify-center rounded-md border border-[#C9B8A8] bg-white px-5 text-sm font-black text-[#243C3A]">Explorar por categoría</Link>
-            </div>
+            <h1 className="max-w-xl text-4xl font-black leading-[1.05] text-[#243C3A] sm:text-5xl">Ropa para perros con estilo.</h1>
+            <p className="mt-4 max-w-xl leading-7 text-[#52615D]">Parkas, chalecos y accesorios para mascotas en Chile.</p>
+            <Link href="#coleccion" className="mt-5 inline-flex h-12 items-center justify-center gap-2 rounded-md bg-[#B6633A] px-5 text-sm font-black text-white">Ver colección <ArrowDown size={18} /></Link>
           </div>
-          <p className="mt-5 text-xs leading-5 text-[#52615D]">Consulta el stock por talla al explorar la tienda. El carrito no reserva unidades; pago en línea próximamente.</p>
         </div>
       </section>
 

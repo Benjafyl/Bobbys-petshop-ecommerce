@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowDown, ArrowRight, Heart, Ruler, Star } from "lucide-react";
 import { InstagramIcon } from "@/components/instagram-icon";
+import { InteractiveRack } from "@/components/interactive-rack";
 import { OfficialProductCard } from "@/components/official-product-card";
 import {
   officialCategoryLabels,
@@ -174,29 +175,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section aria-labelledby="inspiration-heading" className="overflow-hidden border-y border-[#E5DED4] bg-[var(--feature-peach)] text-[var(--feature-ink)]">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 lg:px-8 lg:py-20">
-          <div>
-            <p className="text-sm font-bold">Para cada paseo</p>
-            <h2 id="inspiration-heading" className="mt-4 max-w-lg text-balance text-4xl font-black leading-[1.08] sm:text-5xl">Cada paseo tiene su look.</h2>
-            <p className="mt-5 max-w-md text-base leading-7">Parkas para salir, chalecos para regalonear. Mira las prendas de cerca y elige su próximo favorito.</p>
-            <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
-              <Link href="#abrigos" className="inline-flex min-h-12 items-center gap-2 rounded-md bg-[var(--feature-ink)] px-5 text-sm font-black text-white transition-colors duration-200 hover:bg-[var(--feature-ink-hover)] focus-visible:outline-2 focus-visible:outline-offset-2">Ver parkas <ArrowRight size={17} /></Link>
-              <Link href="#polerones" className="inline-flex min-h-12 items-center gap-2 text-sm font-black underline decoration-2 underline-offset-4 transition-colors duration-200 hover:text-[var(--feature-link-hover)]">Ver chalecos <ArrowRight size={17} /></Link>
-            </div>
-          </div>
-          <div className="grid grid-cols-[1.25fr_0.75fr] items-end gap-3 sm:gap-5">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border-[5px] border-[var(--feature-paper)] bg-[var(--feature-paper)] shadow-lg">
-              <video autoPlay muted loop playsInline controls preload="metadata" poster="/images/official/parka-gris-modelo-lateral.jpg" aria-label="Parka gris puesta en movimiento" className="h-full w-full object-cover"><source src="/videos/official/parka-gris-en-movimiento.mp4" type="video/mp4" />Tu navegador no puede reproducir este video.</video>
-              <span className="pointer-events-none absolute left-3 top-3 rounded-full bg-[var(--feature-paper)] px-3 py-1 text-xs font-black sm:left-4 sm:top-4">Parka en movimiento</span>
-            </div>
-            <Link href="/producto/poleron-corazones-rosa" className="group mb-5 overflow-hidden rounded-2xl border-[5px] border-[var(--feature-paper)] bg-[var(--feature-paper)] shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2">
-              <div className="relative aspect-[3/4] overflow-hidden"><Image src="/images/official/poleron-corazones-rosa-producto.jpg" alt="Chaleco rosado con corazones blancos" fill sizes="(min-width: 1024px) 20vw, 35vw" className="object-cover transition-transform duration-200 group-hover:scale-[1.03] motion-reduce:transition-none" /></div>
-              <span className="flex items-center justify-between gap-2 px-2 py-3 text-xs font-black sm:px-4 sm:text-sm">Chaleco corazones <ArrowRight size={16} className="shrink-0" /></span>
-            </Link>
-          </div>
-        </div>
-      </section>
+      <InteractiveRack />
 
       <section id="coleccion" aria-label="Productos disponibles" className="scroll-mt-28 mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="space-y-14">

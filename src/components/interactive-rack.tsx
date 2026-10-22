@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 
 const garments = [
   { slug: "parka-bicolor-gris", name: "Parka gris", type: "Parka", image: "/images/rack/parka-gris.png", shape: "parka" },
-  { slug: "poleron-ositos", name: "Chaleco de ositos", type: "Chaleco", image: "/images/rack/chaleco-ositos.png", shape: "sweater" },
+  { slug: "poleron-ositos", name: "Chaleco animal print café", type: "Chaleco", image: "/images/rack/chaleco-ositos.png", shape: "sweater" },
   { slug: "parka-bicolor-beige", name: "Parka beige", type: "Parka", image: "/images/rack/parka-beige.png", shape: "parka" },
   { slug: "poleron-corazones-rosa", name: "Chaleco corazones", type: "Chaleco", image: "/images/rack/chaleco-corazones.png", shape: "sweater" },
   { slug: "parka-azul", name: "Parka azul", type: "Parka", image: "/images/rack/parka-azul.png", shape: "parka" },

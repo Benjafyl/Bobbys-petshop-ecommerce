@@ -28,7 +28,7 @@ const categorySections: {
   {
     id: "polerones",
     image: "/images/official/poleron-ositos-producto.jpg",
-    alt: "Chaleco de ositos para perro",
+    alt: "Chaleco animal print café para perro",
     caption: "Para días de regaloneo",
     intro: "Diseños suaves, estampados y llenos de color.",
   },

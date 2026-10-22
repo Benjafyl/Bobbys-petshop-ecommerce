@@ -43,7 +43,7 @@ export function OfficialQuickAdd({ productSlug }: { productSlug: string }) {
               const available = Math.max(0, variant.units - inCart);
               return (
                 <button key={variantId} type="button" disabled={!ready || available === 0} onClick={() => { addItem(productSlug, variantId); setNotice(`${variant.design ?? `Talla ${variant.size}`} agregada al carrito`); dialogRef.current?.close(); }} className="flex min-h-14 items-center justify-between gap-3 rounded-lg border border-[#E5DED4] px-4 py-2 text-left transition hover:border-[#B6633A] hover:bg-[#FCF3EA] disabled:cursor-not-allowed disabled:opacity-50">
-                  <span><strong className="block text-sm">{variant.design ?? `Talla ${variant.size}`}</strong><small className="block text-xs text-[#52615D]">{available === 0 ? "Agotado o en tu carrito" : available === 1 ? "Última unidad" : `${available} disponibles`}</small></span>
+                  <span><strong className="block text-sm">{variant.design ?? `Talla ${variant.size}`}</strong><small className="block text-xs text-[#52615D]">{hasDesignChoices ? `Talla ${variant.size.toLocaleLowerCase("es-CL")} · ` : ""}{available === 0 ? "Agotado o en tu carrito" : available === 1 ? "Última unidad" : `${available} disponibles`}</small></span>
                   <span className="text-sm font-black text-[#B6633A]">{formatClp(variant.priceClp)}</span>
                 </button>
               );

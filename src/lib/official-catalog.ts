@@ -85,10 +85,10 @@ const catalogProducts: OfficialProduct[] = [
   },
   {
     slug: "poleron-ositos",
-    name: "Chaleco de ositos",
+    name: "Chaleco animal print café",
     category: "polerones",
-    description: "Chaleco suave en tonos beige y crema con diseño de ositos.",
-    images: [image("poleron-ositos-producto", "Chaleco beige y crema con ositos")],
+    description: "Chaleco suave en tonos café y crema con estampado animal print.",
+    images: [image("poleron-ositos-producto", "Chaleco animal print café y crema")],
     featured: true,
   },
   {
@@ -100,21 +100,21 @@ const catalogProducts: OfficialProduct[] = [
   },
   {
     slug: "poleron-flores-rosa",
-    name: "Chaleco rosado con patitas",
+    name: "Chaleco patitas",
     category: "polerones",
     description: "Chaleco rosado suave con diseño de patitas y terminaciones acanaladas.",
     images: [image("poleron-flores-rosa-producto", "Chaleco rosado estampado con terminaciones acanaladas")],
   },
   {
     slug: "poleron-corazones-rosa",
-    name: "Chaleco rosado con corazones",
+    name: "Chaleco corazones",
     category: "polerones",
     description: "Chaleco rosado suave con corazones blancos.",
     images: [image("poleron-corazones-rosa-producto", "Chaleco rosado con corazones blancos")],
   },
   {
     slug: "poleron-dinosaurios",
-    name: "Chaleco azul con dinosaurios",
+    name: "Chaleco dinosaurios",
     category: "polerones",
     description: "Chaleco suave gris y azul con dinosaurios en blanco y celeste.",
     images: [image("poleron-dinosaurios-gris-producto", "Chaleco gris y azul con dinosaurios")],
@@ -131,7 +131,7 @@ const catalogProducts: OfficialProduct[] = [
   },
   {
     slug: "vestido-esqueleto",
-    name: "Vestido calabazas",
+    name: "Vestido calabaza",
     category: "halloween",
     description: "Vestido negro con falda de tul y estampado de huesitos y calabaza para Halloween.",
     images: [
@@ -158,7 +158,7 @@ const catalogProducts: OfficialProduct[] = [
   },
   {
     slug: "bandana-halloween",
-    name: "Pañuelos",
+    name: "Pañuelos Spooky",
     category: "accesorios",
     description: "Tres pañuelos de Halloween de talla única para perros medianos a grandes. Hay uno de cada diseño: rosado, crema con fantasmas y murciélagos, y negro con estampado Boo!",
     fit: "Para perros medianos a grandes",
@@ -171,7 +171,7 @@ const catalogProducts: OfficialProduct[] = [
   },
   {
     slug: "collar-murcielago",
-    name: "Collar murciélago para gatos",
+    name: "Collar murciélago",
     category: "accesorios",
     description: "Collar XS para gatos con lazo de telarañas, alas negras decorativas y colgante de temporada.",
     images: [
@@ -182,7 +182,7 @@ const catalogProducts: OfficialProduct[] = [
   },
   {
     slug: "collar-calabaza",
-    name: "Collar calabaza para gatos",
+    name: "Collar calabaza",
     category: "accesorios",
     description: "Collar XS para gatos, morado con lazo naranja, alas decorativas y calabaza.",
     images: [

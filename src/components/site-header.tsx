@@ -20,12 +20,12 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#E5DED4] bg-[#FBF7F1]/95 backdrop-blur">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-3 py-2 sm:px-6 sm:py-3 lg:px-8">
         <Link href="/" className="flex items-center gap-3" aria-label="Ir al inicio">
-          <span className="relative block h-12 w-24 overflow-hidden rounded-sm bg-[#F8F0E3] sm:w-32">
+          <span className="relative block h-10 w-20 overflow-hidden rounded-sm bg-[#F8F0E3] sm:h-12 sm:w-32">
             <Image src="/images/official/logo-bobbys-pet-shop.jpg" alt="Bobby's Pet Shop" fill sizes="128px" className="object-cover" />
           </span>
-          <span className="block max-w-[84px] text-xs font-black leading-tight text-[#243C3A] sm:max-w-none sm:text-sm">Bobby&apos;s Pet Shop</span>
+          <span className="hidden text-sm font-black leading-tight text-[#243C3A] sm:block">Bobby&apos;s Pet Shop</span>
         </Link>
 
         <nav className="hidden items-center gap-6 text-sm font-semibold text-[#354642] lg:flex">

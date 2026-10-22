@@ -27,7 +27,7 @@ export function OfficialShopClient() {
         ))}
       </div>
       <p className="mb-4 text-sm text-[#52615D]">{visible.length} productos</p>
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
         {visible.map((product) => <OfficialProductCard key={product.slug} product={product} />)}
       </div>
     </>

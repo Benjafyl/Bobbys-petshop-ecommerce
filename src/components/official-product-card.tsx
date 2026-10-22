@@ -20,33 +20,33 @@ export function OfficialProductCard({ product, headingLevel = "h3" }: { product:
         <div className="relative aspect-[4/5] overflow-hidden bg-[#F4E8D8]">
           {primaryImage ? (
             <>
-              <Image src={primaryImage.src} alt={primaryImage.alt} fill sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" className="catalog-photo-primary object-cover" />
-              {alternateImage && <Image src={alternateImage.src} alt="" aria-hidden="true" fill sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" className="catalog-photo-secondary object-cover" />}
+              <Image src={primaryImage.src} alt={primaryImage.alt} fill sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 50vw" className="catalog-photo-primary object-cover" />
+              {alternateImage && <Image src={alternateImage.src} alt="" aria-hidden="true" fill sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 50vw" className="catalog-photo-secondary object-cover" />}
             </>
           ) : (
             <div className="flex h-full items-center justify-center px-6 text-center text-sm font-bold uppercase tracking-[0.16em] text-[#52615D]">Foto pendiente</div>
           )}
-          <span className="absolute left-3 top-3 rounded-full bg-white/95 px-3 py-1 text-xs font-black uppercase tracking-[0.12em] text-[#243C3A]">
+          <span className="absolute left-2 top-2 rounded-full bg-white/95 px-2 py-1 text-[10px] font-black uppercase tracking-[0.08em] text-[#243C3A] sm:left-3 sm:top-3 sm:px-3 sm:text-xs sm:tracking-[0.12em]">
             {officialCategoryLabels[product.category]}
           </span>
-          {alternateImage && <span className="absolute bottom-3 right-3 rounded-full bg-white/95 px-3 py-1 text-xs font-bold text-[#243C3A]">+ fotos</span>}
+          {alternateImage && <span className="absolute bottom-2 right-2 rounded-full bg-white/95 px-2 py-1 text-[10px] font-bold text-[#243C3A] sm:bottom-3 sm:right-3 sm:px-3 sm:text-xs">+ fotos</span>}
         </div>
-        <div className="flex flex-1 items-start justify-between gap-3 p-4">
+        <div className="flex flex-1 items-start justify-between gap-1.5 p-2.5 sm:gap-3 sm:p-4">
           <div className="min-w-0">
-            <Heading className="min-h-[2.75rem] text-lg font-black leading-tight text-[#243C3A]">{product.name}</Heading>
+            <Heading className="line-clamp-2 min-h-[2.25rem] text-sm font-black leading-[1.125rem] text-[#243C3A] sm:min-h-[2.75rem] sm:text-lg sm:leading-tight">{product.name}</Heading>
             {inventory ? (
               <>
-                <p className="mt-1 text-base font-black text-[#B6633A]">{hasMultiplePrices(inventory) ? "Desde " : ""}{formatClp(getMinimumPrice(inventory))}</p>
-                <p className="mt-1 text-xs text-[#52615D]">Tallas: {[...new Set(inventory.variants.map((variant) => variant.size))].join(" · ")}</p>
-                {product.fit && <p className="mt-1 text-xs font-semibold text-[#243C3A]">{product.fit}</p>}
-                <p className="mt-1 text-xs font-semibold text-[#52615D]">{getTotalUnits(inventory) === 0 ? "Agotado" : getTotalUnits(inventory) === 1 ? "Última unidad disponible" : "Disponible"}</p>
+                <p className="mt-1 text-sm font-black text-[#B6633A] sm:text-base">{hasMultiplePrices(inventory) ? "Desde " : ""}{formatClp(getMinimumPrice(inventory))}</p>
+                <p className="mt-1 text-[11px] leading-4 text-[#52615D] sm:text-xs">Tallas: {[...new Set(inventory.variants.map((variant) => variant.size))].join(" · ")}</p>
+                {product.fit && <p className="mt-1 hidden text-xs font-semibold text-[#243C3A] sm:block">{product.fit}</p>}
+                <p className="mt-1 hidden text-xs font-semibold text-[#52615D] sm:block">{getTotalUnits(inventory) === 0 ? "Agotado" : getTotalUnits(inventory) === 1 ? "Última unidad disponible" : "Disponible"}</p>
               </>
-            ) : <p className="mt-1 text-sm text-[#52615D]">{inventoryError ? "Disponibilidad temporalmente no disponible" : "Sin unidades disponibles"}</p>}
+            ) : <p className="mt-1 text-xs text-[#52615D] sm:text-sm">{inventoryError ? "Disponibilidad temporalmente no disponible" : "Sin unidades disponibles"}</p>}
           </div>
-          <ArrowUpRight className="shrink-0 text-[#B6633A]" size={20} />
+          <ArrowUpRight className="hidden shrink-0 text-[#B6633A] sm:block" size={20} />
         </div>
       </Link>
-      <div className="mt-auto border-t border-[#E5DED4] p-3"><OfficialQuickAdd productSlug={product.slug} /></div>
+      <div className="mt-auto border-t border-[#E5DED4] p-2 sm:p-3"><OfficialQuickAdd productSlug={product.slug} /></div>
     </article>
   );
 }

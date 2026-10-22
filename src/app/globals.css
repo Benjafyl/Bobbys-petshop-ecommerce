@@ -36,7 +36,13 @@
 }
 
 .hero-overlay {
-  background: radial-gradient(ellipse 55% 70% at center, rgb(18 43 40 / 70%) 0%, rgb(18 43 40 / 42%) 55%, rgb(18 43 40 / 18%) 100%);
+  background: linear-gradient(180deg, transparent 35%, rgb(18 43 40 / 22%) 58%, rgb(18 43 40 / 88%) 100%);
+}
+
+@media (min-width: 640px) {
+  .hero-overlay {
+    background: radial-gradient(ellipse 55% 70% at center, rgb(18 43 40 / 70%) 0%, rgb(18 43 40 / 42%) 55%, rgb(18 43 40 / 18%) 100%);
+  }
 }
 
 .catalog-photo-primary,

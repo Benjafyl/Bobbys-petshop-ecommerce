@@ -12,7 +12,7 @@ export function OfficialQuickAdd({ productSlug }: { productSlug: string }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [notice, setNotice] = useState("");
   const inventory = liveInventory[productSlug];
-  if (!inventory) return <button type="button" disabled className="flex min-h-11 w-full items-center justify-center rounded-md bg-[#B6633A] px-3 text-sm font-black text-white opacity-50">No disponible</button>;
+  if (!inventory) return <button type="button" disabled className="flex min-h-11 w-full items-center justify-center rounded-md bg-[#B6633A] px-2 text-xs font-black text-white opacity-50 sm:px-3 sm:text-sm">No disponible</button>;
 
   if (inventory.variants.length !== 1) {
     const hasDesignChoices = inventory.variants.some((variant) => Boolean(variant.design));
@@ -22,13 +22,13 @@ export function OfficialQuickAdd({ productSlug }: { productSlug: string }) {
     });
     if (!canAdd) {
       return inventory.variants.some((variant) => variant.units > 0)
-        ? <Link href="/carrito" className="flex min-h-11 items-center justify-center gap-2 rounded-md border border-[#B6633A] px-3 text-sm font-black text-[#B6633A]">Ver en carrito <ArrowRight size={16} /></Link>
-        : <button type="button" disabled className="flex min-h-11 w-full items-center justify-center rounded-md bg-[#B6633A] px-3 text-sm font-black text-white opacity-50">Agotado</button>;
+        ? <Link href="/carrito" className="flex min-h-11 items-center justify-center gap-1 rounded-md border border-[#B6633A] px-2 text-xs font-black text-[#B6633A] sm:gap-2 sm:px-3 sm:text-sm">Ver en carrito <ArrowRight size={16} /></Link>
+        : <button type="button" disabled className="flex min-h-11 w-full items-center justify-center rounded-md bg-[#B6633A] px-2 text-xs font-black text-white opacity-50 sm:px-3 sm:text-sm">Agotado</button>;
     }
     return (
       <>
-        <button type="button" disabled={!ready} onClick={() => dialogRef.current?.showModal()} className="flex min-h-11 w-full items-center justify-center gap-2 rounded-md bg-[#B6633A] px-3 text-sm font-black text-white transition hover:bg-[#96502E] disabled:opacity-50">
-          <ShoppingBag size={17} /> Agregar al carrito
+        <button type="button" disabled={!ready} onClick={() => dialogRef.current?.showModal()} className="flex min-h-11 w-full items-center justify-center gap-1 rounded-md bg-[#B6633A] px-2 text-[11px] font-black text-white transition hover:bg-[#96502E] disabled:opacity-50 sm:gap-2 sm:px-3 sm:text-sm">
+          <ShoppingBag size={15} className="shrink-0 sm:h-[17px] sm:w-[17px]" /> Agregar al carrito
         </button>
         <span className="sr-only" aria-live="polite">{notice}</span>
         <dialog ref={dialogRef} aria-label={hasDesignChoices ? "Elige un diseño para agregar al carrito" : "Elige una talla para agregar al carrito"} className="m-auto w-[min(26rem,calc(100vw-2rem))] rounded-2xl border border-[#E5DED4] bg-white p-0 text-[#243C3A] shadow-2xl backdrop:bg-[#243C3A]/65">
@@ -56,16 +56,16 @@ export function OfficialQuickAdd({ productSlug }: { productSlug: string }) {
   }
 
   const variant = inventory.variants[0];
-  if (variant.units <= 0) return <button type="button" disabled className="flex min-h-11 w-full items-center justify-center rounded-md bg-[#B6633A] px-3 text-sm font-black text-white opacity-50">Agotado</button>;
+  if (variant.units <= 0) return <button type="button" disabled className="flex min-h-11 w-full items-center justify-center rounded-md bg-[#B6633A] px-2 text-xs font-black text-white opacity-50 sm:px-3 sm:text-sm">Agotado</button>;
   const variantId = getOfficialVariantId(productSlug, variant);
   const inCart = cart.find((item) => item.variantId === variantId)?.quantity ?? 0;
   if (ready && inCart >= variant.units) {
-    return <Link href="/carrito" className="flex min-h-11 items-center justify-center gap-2 rounded-md border border-[#B6633A] px-3 text-sm font-black text-[#B6633A]">Ver en carrito <ArrowRight size={16} /></Link>;
+    return <Link href="/carrito" className="flex min-h-11 items-center justify-center gap-1 rounded-md border border-[#B6633A] px-2 text-xs font-black text-[#B6633A] sm:gap-2 sm:px-3 sm:text-sm">Ver en carrito <ArrowRight size={16} /></Link>;
   }
 
   return (
-    <button type="button" disabled={!ready} onClick={() => addItem(productSlug, variantId)} className="flex min-h-11 w-full items-center justify-center gap-2 rounded-md bg-[#B6633A] px-3 text-sm font-black text-white transition hover:bg-[#96502E] disabled:opacity-50">
-      <ShoppingBag size={17} /> Agregar al carrito
+    <button type="button" disabled={!ready} onClick={() => addItem(productSlug, variantId)} className="flex min-h-11 w-full items-center justify-center gap-1 rounded-md bg-[#B6633A] px-2 text-[11px] font-black text-white transition hover:bg-[#96502E] disabled:opacity-50 sm:gap-2 sm:px-3 sm:text-sm">
+      <ShoppingBag size={15} className="shrink-0 sm:h-[17px] sm:w-[17px]" /> Agregar al carrito
     </button>
   );
 }

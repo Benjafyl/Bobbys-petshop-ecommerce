@@ -78,7 +78,10 @@ const catalogProducts: OfficialProduct[] = [
     name: "Parka azul",
     category: "abrigos",
     description: "Parka acolchada negra y turquesa con cuello alto y anilla para correa.",
-    images: [image("parka-azul-modelo", "Perro con parka negra y turquesa")],
+    images: [
+      image("parka-azul-producto", "Parka negra y turquesa, vista de producto"),
+      image("parka-azul-modelo", "Bobby con la parka negra y turquesa"),
+    ],
   },
   {
     slug: "poleron-ositos",

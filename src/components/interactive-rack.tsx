@@ -3,12 +3,12 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 const garments = [
-  { slug: "parka-bicolor-gris", name: "Parka gris", type: "Parka", image: "/images/rack/parka-gris.png", shape: "parka" },
-  { slug: "poleron-ositos", name: "Chaleco animal print café", type: "Chaleco", image: "/images/rack/chaleco-ositos.png", shape: "sweater" },
-  { slug: "parka-bicolor-beige", name: "Parka beige", type: "Parka", image: "/images/rack/parka-beige.png", shape: "parka" },
-  { slug: "poleron-corazones-rosa", name: "Chaleco corazones", type: "Chaleco", image: "/images/rack/chaleco-corazones.png", shape: "sweater" },
-  { slug: "parka-azul", name: "Parka azul", type: "Parka", image: "/images/rack/parka-azul.png", shape: "parka" },
-  { slug: "poleron-dinosaurios", name: "Chaleco dinosaurios", type: "Chaleco", image: "/images/rack/chaleco-dinosaurios.png", shape: "sweater" },
+  { slug: "parka-bicolor-gris", name: "Parka gris", image: "/images/rack/parka-gris.png", shape: "parka" },
+  { slug: "poleron-ositos", name: "Chaleco animal print café", image: "/images/rack/chaleco-ositos.png", shape: "sweater" },
+  { slug: "parka-bicolor-beige", name: "Parka beige", image: "/images/rack/parka-beige.png", shape: "parka" },
+  { slug: "poleron-corazones-rosa", name: "Chaleco corazones", image: "/images/rack/chaleco-corazones.png", shape: "sweater" },
+  { slug: "parka-azul", name: "Parka azul", image: "/images/rack/parka-azul.png", shape: "parka" },
+  { slug: "poleron-dinosaurios", name: "Chaleco dinosaurios", image: "/images/rack/chaleco-dinosaurios.png", shape: "sweater" },
 ] as const;
 
 function Hanger() {
@@ -29,7 +29,7 @@ export function InteractiveRack() {
             <p className="rack-eyebrow">El perchero de Bobby&apos;s</p>
             <h2 id="rack-heading" className="rack-heading">Elige su próximo look.</h2>
           </div>
-          <p className="rack-instruction">Pasa el cursor sobre una prenda y tócala para ver sus fotos, tallas y precio.</p>
+          <p className="rack-instruction"><span className="hidden md:inline">Pasa el cursor para verla de frente. Haz clic para conocer sus tallas y precio.</span><span className="md:hidden">Desliza para explorar y toca una prenda para ver sus tallas y precio.</span></p>
         </div>
         <div className="rack-stage" role="group" aria-label="Parkas y chalecos para explorar">
           <div className="rack-scroll">
@@ -49,8 +49,7 @@ export function InteractiveRack() {
                     </span>
                   </span>
                   <span className="rack-label">
-                    <span><small>{garment.type}</small><strong>{garment.name}</strong></span>
-                    <ArrowRight size={17} aria-hidden="true" />
+                    <strong>{garment.name}</strong>
                   </span>
                 </Link>
               ))}

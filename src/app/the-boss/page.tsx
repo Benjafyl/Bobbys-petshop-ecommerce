@@ -15,32 +15,14 @@ const bobbyMoments = [
   {
     src: "/images/brand/bobby-jugando-aire-libre.jpeg",
     alt: "Bobby corriendo al aire libre con una chaqueta brillante",
-    caption: "Siempre en movimiento",
   },
   {
     src: "/images/brand/bobby-jugando-nieve.jpeg",
     alt: "Bobby explorando la nieve con su parka gris",
-    caption: "Feliz en la nieve",
   },
   {
     src: "/images/brand/bobby-salchicha-disfraz.jpeg",
     alt: "Bobby con un divertido disfraz de salchicha",
-    caption: "Su lado más juguetón",
-  },
-  {
-    src: "/images/official/parka-azul-modelo.jpg",
-    alt: "Bobby descansando con una parka negra y turquesa",
-    caption: "Siempre listo para modelar",
-  },
-  {
-    src: "/images/official/parka-beige-en-casa.jpg",
-    alt: "Bobby descansando en casa con una parka beige",
-    caption: "Un rato en casa",
-  },
-  {
-    src: "/images/official/parka-gris-paseo-nieve.jpg",
-    alt: "Bobby paseando en la nieve con su parka gris",
-    caption: "Y también de paseo",
   },
 ];
 
@@ -80,21 +62,22 @@ export default function BossPage() {
       <section aria-labelledby="brand-journey-title" className="border-t border-[#E5DED4] bg-[var(--feature-paper)]">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
           <div className="mb-8 max-w-2xl">
-            <h2 id="brand-journey-title" className="text-balance text-3xl font-black text-[var(--feature-ink)] sm:text-4xl">Una historia que sigue creciendo.</h2>
-            <p className="mt-3 text-base leading-7 text-[#52615D]">Nuestra imagen cambió con los años. El logo anterior y una feria de emprendedores son parte del camino que comenzamos en 2021.</p>
+            <h2 id="brand-journey-title" className="text-balance text-3xl font-black text-[var(--feature-ink)] sm:text-4xl">El mismo Bobby, una nueva imagen.</h2>
+            <p className="mt-3 text-base leading-7 text-[#52615D]">Desde 2021, Bobby está en el centro de nuestra marca. Este rebranding renueva nuestra imagen y colección sin perder lo que nos inspiró desde el inicio.</p>
           </div>
-          <div className="grid gap-4 md:grid-cols-[0.85fr_1.15fr]">
+          <div className="grid items-center gap-4 lg:grid-cols-[1fr_auto_1fr]">
             <figure className="overflow-hidden rounded-2xl border border-[#E5DED4] bg-white">
-              <div className="flex h-[360px] items-center justify-center bg-[#EAF7F4] p-8 sm:h-[420px]">
-                <Image src="/images/brand/logo-anterior-bobbys.jpeg" alt="Logo anterior de Bobby's Pet Shop con una ilustración de Bobby" width={250} height={250} sizes="250px" className="h-full w-auto max-w-full rounded-full object-contain" />
+              <div className="flex h-64 items-center justify-center bg-[#EAF7F4] p-6 sm:h-72">
+                <Image src="/images/brand/logo-anterior-bobbys.jpeg" alt="Logo anterior de Bobby's Pet Shop con una ilustración de Bobby" width={240} height={240} sizes="240px" className="h-full w-auto max-w-full rounded-full object-contain" />
               </div>
-              <figcaption className="px-5 py-4 text-sm font-black text-[var(--feature-ink)]">Nuestro logo anterior</figcaption>
+              <figcaption className="px-5 py-4 text-sm font-black text-[var(--feature-ink)]">2021 · Nuestro primer logo</figcaption>
             </figure>
+            <span aria-hidden="true" className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#243C3A] text-white"><ArrowRight size={22} className="rotate-90 lg:rotate-0" /></span>
             <figure className="overflow-hidden rounded-2xl border border-[#E5DED4] bg-white">
-              <div className="relative h-[360px] bg-[#F4E8D8] sm:h-[420px]">
-                <Image src="/images/brand/feria-emprendedores.jpeg" alt="Prendas de Bobby's Pet Shop exhibidas en una feria de emprendedores" fill sizes="(min-width: 768px) 55vw, 100vw" className="object-contain" />
+              <div className="flex h-64 items-center justify-center bg-[#FFF7E8] p-6 sm:h-72">
+                <Image src="/images/official/logo-bobbys-pet-shop.jpg" alt="Logo actual de Bobby's Pet Shop con un perro salchicha dibujado" width={360} height={240} sizes="(min-width: 1024px) 360px, 100vw" className="h-full w-auto max-w-full object-contain" />
               </div>
-              <figcaption className="px-5 py-4 text-sm font-black text-[var(--feature-ink)]">Una feria de emprendedores</figcaption>
+              <figcaption className="px-5 py-4 text-sm font-black text-[var(--feature-ink)]">Hoy · Una nueva identidad</figcaption>
             </figure>
           </div>
         </div>
@@ -113,7 +96,6 @@ export default function BossPage() {
             {bobbyMoments.map((moment) => (
               <figure key={moment.src} className="min-w-0 snap-start overflow-hidden rounded-xl border-[5px] border-white bg-white shadow-sm">
                 <div className="relative aspect-[4/5] overflow-hidden bg-[#F4E8D8]"><Image src={moment.src} alt={moment.alt} fill sizes="(min-width: 1024px) 30vw, (min-width: 640px) 40vw, 78vw" className="object-cover" /></div>
-                <figcaption className="px-4 py-3 text-sm font-black text-[#243C3A]">{moment.caption}</figcaption>
               </figure>
             ))}
           </div>

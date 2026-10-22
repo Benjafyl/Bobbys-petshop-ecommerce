@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Fredoka, Nunito } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { OfficialCartProvider } from "@/components/official-cart-provider";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const nunito = Nunito({
+  variable: "--font-nunito",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const fredoka = Fredoka({
+  variable: "--font-fredoka",
   subsets: ["latin"],
 });
 
@@ -36,7 +36,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es-CL" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+    <html lang="es-CL" className={`${nunito.variable} ${fredoka.variable} h-full antialiased`}>
       <body className="min-h-full bg-[#FBF7F1] text-[#243C3A]">
         <OfficialCartProvider liveInventoryEnabled={Boolean(process.env.DATABASE_URL)}>
           <SiteHeader />

@@ -265,13 +265,13 @@ export default function Home() {
 
       <section className="border-t border-[#E5DED4] bg-white">
         <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[1fr_1fr] lg:px-8">
-          <div className="relative min-h-[370px] overflow-hidden rounded-lg bg-[#F4E8D8]"><Image src="/images/official/parka-gris-modelo-lateral.jpg" alt="Perro de cuerpo entero con la parka gris" fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-contain" /></div>
+          <div className="relative aspect-[3/2] overflow-hidden rounded-lg bg-[#F4E8D8]"><Image src="/images/official/guia-medidas-perro.jpeg" alt="Perro con flechas que muestran dónde medir cuello, pecho y espalda" fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-contain" /></div>
           <div>
             <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#F9D36B]"><Ruler size={21} /></span>
             <p className="mt-5 text-sm font-black uppercase tracking-[0.18em] text-[#B6633A]">Antes de elegir</p>
             <h2 className="mt-2 text-3xl font-black text-[#243C3A]">La talla empieza con una buena medida.</h2>
-            <p className="mt-4 leading-7 text-[#52615D]">Mide cuello, pecho y espalda con tu perro de pie. Ya puedes consultar la tabla de medidas de parkas M a XXL y revisar qué tallas hay en cada ficha.</p>
-            <Link href="/guia-de-tallas" className="mt-6 inline-flex items-center gap-2 text-sm font-black text-[#B6633A]">Ver tabla de parkas <ArrowRight size={17} /></Link>
+            <p className="mt-4 leading-7 text-[#52615D]">Mide cuello, pecho y espalda con tu perro de pie para elegir su próxima prenda. Compara las medidas con las tallas disponibles de cada producto.</p>
+            <Link href="/guia-de-tallas" className="mt-6 inline-flex items-center gap-2 text-sm font-black text-[#B6633A]">Ver medidas de prendas <ArrowRight size={17} /></Link>
           </div>
         </div>
       </section>

@@ -5,6 +5,35 @@
   --foreground: #243c3a;
 }
 
+.announcement-marquee {
+  overflow: hidden;
+}
+
+.announcement-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: announcement-move-right 24s linear infinite;
+}
+
+.announcement-marquee-sequence {
+  display: flex;
+  flex: none;
+  min-width: 100vw;
+  align-items: center;
+  justify-content: space-around;
+  gap: 3rem;
+  padding: 0 3rem;
+}
+
+@keyframes announcement-move-right {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+.hero-overlay {
+  background: radial-gradient(ellipse 55% 70% at center, rgb(18 43 40 / 70%) 0%, rgb(18 43 40 / 42%) 55%, rgb(18 43 40 / 18%) 100%);
+}
+
 .catalog-photo-primary,
 .catalog-photo-secondary {
   transition: opacity 200ms ease-out;
@@ -88,6 +117,9 @@ textarea::placeholder {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .announcement-marquee-track {
+    animation: none;
+  }
   .catalog-photo-primary,
   .catalog-photo-secondary {
     transition: none;

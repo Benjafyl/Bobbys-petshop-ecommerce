@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, Search, ShoppingBag, UserRound } from "lucide-react";
+import { Menu, Search, ShoppingBag, Truck, UserRound } from "lucide-react";
 import { useState } from "react";
 import { useOfficialCart } from "@/components/official-cart-provider";
 import { InstagramIcon } from "@/components/instagram-icon";
@@ -21,9 +21,6 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#E5DED4] bg-[#FBF7F1]/95 backdrop-blur">
-      <div className="bg-[#243C3A] px-4 py-2 text-center text-xs font-semibold text-white">
-        Envíos a todo Chile por $5.000 · Arma tu carrito · Pago en línea próximamente
-      </div>
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-3" aria-label="Ir al inicio">
           <span className="relative block h-12 w-24 overflow-hidden rounded-sm bg-[#F8F0E3] sm:w-32">
@@ -93,6 +90,17 @@ export function SiteHeader() {
           </a>
         </nav>
       ) : null}
+      <div className="announcement-marquee border-t border-[#D8E4E0] bg-[#EAF1EE] py-2 text-xs font-bold text-[#243C3A]" role="note" aria-label="Envíos a todo Chile por cinco mil pesos. Arma tu carrito. Pago en línea próximamente.">
+        <div className="announcement-marquee-track" aria-hidden="true">
+          {[0, 1].map((copy) => (
+            <div key={copy} className="announcement-marquee-sequence">
+              <span className="inline-flex shrink-0 items-center gap-2"><Truck size={15} /> Envíos a todo Chile por $5.000</span>
+              <span className="shrink-0">Arma tu carrito</span>
+              <span className="shrink-0">Pago en línea próximamente</span>
+            </div>
+          ))}
+        </div>
+      </div>
     </header>
   );
 }

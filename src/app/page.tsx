@@ -112,26 +112,19 @@ export default function Home() {
   return (
     <>
       <section className="bg-[#FBF7F1]">
-        <div className="mx-auto max-w-[1600px] px-4 pb-8 pt-4 sm:px-6 lg:px-8 lg:pb-12 lg:pt-6">
-          <div className="relative overflow-hidden rounded-xl bg-[#F4E8D8]">
-            <div className="grid h-[420px] grid-cols-[1.15fr_1fr] grid-rows-2 gap-1 sm:h-[520px] lg:h-[610px] lg:grid-cols-3 lg:grid-rows-1">
-              {heroPhotos.map((photo, index) => (
-                <div key={photo.src} className={`relative overflow-hidden ${index === 0 ? "row-span-2 lg:row-span-1" : ""}`}>
-                  <Image src={photo.src} alt={photo.alt} fill loading="eager" sizes="(min-width: 1024px) 33vw, 55vw" className={`object-cover ${photo.position}`} />
-                </div>
-              ))}
-            </div>
-            <div className="pointer-events-none absolute inset-0 hidden bg-gradient-to-t from-[#182E2C]/90 via-[#182E2C]/30 to-transparent lg:block" />
-            <div className="hidden lg:absolute lg:inset-x-0 lg:bottom-0 lg:z-10 lg:block lg:px-12 lg:pb-12">
-              <h1 className="max-w-3xl text-5xl font-black leading-[1.04] text-white xl:text-6xl">Ropa para perros con estilo.</h1>
-              <p className="mt-4 max-w-2xl text-lg leading-7 text-white/90">Parkas, chalecos y accesorios para mascotas en Chile.</p>
-              <Link href="#coleccion" className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-md bg-[#B6633A] px-5 text-sm font-black text-white transition hover:bg-[#96502E]">Ver colección <ArrowDown size={18} /></Link>
-            </div>
+        <div className="relative mx-auto max-w-[1800px] overflow-hidden bg-[#243C3A]">
+          <div className="grid h-[510px] grid-cols-3 gap-[3px] sm:h-[580px] lg:h-[620px]">
+            {heroPhotos.map((photo) => (
+              <div key={photo.src} className="relative overflow-hidden">
+                <Image src={photo.src} alt={photo.alt} fill loading="eager" sizes="33vw" className={`object-cover ${photo.position}`} />
+              </div>
+            ))}
           </div>
-          <div className="pt-7 lg:hidden">
-            <h1 className="max-w-xl text-4xl font-black leading-[1.05] text-[#243C3A] sm:text-5xl">Ropa para perros con estilo.</h1>
-            <p className="mt-4 max-w-xl leading-7 text-[#52615D]">Parkas, chalecos y accesorios para mascotas en Chile.</p>
-            <Link href="#coleccion" className="mt-5 inline-flex h-12 items-center justify-center gap-2 rounded-md bg-[#B6633A] px-5 text-sm font-black text-white">Ver colección <ArrowDown size={18} /></Link>
+          <div className="hero-overlay pointer-events-none absolute inset-0" />
+          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-5 text-center text-white sm:px-8">
+            <h1 className="max-w-3xl text-balance text-4xl font-black leading-[1.06] drop-shadow-lg sm:text-5xl lg:text-6xl">Ropa para perros con estilo.</h1>
+            <p className="mt-4 max-w-xl text-balance text-base font-semibold leading-7 drop-shadow-md sm:text-lg">Parkas, chalecos y accesorios para mascotas en Chile.</p>
+            <Link href="#coleccion" className="mt-7 inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-white px-6 text-sm font-black text-[#243C3A] shadow-lg transition-colors duration-200 hover:bg-[#F4E8D8]">Ver colección <ArrowDown size={18} /></Link>
           </div>
         </div>
       </section>

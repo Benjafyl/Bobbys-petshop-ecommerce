@@ -48,9 +48,9 @@ const categorySections: {
 ];
 
 const heroPhotos = [
-  { src: "/images/official/parka-gris-modelo-lateral.jpg", alt: "Perro usando la parka bicolor gris", position: "object-[45%_center]" },
-  { src: "/images/official/poleron-flores-rosa-producto.jpg", alt: "Chaleco rosado con patitas", position: "object-center" },
-  { src: "/images/official/parka-militar-producto.jpg", alt: "Parka militar de colores", position: "object-center" },
+  { src: "/images/official/parka-azul-modelo.jpg", alt: "Bobby modelando una parka negra y azul", position: "object-right" },
+  { src: "/images/official/parka-gris-modelo-cerca.jpg", alt: "Bobby modelando la parka bicolor gris", position: "object-center" },
+  { src: "/images/official/parka-militar-modelo.jpg", alt: "Bobby junto a la parka militar de colores", position: "object-center" },
 ];
 
 // Esta selección muestra productos fotografiados. Se reemplazará por fotos enviadas por clientes.
@@ -69,7 +69,7 @@ export default function Home() {
             <div className="grid h-[420px] grid-cols-[1.15fr_1fr] grid-rows-2 gap-1 sm:h-[520px] lg:h-[610px] lg:grid-cols-3 lg:grid-rows-1">
               {heroPhotos.map((photo, index) => (
                 <div key={photo.src} className={`relative overflow-hidden ${index === 0 ? "row-span-2 lg:row-span-1" : ""}`}>
-                  <Image src={photo.src} alt={photo.alt} fill priority sizes="(min-width: 1024px) 33vw, 55vw" className={`object-cover ${photo.position}`} />
+                  <Image src={photo.src} alt={photo.alt} fill loading="eager" sizes="(min-width: 1024px) 33vw, 55vw" className={`object-cover ${photo.position}`} />
                 </div>
               ))}
             </div>

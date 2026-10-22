@@ -59,44 +59,32 @@ const customerReviews = [
     kind: "image",
     src: "/images/community/cliente-parka-azul.jpeg",
     alt: "Una perrita de Eliana Guerrero con una parka negra y turquesa de Bobby's",
-    petLabel: "La perrita de Eliana con detalles azules",
     name: "Eliana Guerrero",
-    handle: "",
     comment: "Siiii! Son las mejores. Mis perritas felices con sus parkas. Gracias 👏👏👏",
-    source: "",
   },
   {
     id: "tati-parka-rosa",
     kind: "image",
     src: "/images/community/cliente-parka-rosa.jpeg",
     alt: "La perrita blanca de Eliana Guerrero con una parka de Bobby's",
-    petLabel: "La perrita blanca de Eliana",
     name: "Eliana Guerrero",
-    handle: "",
     comment: "Todo hermoso y de la mejor calidad 👏👏",
-    source: "",
   },
   {
     id: "ivana-yorkshire",
     kind: "video",
     src: "/videos/community/perrito-ivana.mp4",
-    alt: "Yorkshire de Ivana usando una parka de Bobby's",
-    petLabel: "El Yorkshire de Ivana",
-    name: "Ivana",
-    handle: "",
-    comment: "Perfecta calidad, mi perrito quedó muy abrigado para este frío.",
-    source: "",
+    alt: "Yorkshire de Ivanna usando una parka de Bobby's",
+    name: "Ivanna",
+    comment: "Perfecta calidad, mi perrita quedó muy abrigada para este frío.",
   },
   {
     id: "valeria-galga",
     kind: "image",
     src: "/images/community/galga-valeria.jpeg",
     alt: "Galga de Valeria Rodil con un chaleco verde",
-    petLabel: "La galga de Valeria",
     name: "Valeria Rodil",
-    handle: "@valeriarodil",
     comment: "Excelente !!!! Muy práctico",
-    source: "Instagram",
   },
 ];
 
@@ -254,13 +242,11 @@ export default function Home() {
                 </div>
                 <figcaption className="flex flex-col justify-between gap-6 p-5">
                   <div>
-                    <p className="text-xs font-black uppercase tracking-[0.12em] text-[#B6633A]">{review.petLabel}</p>
-                    <div className="mt-4"><FiveStars /></div>
+                    <div><FiveStars /></div>
                     <blockquote className="mt-4 text-lg font-semibold leading-7 text-[#243C3A]">“{review.comment}”</blockquote>
                   </div>
                   <div className="flex flex-wrap items-center justify-between gap-2 border-t border-[#E5DED4] pt-4 text-sm">
-                    <span className="font-black text-[#B6633A]">{review.name}{review.handle && <span className="ml-1 font-semibold text-[#52615D]">· {review.handle}</span>}</span>
-                    {review.source && <span className="inline-flex items-center gap-1 text-xs font-semibold text-[#52615D]"><InstagramIcon size={14} /> {review.source}</span>}
+                    <span className="font-black text-[#B6633A]">{review.name}</span>
                   </div>
                 </figcaption>
               </figure>

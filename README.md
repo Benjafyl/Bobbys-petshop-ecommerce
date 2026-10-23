@@ -4,15 +4,15 @@ Tienda Next.js para `bobbyspetshop.cl`, alojada en Servidor-BYL con Docker, Post
 
 ## Estado comercial
 
-El catálogo y carrito muestran el stock y precios por talla. El carrito enlaza a una vista previa del checkout con contacto, dirección, resumen, cupón y envío fijo de $5.000 a todo Chile. El botón de pago permanece deshabilitado: la web todavía no crea pedidos ni marca pagos como recibidos. No actives `ENABLE_PAID_CHECKOUT` hasta integrar y verificar un proveedor de pagos con notificaciones auténticas.
+El catálogo y carrito muestran el stock y precios por talla. El checkout acepta invitados, recalcula precios y cupones en PostgreSQL, reserva unidades y redirige a Mercado Pago Checkout Pro. El botón de pago permanece deshabilitado hasta configurar las credenciales de Benjamín y aprobar una compra de prueba completa. El envío cuesta $5.000 a todo Chile.
 
 ## Para comenzar a vender
 
-1. Antonela debe registrar la cuenta de comercio de Bobby's en [Flow](https://www.flow.cl/) a nombre de la persona o empresa que tiene inicio de actividades y recibirá los abonos. Asociar allí su cuenta bancaria y completar la revisión de Flow. Abrir también una [cuenta de pruebas](https://sandbox.flow.cl/) separada.
-2. Obtener la API Key y Secret Key de cada ambiente desde la cuenta de Flow. Guardarlas solamente como secretos del servidor; nunca en el repositorio, en el navegador ni en mensajes públicos.
-3. Implementar la creación de órdenes con precios, descuentos y stock recalculados en PostgreSQL; reservar unidades durante el pago y devolverlas si vence o falla. Integrar Flow y confirmar cada pago consultando su API después de la notificación. El retorno del navegador por sí solo no prueba que se pagó.
-4. Configurar un proveedor de correo transaccional para que Antonela reciba el pedido **confirmado y pagado** en `antonelarodil@gmail.com` con productos, total y dirección. Los correos de recuperación de cuentas también dependen de esta configuración.
-5. Definir con la contabilidad cómo emitir la boleta o factura correspondiente y probar una compra de punta a punta en sandbox: pago exitoso, fallido, abandonado, cupón, última unidad, correo y panel. Activar producción solo después de esa prueba.
+1. Desde la cuenta de Mercado Pago de **Benjamín**, crear una aplicación Checkout Pro en [Integraciones](https://www.mercadopago.cl/developers/panel/app). Mercado Pago pide una verificación de identidad en la app móvil antes de abrir la creación de la aplicación.
+2. Obtener el `Access Token` de pruebas y después el de producción. En Webhooks configurar el evento **Pagos** con URL `https://bobbyspetshop.cl/api/payments/mercadopago/webhook` y guardar la clave secreta de firma. Introducir ambos secretos solo en el entorno privado del servidor, jamás en el navegador de los clientes ni en Git.
+3. El servidor debe tener `MERCADOPAGO_ACCESS_TOKEN`, `MERCADOPAGO_WEBHOOK_SECRET`, `NEXT_PUBLIC_SITE_URL=https://bobbyspetshop.cl` y `ENABLE_PAID_CHECKOUT=true` únicamente durante pruebas controladas o después de aprobar producción. El dinero llegará a la cuenta Mercado Pago propietaria del token, que debe ser la de Benjamín. `Public Key` no se necesita para el flujo con redirección Checkout Pro.
+4. Configurar SMTP (`SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM`) para avisar a Antonela en `antonelarodil@gmail.com` solo tras confirmar un pago. Los avisos se guardan para reintento si falla el correo; el panel siempre conserva el pedido.
+5. Probar con una cuenta compradora de prueba distinta de la vendedora: pago aprobado, pendiente, rechazado, cupón, última unidad, correo y panel. Verificar que el webhook y la consulta a la API marquen pagado solo tras confirmar el monto y pedido. Activar el botón público al completar esta prueba y la habilitación que Mercado Pago solicite a Benjamín. La emisión tributaria queda a cargo del titular de la venta y su asesoría.
 
 ## Componentes
 

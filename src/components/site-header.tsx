@@ -89,13 +89,13 @@ export function SiteHeader() {
           </a>
         </nav>
       ) : null}
-      <div className="announcement-marquee border-t border-[#D8E4E0] bg-[#EAF1EE] py-2 text-xs font-bold text-[#243C3A]" role="note" aria-label="Envíos a todo Chile por cinco mil pesos. Arma tu carrito. Pago en línea próximamente.">
+      <div className="announcement-marquee border-t border-[#D8E4E0] bg-[#EAF1EE] py-2 text-xs font-bold text-[#243C3A]" role="note" aria-label="Envíos a todo Chile por cinco mil pesos. Arma tu carrito. Ropa para perros y accesorios.">
         <div className="announcement-marquee-track" aria-hidden="true">
           {[0, 1].map((copy) => (
             <div key={copy} className="announcement-marquee-sequence">
               <span className="inline-flex shrink-0 items-center gap-2"><Truck size={15} /> Envíos a todo Chile por $5.000</span>
               <span className="shrink-0">Arma tu carrito</span>
-              <span className="shrink-0">Pago en línea próximamente</span>
+              <span className="shrink-0">Ropa para perros y accesorios</span>
             </div>
           ))}
         </div>

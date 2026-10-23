@@ -31,6 +31,10 @@ create table if not exists shop_orders (
   payment_status text not null default 'PENDING' check (payment_status in ('PENDING','PAID','FAILED','REFUNDED')),
   payment_method text,
   payment_reference text,
+  payment_preference_id text,
+  reservation_expires_at timestamptz,
+  reservation_released_at timestamptz,
+  paid_at timestamptz,
   subtotal_clp integer not null check (subtotal_clp >= 0),
   shipping_clp integer not null default 5000 check (shipping_clp >= 0),
   discount_clp integer not null default 0 check (discount_clp >= 0),
@@ -42,6 +46,19 @@ create table if not exists shop_orders (
 );
 create index if not exists shop_orders_status_date_idx on shop_orders(status,created_at desc);
 create index if not exists shop_orders_user_idx on shop_orders(user_id,created_at desc);
+alter table shop_orders add column if not exists payment_preference_id text;
+alter table shop_orders add column if not exists reservation_expires_at timestamptz;
+alter table shop_orders add column if not exists reservation_released_at timestamptz;
+alter table shop_orders add column if not exists paid_at timestamptz;
+create unique index if not exists shop_orders_payment_reference_idx on shop_orders(payment_reference) where payment_reference is not null;
+
+create table if not exists shop_order_notifications (
+  order_id uuid primary key references shop_orders(id) on delete cascade,
+  sent_at timestamptz,
+  attempts integer not null default 0,
+  last_error text,
+  created_at timestamptz not null default now()
+);
 
 create table if not exists shop_order_items (
   id uuid primary key default gen_random_uuid(),

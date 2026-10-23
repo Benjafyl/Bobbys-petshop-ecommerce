@@ -44,7 +44,7 @@ export function SiteFooter() {
       </div>
       <div className="border-t border-white/10 px-4 py-4 text-xs text-[#C8D2CC] sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 text-center sm:flex-row sm:text-left">
-          <p>Carrito disponible; pago en línea próximamente. Agregar prendas no reserva stock.</p>
+          <p>Envíos a todo Chile por $5.000. Agregar prendas al carrito no reserva stock.</p>
           <a
             className="byl-credit inline-flex shrink-0 items-center gap-2 rounded-md px-2 py-1 hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F9D36B]"
             href="https://bylsoftware.cl/"

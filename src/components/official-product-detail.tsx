@@ -115,7 +115,7 @@ export function OfficialProductDetail({ product }: { product: OfficialProduct })
                 <p className="mt-3 text-sm text-[#52615D]" aria-live="polite">{notice || (selectedVariant?.units === 0 ? "Elige otra opción disponible." : availableToAdd === 0 ? "Ya agregaste todas las unidades disponibles de esta opción." : hasDesignChoices ? "Selecciona tu diseño y agrégalo al carrito." : "Selecciona tu talla y agrégala al carrito.")}</p>
               </div>
               <div className="mt-5 flex items-start gap-3 rounded-lg bg-[#F6F3EC] px-4 py-3 text-sm text-[#243C3A]"><Truck size={18} className="mt-0.5 shrink-0 text-[#B6633A]" /><p><strong>Envío a todo Chile por {formatClp(SHIPPING_FEE_CLP)}.</strong> Verás este costo en el carrito.</p></div>
-              <p className="mt-4 text-xs leading-5 text-[#697873]">Stock consultado al abrir la tienda. Agregar al carrito no reserva la prenda. El pago en línea estará disponible próximamente.</p>
+              <p className="mt-4 text-xs leading-5 text-[#697873]">Stock consultado al abrir la tienda. Agregar al carrito no reserva la prenda.</p>
             </div>
           ) : <div className="mt-8 rounded-lg border border-[#E5DED4] bg-white p-6"><h2 className="text-lg font-black">{inventoryError ? "Disponibilidad temporalmente no disponible" : "Producto agotado"}</h2><p className="mt-2 leading-7 text-[#52615D]">{inventoryError ? "Vuelve a intentarlo en un momento." : "Puedes explorar las fotografías de este producto mientras reponemos stock."}</p></div>}
         </div>

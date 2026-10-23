@@ -63,6 +63,8 @@ export async function updateOrderStatus(form: FormData) {
     const previous = await client.query<{ status: string; payment_status: string }>("select status,payment_status from shop_orders where id=$1 for update", [orderId]);
     if (!previous.rowCount) throw new ActionRejected("Pedido no encontrado.");
     if (status !== "CANCELLED" && previous.rows[0].payment_status !== "PAID") throw new ActionRejected("Solo se puede preparar o enviar un pedido con pago confirmado.");
+    if (status === "CANCELLED" && previous.rows[0].payment_status === "PAID") throw new ActionRejected("Reembolsa el cobro en Mercado Pago antes de cancelar el pedido.");
+    if (status === "CANCELLED" && previous.rows[0].payment_status === "PENDING") throw new ActionRejected("El pago aún puede confirmarse. Espera a que venza la reserva.");
     await client.query("update shop_orders set status=$2,updated_at=now() where id=$1", [orderId, status]);
     await client.query("insert into shop_audit_logs(actor_id,action,entity_id,before_data,after_data) values($1,'order.status',$2,$3,$4)", [session.user.id, orderId, previous.rows[0], { status }]);
     await client.query("commit");

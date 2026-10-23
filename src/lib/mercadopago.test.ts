@@ -27,8 +27,10 @@ describe("integración de cobro", () => {
   it("usa init_point también con credenciales de prueba y envía la referencia del pedido", async () => {
     const oldToken = process.env.MERCADOPAGO_ACCESS_TOKEN;
     const oldSiteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+    const oldAuthUrl = process.env.BETTER_AUTH_URL;
     process.env.MERCADOPAGO_ACCESS_TOKEN = "TEST-example";
     process.env.NEXT_PUBLIC_SITE_URL = "https://bobbyspetshop.cl";
+    process.env.BETTER_AUTH_URL = "https://pruebas.example.cl";
     const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response(JSON.stringify({
       id: "pref-1", init_point: "https://www.mercadopago.cl/checkout/v1/redirect?id=pref-1",
     }), { status: 200 }));
@@ -39,12 +41,16 @@ describe("integración de cobro", () => {
       expect(body.external_reference).toBe("order-1");
       expect(body.payer).toEqual({ email: "ana@example.cl", name: "Ana", surname: "Díaz" });
       expect(body.statement_descriptor).toBe("BOBBYS PET SHOP");
+      expect(body.back_urls.success).toBe("https://pruebas.example.cl/pago/resultado?pedido=order-1");
+      expect(body.notification_url).toBe("https://pruebas.example.cl/api/payments/mercadopago/webhook");
     } finally {
       fetchMock.mockRestore();
       if (oldToken === undefined) delete process.env.MERCADOPAGO_ACCESS_TOKEN;
       else process.env.MERCADOPAGO_ACCESS_TOKEN = oldToken;
       if (oldSiteUrl === undefined) delete process.env.NEXT_PUBLIC_SITE_URL;
       else process.env.NEXT_PUBLIC_SITE_URL = oldSiteUrl;
+      if (oldAuthUrl === undefined) delete process.env.BETTER_AUTH_URL;
+      else process.env.BETTER_AUTH_URL = oldAuthUrl;
     }
   });
 

@@ -44,7 +44,9 @@ export async function createPreference(input: {
   total: number;
   expiresAt: Date;
 }) {
-  const base = process.env.NEXT_PUBLIC_SITE_URL;
+  // The payment callback must use the runtime origin. NEXT_PUBLIC_* values are
+  // embedded during the build and can point at a different deployment.
+  const base = process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_SITE_URL;
   if (!base || !base.startsWith("https://")) throw new Error("URL pública de la tienda no configurada");
   const result = await mpFetch("/checkout/preferences", {
     method: "POST",

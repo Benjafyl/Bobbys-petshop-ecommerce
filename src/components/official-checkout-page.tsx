@@ -103,13 +103,13 @@ export function OfficialCheckoutPage({ checkoutEnabled, initialCoupon }: { check
               <fieldset className="mt-5 space-y-3">
                 <legend className="mb-3 text-sm font-bold text-[#243C3A]">¿Cómo quieres recibir tu pedido?</legend>
                 <label className={`flex cursor-pointer items-start gap-3 rounded-lg border p-4 text-sm transition-colors ${deliveryMethod === "shipping" ? "border-[#B6633A] bg-[#FFF7F1]" : "border-[#D8CEC1] hover:border-[#B6633A]"}`}>
-                  <input type="radio" name="deliveryMethod" value="shipping" checked={deliveryMethod === "shipping"} onChange={() => setDeliveryMethod("shipping")} required className="mt-1 accent-[#B6633A]" />
+                  <input type="radio" name="deliveryMethod" value="shipping" checked={deliveryMethod === "shipping"} onChange={() => setDeliveryMethod("shipping")} required className="mt-1 !size-4 !min-h-0 !shrink-0 !rounded-full !bg-white !p-0 accent-[#B6633A]" />
                   <Truck size={20} className="mt-0.5 shrink-0 text-[#B6633A]" />
                   <span className="min-w-0 flex-1"><strong className="block text-[#243C3A]">Envío a todo Chile</strong><span className="mt-1 block text-[#52615D]">Lo llevamos a la dirección que indiques.</span></span>
                   <strong className="whitespace-nowrap text-[#243C3A]">{formatClp(SHIPPING_FEE_CLP)}</strong>
                 </label>
                 <label className={`flex cursor-pointer items-start gap-3 rounded-lg border p-4 text-sm transition-colors ${deliveryMethod === "pickup" ? "border-[#B6633A] bg-[#FFF7F1]" : "border-[#D8CEC1] hover:border-[#B6633A]"}`}>
-                  <input type="radio" name="deliveryMethod" value="pickup" checked={deliveryMethod === "pickup"} onChange={() => setDeliveryMethod("pickup")} required className="mt-1 accent-[#B6633A]" />
+                  <input type="radio" name="deliveryMethod" value="pickup" checked={deliveryMethod === "pickup"} onChange={() => setDeliveryMethod("pickup")} required className="mt-1 !size-4 !min-h-0 !shrink-0 !rounded-full !bg-white !p-0 accent-[#B6633A]" />
                   <MapPin size={20} className="mt-0.5 shrink-0 text-[#B6633A]" />
                   <span className="min-w-0 flex-1"><strong className="block text-[#243C3A]">Retiro en Viña del Mar</strong><span className="mt-1 block text-[#52615D]">{PICKUP_LOCATION}. Coordinaremos el horario después del pago.</span></span>
                   <strong className="whitespace-nowrap text-[#245C43]">Gratis</strong>

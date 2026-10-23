@@ -4,7 +4,7 @@ Tienda Next.js para `bobbyspetshop.cl`, alojada en Servidor-BYL con Docker, Post
 
 ## Estado comercial
 
-El catálogo y carrito muestran el stock y precios por talla. El checkout acepta invitados, recalcula precios y cupones en PostgreSQL, reserva unidades y redirige a Mercado Pago Checkout Pro. El botón de pago permanece deshabilitado hasta aprobar una compra de prueba completa y configurar el aviso por correo. El envío cuesta $5.000 a todo Chile.
+El catálogo y carrito muestran el stock y precios por talla. El checkout acepta invitados, exige elegir envío a todo Chile por $5.000 o retiro sin costo en Viña del Mar, recalcula precios y cupones en PostgreSQL, reserva unidades y redirige a Mercado Pago Checkout Pro. El aviso de pedido pagado llega a Antonela con los datos de contacto y la modalidad de entrega.
 
 ## Para comenzar a vender
 

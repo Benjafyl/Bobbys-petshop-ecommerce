@@ -2,6 +2,7 @@ import { createHmac } from "node:crypto";
 import { describe, expect, it, vi } from "vitest";
 import { createPreference, isMercadoPagoCheckoutUrl, validWebhook } from "@/lib/mercadopago";
 import { CheckoutRejected, parseCheckoutInput } from "@/lib/shop-payments";
+import { deliveryFeeClp } from "@/lib/shipping";
 
 describe("integración de cobro", () => {
   it("acepta solo enlaces HTTPS propios de Mercado Pago", () => {
@@ -83,9 +84,15 @@ describe("integración de cobro", () => {
   });
 
   it("rechaza artículos duplicados y datos incompletos antes de crear un pedido", () => {
-    const valid = { givenName: "Ana", familyName: "Díaz", email: "ana@example.cl", phone: "+56912345678", address: "Calle 1", city: "Santiago", region: "Metropolitana de Santiago", cart: [{ variantId: "variant-1", quantity: 1 }] };
+    const valid = { givenName: "Ana", familyName: "Díaz", email: "ana@example.cl", phone: "+56912345678", deliveryMethod: "shipping", address: "Calle 1", city: "Santiago", region: "Metropolitana de Santiago", cart: [{ variantId: "variant-1", quantity: 1 }] };
     expect(parseCheckoutInput(valid).email).toBe("ana@example.cl");
     expect(() => parseCheckoutInput({ ...valid, cart: [...valid.cart, ...valid.cart] })).toThrow(CheckoutRejected);
     expect(() => parseCheckoutInput({ ...valid, address: "" })).toThrow(CheckoutRejected);
+    expect(() => parseCheckoutInput({ ...valid, deliveryMethod: "" })).toThrow(CheckoutRejected);
+    expect(parseCheckoutInput({ ...valid, deliveryMethod: "pickup", address: "", city: "", region: "" })).toMatchObject({
+      deliveryMethod: "pickup", address: "Av. Edmundo Eluchans 2066", city: "Viña del Mar", region: "Valparaíso",
+    });
+    expect(deliveryFeeClp("pickup")).toBe(0);
+    expect(deliveryFeeClp("shipping")).toBe(5000);
   });
 });

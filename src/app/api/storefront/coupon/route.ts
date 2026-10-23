@@ -23,6 +23,6 @@ export async function POST(request: Request) {
     const coupon = result.rows[0];
     if (!coupon || subtotal < coupon.minimum_clp || (coupon.usage_limit !== null && coupon.used_count >= coupon.usage_limit)) return NextResponse.json({ valid: false, message: "Código no disponible para este carrito." });
     const discount = Math.min(subtotal, coupon.kind === "PERCENT" ? Math.floor(subtotal * coupon.amount / 100) : coupon.amount);
-    return NextResponse.json({ valid: true, code, discountClp: discount, subtotalClp: subtotal, shippingClp: SHIPPING_FEE_CLP, totalClp: subtotal + SHIPPING_FEE_CLP - discount }, { headers: { "Cache-Control": "no-store" } });
+    return NextResponse.json({ valid: true, code, discountClp: discount, subtotalClp: subtotal, pickupTotalClp: subtotal - discount, shippingTotalClp: subtotal + SHIPPING_FEE_CLP - discount }, { headers: { "Cache-Control": "no-store" } });
   } catch { return NextResponse.json({ valid: false, message: "No pudimos revisar el código. Inténtalo más tarde." }, { status: 503 }); }
 }

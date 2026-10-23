@@ -27,6 +27,7 @@ create table if not exists shop_orders (
   delivery_address text not null default '',
   delivery_city text not null default '',
   delivery_region text not null default '',
+  delivery_method text not null default 'shipping' check (delivery_method in ('shipping','pickup')),
   status text not null default 'PENDING' check (status in ('PENDING','PAID','PREPARING','READY','SHIPPED','DELIVERED','CANCELLED','REFUNDED')),
   payment_status text not null default 'PENDING' check (payment_status in ('PENDING','PAID','FAILED','REFUNDED')),
   payment_method text,
@@ -50,6 +51,7 @@ alter table shop_orders add column if not exists payment_preference_id text;
 alter table shop_orders add column if not exists reservation_expires_at timestamptz;
 alter table shop_orders add column if not exists reservation_released_at timestamptz;
 alter table shop_orders add column if not exists paid_at timestamptz;
+alter table shop_orders add column if not exists delivery_method text not null default 'shipping' check (delivery_method in ('shipping','pickup'));
 create unique index if not exists shop_orders_payment_reference_idx on shop_orders(payment_reference) where payment_reference is not null;
 
 create table if not exists shop_order_notifications (

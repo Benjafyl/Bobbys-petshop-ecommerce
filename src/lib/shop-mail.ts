@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 import { db } from "@/lib/db";
 import { formatClp } from "@/lib/public-inventory";
+import { PICKUP_LOCATION } from "@/lib/shipping";
 
 export async function sendPendingOrderNotifications() {
   const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD, SMTP_FROM, ORDER_NOTIFICATION_EMAIL } = process.env;
@@ -8,8 +9,8 @@ export async function sendPendingOrderNotifications() {
   const client = await db().connect();
   try {
     await client.query("begin");
-    const found = await client.query<{ order_id: string; order_number: string; customer_name: string; customer_email: string; customer_phone: string; delivery_address: string; delivery_city: string; delivery_region: string; total_clp: number }>(
-      `select n.order_id,o.order_number,o.customer_name,o.customer_email,o.customer_phone,o.delivery_address,o.delivery_city,o.delivery_region,o.total_clp
+    const found = await client.query<{ order_id: string; order_number: string; customer_name: string; customer_email: string; customer_phone: string; delivery_address: string; delivery_city: string; delivery_region: string; delivery_method: "shipping" | "pickup"; payment_method: string | null; shipping_clp: number; total_clp: number }>(
+      `select n.order_id,o.order_number,o.customer_name,o.customer_email,o.customer_phone,o.delivery_address,o.delivery_city,o.delivery_region,o.delivery_method,o.payment_method,o.shipping_clp,o.total_clp
        from shop_order_notifications n join shop_orders o on o.id=n.order_id
        where n.sent_at is null and o.payment_status='PAID' order by n.created_at limit 1 for update of n skip locked`,
     );
@@ -20,7 +21,9 @@ export async function sendPendingOrderNotifications() {
       `Pedido pagado ${order.order_number}`,
       `Cliente: ${order.customer_name} (${order.customer_email})`,
       `Teléfono: ${order.customer_phone}`,
-      `Envío: ${order.delivery_address}, ${order.delivery_city}, ${order.delivery_region}`,
+      order.delivery_method === "pickup" ? `Retiro sin costo: ${PICKUP_LOCATION}` : `Envío: ${order.delivery_address}, ${order.delivery_city}, ${order.delivery_region}`,
+      `Costo de envío: ${formatClp(order.shipping_clp)}`,
+      `Pago: ${order.payment_method ?? "Mercado Pago"}`,
       `Total: ${formatClp(order.total_clp)}`,
       "Prendas:",
       ...items.rows.map((item) => `${item.quantity} × ${item.product_name} · ${item.design ? item.design + " · " : ""}Talla ${item.size}`),

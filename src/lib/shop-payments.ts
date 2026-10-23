@@ -2,7 +2,7 @@ import { randomUUID } from "node:crypto";
 import { db } from "@/lib/db";
 import { getOfficialProduct } from "@/lib/official-catalog";
 import { createPreference, searchOrderPayments, type MpPayment } from "@/lib/mercadopago";
-import { SHIPPING_FEE_CLP } from "@/lib/shipping";
+import { deliveryFeeClp, PICKUP_ADDRESS, PICKUP_CITY, PICKUP_REGION, type DeliveryMethod } from "@/lib/shipping";
 import { sendPendingOrderNotifications } from "@/lib/shop-mail";
 
 export class CheckoutRejected extends Error {}
@@ -12,6 +12,7 @@ type CheckoutInput = {
   familyName: string;
   email: string;
   phone: string;
+  deliveryMethod: DeliveryMethod;
   address: string;
   addressExtra: string;
   city: string;
@@ -26,14 +27,23 @@ const clean = (value: unknown, limit: number) => typeof value === "string" ? val
 export function parseCheckoutInput(value: unknown): CheckoutInput {
   if (!value || typeof value !== "object") throw new CheckoutRejected("Revisa los datos de entrega.");
   const body = value as Record<string, unknown>;
+  if (body.deliveryMethod !== "shipping" && body.deliveryMethod !== "pickup") throw new CheckoutRejected("Elige envío o retiro antes de pagar.");
   const input: CheckoutInput = {
     givenName: clean(body.givenName, 80), familyName: clean(body.familyName, 80),
     email: clean(body.email, 254).toLowerCase(), phone: clean(body.phone, 40),
+    deliveryMethod: body.deliveryMethod,
     address: clean(body.address, 180), addressExtra: clean(body.addressExtra, 180),
     city: clean(body.city, 100), region: clean(body.region, 100),
     couponCode: clean(body.couponCode, 32).toUpperCase(), cart: [],
   };
-  if (!input.givenName || !input.familyName || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.email) || !input.phone || !input.address || !input.city || !input.region) throw new CheckoutRejected("Completa nombre, correo, teléfono y dirección de envío.");
+  if (!input.givenName || !input.familyName || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.email) || !input.phone) throw new CheckoutRejected("Completa nombre, correo y teléfono.");
+  if (input.deliveryMethod === "shipping" && (!input.address || !input.city || !input.region)) throw new CheckoutRejected("Completa la dirección para el envío.");
+  if (input.deliveryMethod === "pickup") {
+    input.address = PICKUP_ADDRESS;
+    input.addressExtra = "";
+    input.city = PICKUP_CITY;
+    input.region = PICKUP_REGION;
+  }
   if (!Array.isArray(body.cart) || body.cart.length < 1 || body.cart.length > 30) throw new CheckoutRejected("Revisa tu carrito.");
   const seen = new Set<string>();
   for (const entry of body.cart) {
@@ -77,11 +87,12 @@ export async function createCheckout(input: CheckoutInput) {
       }
       discount = Math.min(subtotal, coupon.kind === "PERCENT" ? Math.floor(subtotal * coupon.amount / 100) : coupon.amount);
     }
-    const total = subtotal + SHIPPING_FEE_CLP - discount;
-    await client.query(`insert into shop_orders(id,order_number,user_id,customer_name,customer_email,customer_phone,delivery_address,delivery_city,delivery_region,subtotal_clp,shipping_clp,discount_clp,discount_code,reservation_expires_at,payment_method)
-      values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,'Mercado Pago')`,
+    const shippingClp = deliveryFeeClp(input.deliveryMethod);
+    const total = subtotal + shippingClp - discount;
+    await client.query(`insert into shop_orders(id,order_number,user_id,customer_name,customer_email,customer_phone,delivery_address,delivery_city,delivery_region,delivery_method,subtotal_clp,shipping_clp,discount_clp,discount_code,reservation_expires_at,payment_method)
+      values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,'Mercado Pago')`,
       [orderId, orderNumber, input.userId ?? null, `${input.givenName} ${input.familyName}`, input.email, input.phone,
-        [input.address, input.addressExtra].filter(Boolean).join(", "), input.city, input.region, subtotal, SHIPPING_FEE_CLP, discount, input.couponCode || null, expiresAt]);
+        [input.address, input.addressExtra].filter(Boolean).join(", "), input.city, input.region, input.deliveryMethod, subtotal, shippingClp, discount, input.couponCode || null, expiresAt]);
     for (const item of inventory.rows) {
       const quantity = quantities.get(item.variant_key)!;
       const name = getOfficialProduct(item.product_slug)!.name;

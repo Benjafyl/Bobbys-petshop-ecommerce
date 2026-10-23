@@ -60,8 +60,9 @@ export async function updateOrderStatus(form: FormData) {
   let rejection = "";
   try {
     await client.query("begin");
-    const previous = await client.query<{ status: string; payment_status: string }>("select status,payment_status from shop_orders where id=$1 for update", [orderId]);
+    const previous = await client.query<{ status: string; payment_status: string; delivery_method: string }>("select status,payment_status,delivery_method from shop_orders where id=$1 for update", [orderId]);
     if (!previous.rowCount) throw new ActionRejected("Pedido no encontrado.");
+    if (status === "SHIPPED" && previous.rows[0].delivery_method === "pickup") throw new ActionRejected("Un pedido para retiro no se puede marcar como enviado.");
     if (status !== "CANCELLED" && previous.rows[0].payment_status !== "PAID") throw new ActionRejected("Solo se puede preparar o enviar un pedido con pago confirmado.");
     if (status === "CANCELLED" && previous.rows[0].payment_status === "PAID") throw new ActionRejected("Reembolsa el cobro en Mercado Pago antes de cancelar el pedido.");
     if (status === "CANCELLED" && previous.rows[0].payment_status === "PENDING") throw new ActionRejected("El pago aún puede confirmarse. Espera a que venza la reserva.");

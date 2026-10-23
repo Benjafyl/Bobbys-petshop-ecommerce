@@ -89,7 +89,7 @@ export async function createCheckout(input: CheckoutInput) {
       await client.query("update shop_inventory set stock_on_hand=stock_on_hand-$2,updated_at=now() where variant_key=$1", [item.variant_key, quantity]);
       await client.query("insert into shop_stock_movements(variant_key,before_units,after_units,reason) values($1,$2,$3,$4)", [item.variant_key, item.stock_on_hand, item.stock_on_hand - quantity, `Reserva pedido ${orderNumber}`]);
     }
-    const preference = await createPreference({ orderId, orderNumber, email: input.email, total, expiresAt });
+    const preference = await createPreference({ orderId, orderNumber, givenName: input.givenName, familyName: input.familyName, email: input.email, total, expiresAt });
     await client.query("update shop_orders set payment_preference_id=$2 where id=$1", [orderId, preference.id]);
     await client.query("commit");
     return { orderId, orderNumber, checkoutUrl: preference.url };

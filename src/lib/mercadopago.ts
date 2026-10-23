@@ -38,6 +38,8 @@ export type MpPayment = {
 export async function createPreference(input: {
   orderId: string;
   orderNumber: string;
+  givenName: string;
+  familyName: string;
   email: string;
   total: number;
   expiresAt: Date;
@@ -48,7 +50,8 @@ export async function createPreference(input: {
     method: "POST",
     body: JSON.stringify({
       items: [{ id: input.orderId, title: `Pedido Bobby's ${input.orderNumber}`, currency_id: "CLP", quantity: 1, unit_price: input.total }],
-      payer: { email: input.email },
+      payer: { email: input.email, name: input.givenName, surname: input.familyName },
+      statement_descriptor: "BOBBYS PET SHOP",
       external_reference: input.orderId,
       back_urls: {
         success: `${base}/pago/resultado?pedido=${input.orderId}`,
@@ -61,8 +64,8 @@ export async function createPreference(input: {
       expiration_date_from: new Date().toISOString(),
       expiration_date_to: input.expiresAt.toISOString(),
     }),
-  }) as { id?: string; init_point?: string; sandbox_init_point?: string };
-  const url = process.env.MERCADOPAGO_ACCESS_TOKEN?.startsWith("TEST-") ? result.sandbox_init_point : result.init_point;
+  }) as { id?: string; init_point?: string };
+  const url = result.init_point;
   if (!result.id || !url || !isMercadoPagoCheckoutUrl(url)) throw new Error("Mercado Pago no devolvió una URL de pago válida");
   return { id: result.id, url };
 }

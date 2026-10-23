@@ -24,19 +24,21 @@ describe("integración de cobro", () => {
     } finally { process.env.MERCADOPAGO_WEBHOOK_SECRET = oldSecret; }
   });
 
-  it("usa init_point también con credenciales de prueba y envía la referencia del pedido", async () => {
+  it("usa sandbox_init_point en pruebas y envía la referencia del pedido", async () => {
     const oldToken = process.env.MERCADOPAGO_ACCESS_TOKEN;
+    const oldEnvironment = process.env.MERCADOPAGO_ENVIRONMENT;
     const oldSiteUrl = process.env.NEXT_PUBLIC_SITE_URL;
     const oldAuthUrl = process.env.BETTER_AUTH_URL;
     process.env.MERCADOPAGO_ACCESS_TOKEN = "TEST-example";
+    process.env.MERCADOPAGO_ENVIRONMENT = "test";
     process.env.NEXT_PUBLIC_SITE_URL = "https://bobbyspetshop.cl";
     process.env.BETTER_AUTH_URL = "https://pruebas.example.cl";
     const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response(JSON.stringify({
-      id: "pref-1", init_point: "https://www.mercadopago.cl/checkout/v1/redirect?id=pref-1",
+      id: "pref-1", init_point: "https://www.mercadopago.cl/checkout/v1/redirect?id=pref-1", sandbox_init_point: "https://sandbox.mercadopago.cl/checkout/v1/redirect?id=pref-1",
     }), { status: 200 }));
     try {
       const result = await createPreference({ orderId: "order-1", orderNumber: "BPS-1", givenName: "Ana", familyName: "Díaz", email: "ana@example.cl", total: 10500, expiresAt: new Date(Date.now() + 3600000) });
-      expect(result.url).toContain("mercadopago.cl");
+      expect(result.url).toBe("https://sandbox.mercadopago.cl/checkout/v1/redirect?id=pref-1");
       const body = JSON.parse(String(fetchMock.mock.calls[0][1]?.body));
       expect(body.external_reference).toBe("order-1");
       expect(body.payer).toEqual({ email: "ana@example.cl", name: "Ana", surname: "Díaz" });
@@ -47,8 +49,34 @@ describe("integración de cobro", () => {
       fetchMock.mockRestore();
       if (oldToken === undefined) delete process.env.MERCADOPAGO_ACCESS_TOKEN;
       else process.env.MERCADOPAGO_ACCESS_TOKEN = oldToken;
+      if (oldEnvironment === undefined) delete process.env.MERCADOPAGO_ENVIRONMENT;
+      else process.env.MERCADOPAGO_ENVIRONMENT = oldEnvironment;
       if (oldSiteUrl === undefined) delete process.env.NEXT_PUBLIC_SITE_URL;
       else process.env.NEXT_PUBLIC_SITE_URL = oldSiteUrl;
+      if (oldAuthUrl === undefined) delete process.env.BETTER_AUTH_URL;
+      else process.env.BETTER_AUTH_URL = oldAuthUrl;
+    }
+  });
+
+  it("usa init_point de producción aunque Mercado Pago devuelva ambos enlaces", async () => {
+    const oldToken = process.env.MERCADOPAGO_ACCESS_TOKEN;
+    const oldEnvironment = process.env.MERCADOPAGO_ENVIRONMENT;
+    const oldAuthUrl = process.env.BETTER_AUTH_URL;
+    process.env.MERCADOPAGO_ACCESS_TOKEN = "APP_USR-production-example";
+    delete process.env.MERCADOPAGO_ENVIRONMENT;
+    process.env.BETTER_AUTH_URL = "https://bobbyspetshop.cl";
+    const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response(JSON.stringify({
+      id: "pref-2", init_point: "https://www.mercadopago.cl/checkout/v1/redirect?id=pref-2", sandbox_init_point: "https://sandbox.mercadopago.cl/checkout/v1/redirect?id=pref-2",
+    }), { status: 200 }));
+    try {
+      const result = await createPreference({ orderId: "order-2", orderNumber: "BPS-2", givenName: "Ana", familyName: "Díaz", email: "ana@example.cl", total: 10500, expiresAt: new Date(Date.now() + 3600000) });
+      expect(result.url).toBe("https://www.mercadopago.cl/checkout/v1/redirect?id=pref-2");
+    } finally {
+      fetchMock.mockRestore();
+      if (oldToken === undefined) delete process.env.MERCADOPAGO_ACCESS_TOKEN;
+      else process.env.MERCADOPAGO_ACCESS_TOKEN = oldToken;
+      if (oldEnvironment === undefined) delete process.env.MERCADOPAGO_ENVIRONMENT;
+      else process.env.MERCADOPAGO_ENVIRONMENT = oldEnvironment;
       if (oldAuthUrl === undefined) delete process.env.BETTER_AUTH_URL;
       else process.env.BETTER_AUTH_URL = oldAuthUrl;
     }

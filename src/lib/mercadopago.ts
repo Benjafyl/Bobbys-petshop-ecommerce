@@ -66,8 +66,8 @@ export async function createPreference(input: {
       expiration_date_from: new Date().toISOString(),
       expiration_date_to: input.expiresAt.toISOString(),
     }),
-  }) as { id?: string; init_point?: string };
-  const url = result.init_point;
+  }) as { id?: string; init_point?: string; sandbox_init_point?: string };
+  const url = process.env.MERCADOPAGO_ENVIRONMENT === "test" ? result.sandbox_init_point : result.init_point;
   if (!result.id || !url || !isMercadoPagoCheckoutUrl(url)) throw new Error("Mercado Pago no devolvió una URL de pago válida");
   return { id: result.id, url };
 }

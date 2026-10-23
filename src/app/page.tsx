@@ -247,7 +247,7 @@ export default function Home() {
 
       <section className="border-t border-[#E5DED4] bg-[#F4E8D8]">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-5 px-4 py-10 sm:px-6 md:flex-row md:items-center lg:px-8">
-          <div className="flex items-start gap-3"><Heart className="mt-1 shrink-0 text-[#B6633A]" size={24} /><div><h2 className="text-xl font-black">¿Ya encontraste su próximo look?</h2><p className="mt-1 max-w-xl text-sm leading-6 text-[#52615D]">Explora las fotos, elige la talla y agrega tus favoritos al carrito. El pago en línea llegará en una próxima etapa.</p></div></div>
+          <div className="flex items-start gap-3"><Heart className="mt-1 shrink-0 text-[#B6633A]" size={24} /><div><h2 className="text-xl font-black">¿Ya encontraste su próximo look?</h2><p className="mt-1 max-w-xl text-sm leading-6 text-[#52615D]">Elige la talla, arma tu carrito y paga de forma segura con Mercado Pago.</p></div></div>
           <Link href="/tienda" className="inline-flex shrink-0 items-center gap-2 rounded-md bg-[#243C3A] px-5 py-3 text-sm font-black text-white">Explorar con filtros <ArrowRight size={17} /></Link>
         </div>
       </section>

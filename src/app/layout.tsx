@@ -38,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang="es-CL" className={`${nunito.variable} ${fredoka.variable} h-full antialiased`}>
       <body className="min-h-full bg-[#FBF7F1] text-[#243C3A]">
-        <OfficialCartProvider liveInventoryEnabled={Boolean(process.env.DATABASE_URL)}>
+        <OfficialCartProvider liveInventoryEnabled>
           <SiteHeader />
           <main>{children}</main>
           <SiteFooter />

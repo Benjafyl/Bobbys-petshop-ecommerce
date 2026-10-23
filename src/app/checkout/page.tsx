@@ -1,3 +1,9 @@
-import { redirect } from "next/navigation";
+import type { Metadata } from "next";
+import { OfficialCheckoutPage } from "@/components/official-checkout-page";
 
-export default function CheckoutPage() { redirect("/carrito"); }
+export const metadata: Metadata = {
+  title: "Finalizar compra",
+  description: "Datos de entrega y resumen de compra en Bobby's Pet Shop.",
+};
+
+export default function CheckoutPage() { return <OfficialCheckoutPage />; }

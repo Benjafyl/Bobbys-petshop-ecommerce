@@ -3,6 +3,7 @@ import { Fredoka, Nunito } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { OfficialCartProvider } from "@/components/official-cart-provider";
+import { WhatsAppFloatingButton } from "@/components/whatsapp-floating-button";
 import "./globals.css";
 
 const nunito = Nunito({
@@ -42,6 +43,7 @@ export default function RootLayout({
           <SiteHeader />
           <main>{children}</main>
           <SiteFooter />
+          <WhatsAppFloatingButton />
         </OfficialCartProvider>
       </body>
     </html>

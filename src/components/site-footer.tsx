@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Mail, MessageCircle } from "lucide-react";
+import { Mail } from "lucide-react";
 import { InstagramIcon } from "@/components/instagram-icon";
-import { instagramProfileUrl } from "@/lib/social";
+import { instagramProfileUrl, whatsappProfileUrl } from "@/lib/social";
 
 export function SiteFooter() {
   return (
@@ -29,9 +29,9 @@ export function SiteFooter() {
             Contacto
           </p>
           <div className="mt-3 flex gap-2">
-            <Link className="rounded-full bg-white/10 p-2" href="/contacto" aria-label="Contacto">
-              <MessageCircle size={18} />
-            </Link>
+            {whatsappProfileUrl && <a className="rounded-full bg-white/10 p-2 transition hover:bg-white/20" href={whatsappProfileUrl} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp de Bobby's Pet Shop">
+              <Image src="/whatsapp.svg" alt="" width={18} height={18} unoptimized />
+            </a>}
             <Link className="rounded-full bg-white/10 p-2" href="/contacto" aria-label="Información de contacto">
               <Mail size={18} />
             </Link>

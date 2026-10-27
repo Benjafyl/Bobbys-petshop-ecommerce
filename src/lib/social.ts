@@ -1,4 +1,5 @@
 export const instagramProfileUrl = "https://www.instagram.com/bobbys.cl/";
+export const whatsappProfileUrl = "https://wa.me/56992970756";
 
 export const instagramReels = [
   {

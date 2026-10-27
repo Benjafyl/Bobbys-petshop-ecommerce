@@ -111,7 +111,7 @@ export default function Home() {
           </div>
           <div className="hero-overlay pointer-events-none absolute inset-0" />
           <div className="absolute inset-0 z-10 flex flex-col items-center justify-end px-5 pb-8 text-center text-white sm:justify-center sm:px-8 sm:pb-0">
-            <h1 className="max-w-3xl text-balance text-[2rem] font-black leading-[1.06] drop-shadow-lg sm:text-5xl lg:text-6xl">Ropa para perros con estilo.</h1>
+            <h1 className="max-w-3xl text-balance text-[2rem] font-black leading-[1.06] drop-shadow-lg sm:text-5xl lg:text-6xl">Ropa para mascotas con estilo.</h1>
             <p className="mt-3 max-w-xl text-balance text-sm font-semibold leading-5 drop-shadow-md sm:mt-4 sm:text-lg sm:leading-7">Parkas, chalecos y accesorios para mascotas en Chile.</p>
             <Link href="#coleccion" className="mt-5 inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-white px-5 text-sm font-black text-[#243C3A] shadow-lg transition-colors duration-200 hover:bg-[#F4E8D8] sm:mt-7 sm:min-h-12 sm:px-6">Ver colección <ArrowDown size={18} /></Link>
           </div>

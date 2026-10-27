@@ -4,7 +4,7 @@ Tienda Next.js para `bobbyspetshop.cl`, alojada en Servidor-BYL con Docker, Post
 
 ## Estado comercial
 
-El catálogo y carrito muestran el stock y precios por talla. El checkout acepta invitados, exige elegir envío a todo Chile por $5.000 o retiro sin costo en Viña del Mar, recalcula precios y cupones en PostgreSQL, reserva unidades y redirige a Mercado Pago Checkout Pro. El aviso de pedido pagado llega a Antonela con los datos de contacto y la modalidad de entrega.
+El catálogo y carrito muestran el stock y precios por talla. El checkout acepta invitados, exige elegir envío a todo Chile por $5.000 o retiro sin costo en Viña del Mar, recalcula precios y cupones en PostgreSQL y redirige a Mercado Pago Checkout Pro. El stock se descuenta solo cuando Mercado Pago confirma el pago; si ya no quedan unidades, el pedido pagado queda señalado para resolución en el panel y en el correo de Antonela. El aviso de pedido pagado incluye los datos de contacto y la modalidad de entrega.
 
 ## Para comenzar a vender
 
@@ -20,6 +20,7 @@ El catálogo y carrito muestran el stock y precios por talla. El checkout acepta
 - `postgres`: base exclusiva `bobbys_petshop`, sin puerto PostgreSQL público.
 - `db/shop.sql`: tablas de inventario, pedidos, cupones y auditoría; carga inicial de 23 variantes. No sobrescribe el stock al reiniciar.
 - `scripts/migrate.mjs`: crea tablas de autenticación y aplica el esquema de tienda antes de iniciar la web.
+- `scripts/reconcile-legacy-stock.mjs`: después de desplegar el cambio de inventario, revisar en modo lectura los pedidos pendientes creados por el flujo anterior; ejecutar una sola vez con `--apply` para devolver las unidades retenidas sin pago aprobado. Consulta Mercado Pago antes de cada pedido y no modifica pedidos ya pagados.
 - `docker-compose.yml`: conecta la web a `dokploy-network`, que usa Traefik. La base permanece en la red privada del proyecto.
 
 ## Desarrollo

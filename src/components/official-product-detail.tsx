@@ -3,12 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { ArrowLeft, Minus, Plus, Ruler, ShoppingBag, Truck } from "lucide-react";
+import { ArrowLeft, Minus, Plus, Ruler, ShoppingBag } from "lucide-react";
 import { useOfficialCart } from "@/components/official-cart-provider";
 import { officialCategoryLabels, type OfficialProduct } from "@/lib/official-catalog";
 import { getOfficialVariantId } from "@/lib/official-cart";
 import { formatClp } from "@/lib/public-inventory";
-import { SHIPPING_FEE_CLP } from "@/lib/shipping";
 
 function galleryImageClassName(image: OfficialProduct["images"][number]) {
   if (image.crop === "left") return "object-cover object-left";
@@ -29,7 +28,8 @@ export function OfficialProductDetail({ product }: { product: OfficialProduct })
   const [selectedVariantId, setSelectedVariantId] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [notice, setNotice] = useState("");
-  const effectiveVariantId = selectedVariantId || (inventory?.variants[0] ? getOfficialVariantId(product.slug, inventory.variants[0]) : "");
+  const defaultVariant = inventory?.variants.find((variant) => variant.units > 0) ?? inventory?.variants[0];
+  const effectiveVariantId = selectedVariantId || (defaultVariant ? getOfficialVariantId(product.slug, defaultVariant) : "");
   const selectedVariant = inventory?.variants.find((variant) => getOfficialVariantId(product.slug, variant) === effectiveVariantId);
   const inCart = cart.find((item) => item.variantId === effectiveVariantId)?.quantity ?? 0;
   const availableToAdd = Math.max(0, (selectedVariant?.units ?? 0) - inCart);
@@ -37,12 +37,12 @@ export function OfficialProductDetail({ product }: { product: OfficialProduct })
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
-      <Link href="/tienda" className="mb-6 inline-flex items-center gap-2 text-sm font-bold text-[#B6633A] hover:underline hover:underline-offset-4">
+      <Link href="/tienda" className="mb-4 inline-flex items-center gap-2 text-sm font-bold text-[#B6633A] hover:underline hover:underline-offset-4">
         <ArrowLeft size={16} /> Volver al catálogo
       </Link>
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-12">
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-12">
         <div className="min-w-0">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-[#F4E8D8]">
+          <div className="relative aspect-square overflow-hidden rounded-xl bg-[#F4E8D8] sm:aspect-[4/5]">
             {active ? <Image src={active.src} alt={active.alt} fill priority sizes="(min-width: 1024px) 50vw, 100vw" className={galleryImageClassName(active)} /> : <div className="flex h-full items-center justify-center px-8 text-center text-base font-bold uppercase tracking-[0.16em] text-[#52615D]">Fotografía del producto pendiente</div>}
             {product.images.length > 1 && <span className="absolute bottom-3 right-3 rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-[#243C3A]">{activeIndex + 1} / {product.images.length}</span>}
           </div>
@@ -55,12 +55,10 @@ export function OfficialProductDetail({ product }: { product: OfficialProduct })
               ))}
             </div>
           )}
-          {product.video && <div className="mt-8"><h2 className="mb-3 text-lg font-black text-[#243C3A]">Mírala en movimiento</h2><video controls playsInline loop preload="none" poster={product.video.poster} aria-label={product.video.label} className="max-h-[520px] w-full rounded-lg bg-[#243C3A] object-contain"><source src={product.video.src} type="video/mp4" />Tu navegador no puede reproducir este video.</video></div>}
         </div>
-        <div className="min-w-0 self-start lg:sticky lg:top-28">
+        <div id="comprar" className="min-w-0 scroll-mt-28 self-start lg:sticky lg:top-28">
           <p className="text-xs font-black uppercase tracking-[0.2em] text-[#B6633A]">{officialCategoryLabels[product.category]}</p>
           <h1 className="mt-2 text-3xl font-black leading-tight text-[#243C3A] sm:text-4xl">{product.name}</h1>
-          <p className="mt-3 text-base leading-7 text-[#52615D]">{product.description}</p>
           {bicolorOptions.some((option) => option.slug === product.slug) && (
             <div className="mt-6">
               <h2 className="text-base font-black text-[#243C3A]">Color</h2>
@@ -78,12 +76,12 @@ export function OfficialProductDetail({ product }: { product: OfficialProduct })
             </div>
           )}
           {inventory ? (
-            <div className="mt-6 rounded-xl border border-[#E5DED4] bg-white p-5 shadow-sm sm:p-7">
+            <div className="mt-5 rounded-xl border border-[#E5DED4] bg-white p-4 shadow-sm sm:p-6">
               <div className="flex flex-wrap items-end justify-between gap-3 border-b border-[#E5DED4] pb-5">
                 <div><p className="text-xs font-black uppercase tracking-[0.14em] text-[#52615D]">Precio</p><p className="mt-1 text-3xl font-black text-[#243C3A]" aria-live="polite">{selectedVariant ? formatClp(selectedVariant.priceClp) : "—"}</p></div>
                 <span className="rounded-full bg-[#EAF3EB] px-3 py-1.5 text-xs font-bold text-[#245C43]">{selectedVariant?.units === 0 ? "Agotado" : ready && availableToAdd === 0 ? "En tu carrito" : "Disponible"}</span>
               </div>
-              <div className="mt-6">
+              <div className="mt-4">
                 <h2 className="text-base font-black text-[#243C3A]">{hasDesignChoices ? "Elige tu diseño" : "Elige tu talla"}</h2>
                 <div className={`mt-3 grid gap-2 ${hasDesignChoices ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-3 sm:grid-cols-4"}`} aria-label={hasDesignChoices ? "Diseños disponibles" : "Tallas disponibles"}>
                   {inventory.variants.map((variant) => {
@@ -101,7 +99,7 @@ export function OfficialProductDetail({ product }: { product: OfficialProduct })
                     );
                   })}
                 </div>
-                {product.category !== "accesorios" && <Link href="/guia-de-tallas" className="mt-3 inline-flex items-center gap-2 text-sm font-bold text-[#B6633A] hover:underline hover:underline-offset-4"><Ruler size={16} />{product.category === "abrigos" ? "Ver medidas de las parkas" : "¿Qué talla necesita mi perro?"}</Link>}
+                {product.category !== "accesorios" && <Link href="/guia-de-tallas" className="mt-3 inline-flex items-center gap-2 text-sm font-bold text-[#B6633A] hover:underline hover:underline-offset-4"><Ruler size={16} /> Ver guía de tallas</Link>}
               </div>
               <div className="mt-6 border-t border-[#E5DED4] pt-5">
                 {availableToAdd > 0 ? <div className="flex flex-wrap gap-3">
@@ -112,12 +110,11 @@ export function OfficialProductDetail({ product }: { product: OfficialProduct })
                   </div>
                   <button type="button" disabled={!ready} onClick={() => { if (!selectedVariant) return; const amount = Math.min(quantity, availableToAdd); addItem(product.slug, effectiveVariantId, amount); setQuantity(1); setNotice(`${amount} ${amount === 1 ? "unidad agregada" : "unidades agregadas"} al carrito`); }} className="inline-flex h-12 min-w-48 flex-1 items-center justify-center gap-2 rounded-lg bg-[#B6633A] px-5 text-sm font-black text-white transition-colors duration-200 hover:bg-[#96502E] disabled:cursor-not-allowed disabled:opacity-50"><ShoppingBag size={18} /> Agregar al carrito</button>
                 </div> : selectedVariant?.units === 0 ? <p className="text-sm font-bold text-[#52615D]">Esta opción está agotada.</p> : <Link href="/carrito" className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-[#243C3A] px-5 text-sm font-black text-white hover:bg-[#31514E]"><ShoppingBag size={18} /> Ver en mi carrito</Link>}
-                <p className="mt-3 text-sm text-[#52615D]" aria-live="polite">{notice || (selectedVariant?.units === 0 ? "Elige otra opción disponible." : availableToAdd === 0 ? "Ya agregaste todas las unidades disponibles de esta opción." : hasDesignChoices ? "Selecciona tu diseño y agrégalo al carrito." : "Selecciona tu talla y agrégala al carrito.")}</p>
+                {notice && <p className="mt-3 text-sm text-[#52615D]" aria-live="polite">{notice}</p>}
               </div>
-              <div className="mt-5 flex items-start gap-3 rounded-lg bg-[#F6F3EC] px-4 py-3 text-sm text-[#243C3A]"><Truck size={18} className="mt-0.5 shrink-0 text-[#B6633A]" /><p><strong>Envío a todo Chile por {formatClp(SHIPPING_FEE_CLP)}.</strong> Verás este costo en el carrito.</p></div>
-              <p className="mt-4 text-xs leading-5 text-[#697873]">Stock consultado al abrir la tienda. Agregar al carrito no reserva la prenda.</p>
             </div>
           ) : <div className="mt-8 rounded-lg border border-[#E5DED4] bg-white p-6"><h2 className="text-lg font-black">{inventoryError ? "Disponibilidad temporalmente no disponible" : "Producto agotado"}</h2><p className="mt-2 leading-7 text-[#52615D]">{inventoryError ? "Vuelve a intentarlo en un momento." : "Puedes explorar las fotografías de este producto mientras reponemos stock."}</p></div>}
+          <p className="mt-4 text-sm leading-6 text-[#52615D]">{product.description}</p>
         </div>
       </div>
     </section>

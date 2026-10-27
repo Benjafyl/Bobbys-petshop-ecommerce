@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, Search, ShoppingBag, Truck, UserRound } from "lucide-react";
+import { Menu, Search, ShoppingBag, UserRound } from "lucide-react";
 import { useState } from "react";
 import { useOfficialCart } from "@/components/official-cart-provider";
 import { InstagramIcon } from "@/components/instagram-icon";
@@ -89,13 +89,13 @@ export function SiteHeader() {
           </a>
         </nav>
       ) : null}
-      <div className="announcement-marquee border-t border-[#D8E4E0] bg-[#EAF1EE] py-2 text-xs font-bold text-[#243C3A]" role="note" aria-label="Envíos a todo Chile por cinco mil pesos. Arma tu carrito. Ropa para perros y accesorios.">
+      <div className="announcement-marquee border-t border-[#D8E4E0] bg-[#EAF1EE] py-2 text-xs font-bold text-[#243C3A]" role="note" aria-label="Ropa para mascotas. Parkas y chalecos con personalidad.">
         <div className="announcement-marquee-track" aria-hidden="true">
           {[0, 1].map((copy) => (
             <div key={copy} className="announcement-marquee-sequence">
-              <span className="inline-flex shrink-0 items-center gap-2"><Truck size={15} /> Envíos a todo Chile por $5.000</span>
-              <span className="shrink-0">Arma tu carrito</span>
-              <span className="shrink-0">Ropa para perros y accesorios</span>
+              <span className="shrink-0">Ropa para mascotas</span>
+              <span className="shrink-0">Parkas y chalecos con personalidad</span>
+              <span className="shrink-0">Elige su próximo look</span>
             </div>
           ))}
         </div>

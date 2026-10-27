@@ -89,16 +89,14 @@ export async function createCheckout(input: CheckoutInput) {
     }
     const shippingClp = deliveryFeeClp(input.deliveryMethod);
     const total = subtotal + shippingClp - discount;
-    await client.query(`insert into shop_orders(id,order_number,user_id,customer_name,customer_email,customer_phone,delivery_address,delivery_city,delivery_region,delivery_method,subtotal_clp,shipping_clp,discount_clp,discount_code,reservation_expires_at,payment_method)
-      values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,'Mercado Pago')`,
+    await client.query(`insert into shop_orders(id,order_number,user_id,customer_name,customer_email,customer_phone,delivery_address,delivery_city,delivery_region,delivery_method,subtotal_clp,shipping_clp,discount_clp,discount_code,reservation_expires_at,payment_method,stock_reserved_at_checkout)
+      values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,'Mercado Pago',false)`,
       [orderId, orderNumber, input.userId ?? null, `${input.givenName} ${input.familyName}`, input.email, input.phone,
         [input.address, input.addressExtra].filter(Boolean).join(", "), input.city, input.region, input.deliveryMethod, subtotal, shippingClp, discount, input.couponCode || null, expiresAt]);
     for (const item of inventory.rows) {
       const quantity = quantities.get(item.variant_key)!;
       const name = getOfficialProduct(item.product_slug)!.name;
       await client.query("insert into shop_order_items(order_id,variant_key,product_name,size,design,quantity,unit_price_clp) values($1,$2,$3,$4,$5,$6,$7)", [orderId, item.variant_key, name, item.size, item.design, quantity, item.price_clp]);
-      await client.query("update shop_inventory set stock_on_hand=stock_on_hand-$2,updated_at=now() where variant_key=$1", [item.variant_key, quantity]);
-      await client.query("insert into shop_stock_movements(variant_key,before_units,after_units,reason) values($1,$2,$3,$4)", [item.variant_key, item.stock_on_hand, item.stock_on_hand - quantity, `Reserva pedido ${orderNumber}`]);
     }
     const preference = await createPreference({ orderId, orderNumber, givenName: input.givenName, familyName: input.familyName, email: input.email, total, expiresAt });
     await client.query("update shop_orders set payment_preference_id=$2 where id=$1", [orderId, preference.id]);
@@ -115,14 +113,27 @@ export async function recordVerifiedPayment(payment: MpPayment) {
   const client = await db().connect();
   try {
     await client.query("begin");
-    const result = await client.query<{ id: string; total_clp: number; payment_status: string; reservation_released_at: Date | null; discount_code: string | null }>(
-      "select id,total_clp,payment_status,reservation_released_at,discount_code from shop_orders where id=$1 for update", [payment.external_reference],
+    const result = await client.query<{ id: string; order_number: string; total_clp: number; payment_status: string; reservation_released_at: Date | null; stock_reserved_at_checkout: boolean; discount_code: string | null }>(
+      "select id,order_number,total_clp,payment_status,reservation_released_at,stock_reserved_at_checkout,discount_code from shop_orders where id=$1 for update", [payment.external_reference],
     );
     const order = result.rows[0];
     if (!order || payment.currency_id !== "CLP" || Number(payment.transaction_amount) !== order.total_clp) { await client.query("rollback"); return false; }
-    if (payment.status === "approved" && order.payment_status === "PENDING") {
-      await client.query(`update shop_orders set payment_status='PAID',status='PAID',payment_reference=$2,payment_method=$3,paid_at=now(),updated_at=now(),notes=case when reservation_released_at is not null then notes || ' Pago tardío: revisar stock.' else notes end where id=$1`,
-        [order.id, String(payment.id), `Mercado Pago${payment.payment_method_id ? ` · ${payment.payment_method_id}` : ""}`]);
+    if (payment.status === "approved" && (order.payment_status === "PENDING" || order.payment_status === "FAILED")) {
+      let stockIssue = false;
+      if (!order.stock_reserved_at_checkout || order.reservation_released_at) {
+        const items = await client.query<{ variant_key: string; quantity: number }>(
+          "select variant_key,sum(quantity)::integer as quantity from shop_order_items where order_id=$1 group by variant_key order by variant_key", [order.id],
+        );
+        for (const item of items.rows) {
+          const inventory = await client.query<{ stock_on_hand: number }>("select stock_on_hand from shop_inventory where variant_key=$1 for update", [item.variant_key]);
+          const before = inventory.rows[0]?.stock_on_hand;
+          if (before === undefined || before < item.quantity) { stockIssue = true; continue; }
+          await client.query("update shop_inventory set stock_on_hand=stock_on_hand-$2,updated_at=now() where variant_key=$1", [item.variant_key, item.quantity]);
+          await client.query("insert into shop_stock_movements(variant_key,before_units,after_units,reason) values($1,$2,$3,$4)", [item.variant_key, before, before - item.quantity, `Pago confirmado ${order.order_number}`]);
+        }
+      }
+      await client.query(`update shop_orders set payment_status='PAID',status='PAID',payment_reference=$2,payment_method=$3,paid_at=now(),updated_at=now(),stock_issue=$4,notes=case when $4 then notes || ' Stock insuficiente al confirmar el pago: resolver en administración.' else notes end where id=$1`,
+        [order.id, String(payment.id), `Mercado Pago${payment.payment_method_id ? ` · ${payment.payment_method_id}` : ""}`, stockIssue]);
       if (order.discount_code) await client.query("update shop_coupons set used_count=used_count+1,updated_at=now() where code=$1", [order.discount_code]);
       await client.query("insert into shop_audit_logs(action,entity_id,after_data) values('payment.approved',$1,$2)", [order.id, { paymentId: String(payment.id) }]);
       await client.query("insert into shop_order_notifications(order_id) values($1) on conflict do nothing", [order.id]);
@@ -145,14 +156,16 @@ export async function releaseExpiredReservations() {
     const client = await db().connect();
     try {
       await client.query("begin");
-      const order = await client.query<{ id: string; order_number: string }>("select id,order_number from shop_orders where id=$1 and payment_status='PENDING' and reservation_released_at is null and reservation_expires_at < now() - interval '24 hours' for update", [id]);
+      const order = await client.query<{ id: string; order_number: string; stock_reserved_at_checkout: boolean }>("select id,order_number,stock_reserved_at_checkout from shop_orders where id=$1 and payment_status='PENDING' and reservation_released_at is null and reservation_expires_at < now() - interval '24 hours' for update", [id]);
       if (order.rows[0]) {
-        const items = await client.query<{ variant_key: string; quantity: number }>("select variant_key,quantity from shop_order_items where order_id=$1", [id]);
-        for (const item of items.rows) {
-          const restored = await client.query<{ stock_on_hand: number }>("update shop_inventory set stock_on_hand=stock_on_hand+$2,updated_at=now() where variant_key=$1 returning stock_on_hand", [item.variant_key, item.quantity]);
-          if (restored.rows[0]) {
-            const after = restored.rows[0].stock_on_hand;
-            await client.query("insert into shop_stock_movements(variant_key,before_units,after_units,reason) values($1,$2,$3,$4)", [item.variant_key, after - item.quantity, after, `Reserva vencida ${order.rows[0].order_number}`]);
+        if (order.rows[0].stock_reserved_at_checkout) {
+          const items = await client.query<{ variant_key: string; quantity: number }>("select variant_key,quantity from shop_order_items where order_id=$1", [id]);
+          for (const item of items.rows) {
+            const restored = await client.query<{ stock_on_hand: number }>("update shop_inventory set stock_on_hand=stock_on_hand+$2,updated_at=now() where variant_key=$1 returning stock_on_hand", [item.variant_key, item.quantity]);
+            if (restored.rows[0]) {
+              const after = restored.rows[0].stock_on_hand;
+              await client.query("insert into shop_stock_movements(variant_key,before_units,after_units,reason) values($1,$2,$3,$4)", [item.variant_key, after - item.quantity, after, `Reserva vencida ${order.rows[0].order_number}`]);
+            }
           }
         }
         await client.query("update shop_orders set reservation_released_at=now(),payment_status='FAILED',status='CANCELLED',updated_at=now() where id=$1", [id]);

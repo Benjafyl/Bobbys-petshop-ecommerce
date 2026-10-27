@@ -41,6 +41,7 @@ describe("integración de cobro", () => {
       const result = await createPreference({ orderId: "order-1", orderNumber: "BPS-1", givenName: "Ana", familyName: "Díaz", email: "ana@example.cl", total: 10500, expiresAt: new Date(Date.now() + 3600000) });
       expect(result.url).toBe("https://sandbox.mercadopago.cl/checkout/v1/redirect?id=pref-1");
       const body = JSON.parse(String(fetchMock.mock.calls[0][1]?.body));
+      expect((fetchMock.mock.calls[0][1]?.headers as Record<string, string>)["X-Idempotency-Key"]).toBe("order-1");
       expect(body.external_reference).toBe("order-1");
       expect(body.payer).toEqual({ email: "ana@example.cl", name: "Ana", surname: "Díaz" });
       expect(body.statement_descriptor).toBe("BOBBYS PET SHOP");

@@ -35,6 +35,8 @@ create table if not exists shop_orders (
   payment_preference_id text,
   reservation_expires_at timestamptz,
   reservation_released_at timestamptz,
+  stock_reserved_at_checkout boolean not null default true,
+  stock_issue boolean not null default false,
   paid_at timestamptz,
   subtotal_clp integer not null check (subtotal_clp >= 0),
   shipping_clp integer not null default 5000 check (shipping_clp >= 0),
@@ -50,6 +52,8 @@ create index if not exists shop_orders_user_idx on shop_orders(user_id,created_a
 alter table shop_orders add column if not exists payment_preference_id text;
 alter table shop_orders add column if not exists reservation_expires_at timestamptz;
 alter table shop_orders add column if not exists reservation_released_at timestamptz;
+alter table shop_orders add column if not exists stock_reserved_at_checkout boolean not null default true;
+alter table shop_orders add column if not exists stock_issue boolean not null default false;
 alter table shop_orders add column if not exists paid_at timestamptz;
 alter table shop_orders add column if not exists delivery_method text not null default 'shipping' check (delivery_method in ('shipping','pickup'));
 create unique index if not exists shop_orders_payment_reference_idx on shop_orders(payment_reference) where payment_reference is not null;

@@ -50,6 +50,7 @@ export async function createPreference(input: {
   if (!base || !base.startsWith("https://")) throw new Error("URL pública de la tienda no configurada");
   const result = await mpFetch("/checkout/preferences", {
     method: "POST",
+    headers: { "X-Idempotency-Key": input.orderId },
     body: JSON.stringify({
       items: [{ id: input.orderId, title: `Pedido Bobby's ${input.orderNumber}`, currency_id: "CLP", quantity: 1, unit_price: input.total }],
       payer: { email: input.email, name: input.givenName, surname: input.familyName },

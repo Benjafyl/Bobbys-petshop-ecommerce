@@ -7,7 +7,6 @@ import { ArrowLeft, Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
 import { useOfficialCart } from "@/components/official-cart-provider";
 import { getOfficialCartLines } from "@/lib/official-cart";
 import { formatClp } from "@/lib/public-inventory";
-import { SHIPPING_FEE_CLP } from "@/lib/shipping";
 
 export function OfficialCartPage() {
   const { cart, ready, inventory, inventoryError, setQuantity, removeItem, clearCart } = useOfficialCart();
@@ -19,8 +18,6 @@ export function OfficialCartPage() {
   const subtotal = lines.reduce((total, line) => total + line.lineTotal, 0);
   const signature = JSON.stringify(cart);
   const discount = appliedCoupon?.signature === signature ? appliedCoupon.discountClp : 0;
-  const pickupTotal = subtotal - discount;
-  const shippingTotal = pickupTotal + SHIPPING_FEE_CLP;
 
   async function applyCoupon(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -88,14 +85,10 @@ export function OfficialCartPage() {
         </div>
         <aside className="rounded-lg border border-[#E5DED4] bg-white p-5 lg:sticky lg:top-32">
           <h2 className="text-xl font-black text-[#243C3A]">Resumen</h2>
-          <div className="mt-5 flex justify-between gap-3 text-sm"><span>Productos ({lines.reduce((count, line) => count + line.quantity, 0)})</span><strong>{formatClp(subtotal)}</strong></div>
-          <div className="mt-3 flex justify-between gap-3 border-b border-[#E5DED4] pb-4 text-sm"><span>Entrega</span><strong>Se elige al finalizar</strong></div>
           <form onSubmit={applyCoupon} className="mt-4"><label htmlFor="shop-coupon" className="text-sm font-bold">Código de descuento</label><div className="mt-2 flex gap-2"><input id="shop-coupon" value={couponCode} onChange={(event) => setCouponCode(event.target.value)} maxLength={32} placeholder="Tu código" className="min-w-0 flex-1 rounded-md border border-[#D8CEC1] px-3 py-2 text-sm" /><button disabled={checkingCoupon || !couponCode.trim()} className="rounded-md border border-[#B6633A] px-3 py-2 text-sm font-black text-[#B6633A] disabled:opacity-50">Aplicar</button></div><p role="status" className="mt-2 text-xs text-[#52615D]">{couponMessage}</p></form>
           {discount > 0 && <div className="mt-3 flex justify-between gap-3 text-sm text-[#245C43]"><span>Descuento {appliedCoupon?.code}</span><strong>−{formatClp(discount)}</strong></div>}
-          <div className="mt-4 space-y-2 border-t border-[#E5DED4] pt-4 text-sm font-bold"><div className="flex justify-between gap-3"><span>Con retiro en Viña</span><span>{formatClp(pickupTotal)}</span></div><div className="flex justify-between gap-3"><span>Con envío</span><span>{formatClp(shippingTotal)}</span></div></div>
-          <p className="mt-4 text-sm leading-6 text-[#52615D]">Elegirás entre retiro sin costo y envío a todo Chile por {formatClp(SHIPPING_FEE_CLP)} en el siguiente paso. Agregar al carrito no reserva stock.</p>
-          <Link href={appliedCoupon?.signature === signature ? `/checkout?cupon=${encodeURIComponent(appliedCoupon.code)}` : "/checkout"} className="mt-6 flex min-h-12 w-full items-center justify-center rounded-md bg-[#B6633A] px-4 text-sm font-black text-white hover:bg-[#99502F]">Revisar datos de compra</Link>
-          <p className="mt-3 text-xs leading-5 text-[#52615D]">El stock se consulta al abrir la tienda y puede cambiar antes del pago.</p>
+          <div className="mt-4 flex justify-between gap-3 border-t border-[#E5DED4] pt-4 text-lg font-black"><span>Productos</span><span>{formatClp(subtotal - discount)}</span></div>
+          <Link href={appliedCoupon?.signature === signature ? `/checkout?cupon=${encodeURIComponent(appliedCoupon.code)}` : "/checkout"} className="mt-6 flex min-h-12 w-full items-center justify-center rounded-md bg-[#B6633A] px-4 text-sm font-black text-white hover:bg-[#99502F]">Comprar</Link>
           <Link href="/#coleccion" className="mt-5 flex min-h-11 items-center justify-center rounded-md border border-[#D8CEC1] text-sm font-black text-[#243C3A]">Seguir comprando</Link>
         </aside>
       </div>

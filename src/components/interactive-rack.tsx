@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 
 const garments = [
   { slug: "parka-bicolor-gris", name: "Parka gris", image: "/images/rack/parka-gris.png", shape: "parka" },
@@ -31,7 +30,6 @@ export function InteractiveRack() {
             <p className="rack-eyebrow">El perchero de Bobby&apos;s</p>
             <h2 id="rack-heading" className="rack-heading">Elige su próximo look.</h2>
           </div>
-          <p className="rack-instruction"><span className="hidden md:inline">Pasa el cursor para verla de frente. Haz clic para conocer sus tallas y precio.</span><span className="md:hidden">Desliza para explorar y toca una prenda para ver sus tallas y precio.</span></p>
         </div>
         <div className="rack-stage" role="group" aria-label="Parkas y chalecos para explorar">
           <div className="rack-scroll">
@@ -58,7 +56,6 @@ export function InteractiveRack() {
             </div>
           </div>
         </div>
-        <p className="rack-mobile-hint">Desliza para ver más prendas <ArrowRight size={15} aria-hidden="true" /></p>
       </div>
     </section>
   );

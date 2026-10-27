@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { OfficialQuickAdd } from "@/components/official-quick-add";
 import { officialCategoryLabels, type OfficialProduct } from "@/lib/official-catalog";
-import { formatClp, getMinimumPrice, getTotalUnits, hasMultiplePrices } from "@/lib/public-inventory";
+import { formatClp, getMinimumPrice, hasMultiplePrices } from "@/lib/public-inventory";
 import { useOfficialCart } from "@/components/official-cart-provider";
 
 export function OfficialProductCard({ product, headingLevel = "h3" }: { product: OfficialProduct; headingLevel?: "h3" | "h4" }) {
@@ -37,9 +37,6 @@ export function OfficialProductCard({ product, headingLevel = "h3" }: { product:
             {inventory ? (
               <>
                 <p className="mt-1 text-sm font-black text-[#B6633A] sm:text-base">{hasMultiplePrices(inventory) ? "Desde " : ""}{formatClp(getMinimumPrice(inventory))}</p>
-                <p className="mt-1 text-[11px] leading-4 text-[#52615D] sm:text-xs">Tallas: {[...new Set(inventory.variants.map((variant) => variant.size))].join(" · ")}</p>
-                {product.fit && <p className="mt-1 hidden text-xs font-semibold text-[#243C3A] sm:block">{product.fit}</p>}
-                <p className="mt-1 hidden text-xs font-semibold text-[#52615D] sm:block">{getTotalUnits(inventory) === 0 ? "Agotado" : getTotalUnits(inventory) === 1 ? "Última unidad disponible" : "Disponible"}</p>
               </>
             ) : <p className="mt-1 text-xs text-[#52615D] sm:text-sm">{inventoryError ? "Disponibilidad temporalmente no disponible" : "Sin unidades disponibles"}</p>}
           </div>

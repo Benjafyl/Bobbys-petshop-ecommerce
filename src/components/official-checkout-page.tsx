@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
-import { ArrowLeft, CreditCard, LockKeyhole, MapPin, Truck, Wallet } from "lucide-react";
+import { ArrowLeft, LockKeyhole, MapPin, Truck } from "lucide-react";
 import { useOfficialCart } from "@/components/official-cart-provider";
 import { getOfficialCartLines } from "@/lib/official-cart";
 import { formatClp } from "@/lib/public-inventory";
@@ -124,8 +124,11 @@ export function OfficialCheckoutPage({ checkoutEnabled, initialCoupon }: { check
               </div>}
               <div className="mt-6 border-t border-[#EEE7DF] pt-5">
                 <h3 className="text-sm font-black text-[#243C3A]">Medios de pago</h3>
-                <div className="mt-3 flex flex-wrap gap-2 text-xs font-bold text-[#243C3A]"><span className="inline-flex items-center gap-2 rounded-full bg-[#F5F1EA] px-3 py-2"><CreditCard size={16} /> Crédito</span><span className="inline-flex items-center gap-2 rounded-full bg-[#F5F1EA] px-3 py-2"><CreditCard size={16} /> Débito</span><span className="inline-flex items-center gap-2 rounded-full bg-[#F5F1EA] px-3 py-2"><Wallet size={16} /> Saldo Mercado Pago</span></div>
-                <p className="mt-3 text-xs leading-5 text-[#52615D]">Elegirás entre las opciones disponibles en el pago seguro de Mercado Pago.</p>
+                <p className="mt-2 text-sm text-[#52615D]">Tarjetas de crédito, débito y saldo Mercado Pago.</p>
+                <div className="mt-3 flex flex-wrap items-center gap-2" aria-label="Tarjetas Visa, Mastercard y American Express; otros medios disponibles al pagar">
+                  {[["visa-mp", "Visa"], ["master-mp", "Mastercard"], ["amex-mp", "American Express"]].map(([file, name]) => <span key={file} className="flex h-10 w-16 items-center justify-center rounded-lg border border-[#E5DED4] bg-white px-2"><Image src={`/images/brand/${file}.gif`} alt={name} width={48} height={28} unoptimized className="max-h-7 w-auto" /></span>)}
+                  <span className="text-xs text-[#52615D]">y otros medios en Mercado Pago</span>
+                </div>
               </div>
             </div>
           </form>

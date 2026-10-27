@@ -9,7 +9,7 @@ import { InstagramIcon } from "@/components/instagram-icon";
 import { instagramProfileUrl } from "@/lib/social";
 
 const navItems = [
-  { href: "/tienda", label: "Tienda" },
+  { href: "/tienda", label: "Catálogo" },
   { href: "/guia-de-tallas", label: "Tallas" },
   { href: "/the-boss", label: "El Jefe" },
 ];

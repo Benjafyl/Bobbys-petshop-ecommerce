@@ -59,6 +59,7 @@ export function OfficialProductDetail({ product }: { product: OfficialProduct })
         <div id="comprar" className="min-w-0 scroll-mt-28 self-start lg:sticky lg:top-28">
           <p className="text-xs font-black uppercase tracking-[0.2em] text-[#B6633A]">{officialCategoryLabels[product.category]}</p>
           <h1 className="mt-2 text-3xl font-black leading-tight text-[#243C3A] sm:text-4xl">{product.name}</h1>
+          <p className="mt-3 max-w-prose text-sm leading-6 text-[#52615D] sm:text-base">{product.description}</p>
           {bicolorOptions.some((option) => option.slug === product.slug) && (
             <div className="mt-6">
               <h2 className="text-base font-black text-[#243C3A]">Color</h2>
@@ -114,7 +115,6 @@ export function OfficialProductDetail({ product }: { product: OfficialProduct })
               </div>
             </div>
           ) : <div className="mt-8 rounded-lg border border-[#E5DED4] bg-white p-6"><h2 className="text-lg font-black">{inventoryError ? "Disponibilidad temporalmente no disponible" : "Producto agotado"}</h2><p className="mt-2 leading-7 text-[#52615D]">{inventoryError ? "Vuelve a intentarlo en un momento." : "Puedes explorar las fotografías de este producto mientras reponemos stock."}</p></div>}
-          <p className="mt-4 text-sm leading-6 text-[#52615D]">{product.description}</p>
         </div>
       </div>
     </section>

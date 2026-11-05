@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowDown, ArrowRight, Heart, Star } from "lucide-react";
 import { InstagramIcon } from "@/components/instagram-icon";
+import { InstagramReelVideo } from "@/components/instagram-reel-video";
 import { InteractiveRack } from "@/components/interactive-rack";
 import { OfficialProductCard } from "@/components/official-product-card";
 import {
@@ -127,11 +128,7 @@ export default function Home() {
             {instagramReels.map((reel) => (
               <article key={reel.id} className="min-w-0 snap-start overflow-hidden rounded-lg border border-[#E5DED4] bg-white shadow-sm">
                 <div className="relative aspect-[9/16] overflow-hidden bg-[#F4E8D8]">
-                  <video autoPlay muted loop playsInline controls preload="metadata" poster={reel.cover} aria-label={reel.label} className="h-full w-full object-cover">
-                    <source src={reel.video} type="video/mp4" />
-                    Tu navegador no puede reproducir este video.
-                  </video>
-                  <span className="pointer-events-none absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1 text-xs font-black uppercase tracking-[0.12em] text-[#243C3A]">@bobbys.cl</span>
+                  <InstagramReelVideo video={reel.video} cover={reel.cover} label={reel.label} />
                 </div>
                 <a href={reel.url} target="_blank" rel="noopener noreferrer" aria-label={`Ver ${reel.label} en Instagram`} className="flex min-h-14 items-center justify-between gap-2 px-4 text-sm font-black text-[#B6633A] transition hover:text-[#96502E]"><span className="inline-flex items-center gap-2"><InstagramIcon size={17} /> Ver reel en Instagram</span><ArrowRight size={16} /></a>
               </article>

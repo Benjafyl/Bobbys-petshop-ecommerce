@@ -24,7 +24,7 @@ function Hanger() {
 export function InteractiveRack() {
   return (
     <section aria-labelledby="rack-heading" className="rack-section border-y border-[#E5DED4]">
-      <div className="w-full px-4 py-14 sm:px-6 lg:px-8 lg:py-20 xl:px-10">
+      <div className="w-full px-4 py-9 sm:px-6 sm:py-14 lg:px-8 lg:py-20 xl:px-10">
         <div className="rack-intro">
           <div>
             <p className="rack-eyebrow">El perchero de Bobby&apos;s</p>

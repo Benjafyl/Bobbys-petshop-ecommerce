@@ -69,9 +69,7 @@ export default function SizeGuidePage() {
         </div>
       </div>
 
-      <p className="mt-4 rounded-lg bg-[#F4E8D8] p-5 text-sm leading-7 text-[#52615D]">Esta tabla es una referencia de medidas de parkas, no una lista de stock. Revisa las tallas disponibles en la ficha de cada modelo. No tenemos una medida confirmada para la talla S; la tabla también incluye XXL aunque no hay unidades XXL informadas en el inventario actual.</p>
-
-      <Link href="/#abrigos" className="mt-8 inline-flex rounded-md bg-[#B6633A] px-5 py-3 text-sm font-black text-white">Ver parkas disponibles</Link>
+      <Link href="/tienda" className="mt-8 inline-flex rounded-md bg-[#B6633A] px-5 py-3 text-sm font-black text-white">Ver catálogo</Link>
     </section>
   );
 }

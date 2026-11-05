@@ -7,7 +7,7 @@ export default function FaqPage() {
     <InfoPage eyebrow="Ayuda" title="Preguntas frecuentes">
       <div className="grid gap-5">
         <p>
-          <strong>¿Cómo se paga?</strong> Los medios de pago se informarán cuando habilitemos las compras.
+          <strong>¿Cómo se paga?</strong> Al finalizar tu compra, pagas de forma segura con Mercado Pago. Puedes elegir entre los medios disponibles, como tarjeta de crédito, débito o saldo de Mercado Pago.
         </p>
         <p>
           <strong>¿Cómo elijo talla?</strong> Mide cuello, pecho y espalda. La guía incluye una tabla
@@ -15,10 +15,6 @@ export default function FaqPage() {
         </p>
         <p>
           <strong>¿Cuánto cuesta el envío?</strong> {formatClp(SHIPPING_FEE_CLP)} por pedido a cualquier destino dentro de Chile.
-        </p>
-        <p>
-          <strong>¿Ya hay precios y tallas?</strong> Cada producto del catálogo muestra precio,
-          talla y unidades consultadas desde nuestro inventario. El stock puede cambiar antes del pago.
         </p>
       </div>
     </InfoPage>

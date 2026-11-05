@@ -4,23 +4,31 @@ import { describe, expect, it } from "vitest";
 import { officialProducts } from "@/lib/official-catalog";
 import { getTotalUnits, publicInventoryBySlug } from "@/lib/public-inventory";
 
-describe("inventario público del 19 de octubre", () => {
-  it("publica exactamente las 26 unidades vigentes y todas tienen ficha", () => {
+describe("inventario público", () => {
+  it("mantiene las fichas del catálogo, incluido el collar agotado", () => {
     const published = officialProducts.map((product) => product.slug);
     const recorded = Object.keys(publicInventoryBySlug);
 
     expect(published).toHaveLength(17);
     expect(new Set(published)).toEqual(new Set(recorded));
-    expect(recorded.reduce((total, slug) => total + getTotalUnits(publicInventoryBySlug[slug]), 0)).toBe(26);
+    expect(recorded.reduce((total, slug) => total + getTotalUnits(publicInventoryBySlug[slug]), 0)).toBe(25);
+    expect(publicInventoryBySlug["collar-murcielago"].variants[0].units).toBe(0);
+    expect(officialProducts.find((product) => product.slug === "collar-murcielago")?.showWhenSoldOut).toBe(true);
   });
 
-  it("cada variante tiene talla, precio y stock positivos", () => {
+  it("agrupa los accesorios de temporada con Halloween", () => {
+    for (const slug of ["bandana-halloween", "collar-murcielago", "collar-calabaza"]) {
+      expect(officialProducts.find((product) => product.slug === slug)?.category).toBe("halloween");
+    }
+  });
+
+  it("cada variante tiene talla, precio y stock no negativo", () => {
     for (const inventory of Object.values(publicInventoryBySlug)) {
       expect(inventory.variants.length).toBeGreaterThan(0);
       for (const variant of inventory.variants) {
         expect(variant.size.length).toBeGreaterThan(0);
         expect(variant.priceClp).toBeGreaterThan(0);
-        expect(variant.units).toBeGreaterThan(0);
+        expect(variant.units).toBeGreaterThanOrEqual(0);
         if (variant.imageSrc) {
           expect(existsSync(join(process.cwd(), "public", variant.imageSrc.slice(1))), variant.imageSrc).toBe(true);
         }

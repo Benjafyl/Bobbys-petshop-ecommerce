@@ -5,7 +5,7 @@ import { OfficialProductCard } from "@/components/official-product-card";
 import { officialCategoryLabels, officialProducts, type OfficialCategory } from "@/lib/official-catalog";
 
 type Filter = "todos" | OfficialCategory;
-const filters: Filter[] = ["todos", "abrigos", "polerones", "halloween", "accesorios"];
+const filters: Filter[] = ["todos", "abrigos", "polerones", "halloween"];
 
 export function OfficialShopClient() {
   const [filter, setFilter] = useState<Filter>("todos");

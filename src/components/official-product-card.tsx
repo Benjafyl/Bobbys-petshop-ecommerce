@@ -12,6 +12,7 @@ export function OfficialProductCard({ product, headingLevel = "h3" }: { product:
   const Heading = headingLevel;
   const { inventory: liveInventory, inventoryError } = useOfficialCart();
   const inventory = liveInventory[product.slug];
+  const soldOut = inventory ? inventory.variants.every((variant) => variant.units === 0) : false;
   const primaryImage = product.images[0];
   const alternateImage = product.images[1];
   return (
@@ -29,6 +30,7 @@ export function OfficialProductCard({ product, headingLevel = "h3" }: { product:
           <span className="absolute left-2 top-2 rounded-full bg-white/95 px-2 py-1 text-[10px] font-black uppercase tracking-[0.08em] text-[#243C3A] sm:left-3 sm:top-3 sm:px-3 sm:text-xs sm:tracking-[0.12em]">
             {officialCategoryLabels[product.category]}
           </span>
+          {soldOut && <span className="absolute bottom-2 left-2 rounded-full bg-[#243C3A] px-2 py-1 text-[10px] font-black uppercase tracking-[0.08em] text-white sm:bottom-3 sm:left-3 sm:px-3 sm:text-xs">Agotado</span>}
           {alternateImage && <span className="absolute bottom-2 right-2 rounded-full bg-white/95 px-2 py-1 text-[10px] font-bold text-[#243C3A] sm:bottom-3 sm:right-3 sm:px-3 sm:text-xs">+ fotos</span>}
         </div>
         <div className="flex flex-1 items-start justify-between gap-1.5 p-2.5 sm:gap-3 sm:p-4">

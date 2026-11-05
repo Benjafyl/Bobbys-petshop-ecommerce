@@ -39,13 +39,6 @@ const categorySections: {
     caption: "Para celebrar",
     intro: "Looks de Halloween que no pasan desapercibidos.",
   },
-  {
-    id: "accesorios",
-    image: "/images/official/bandanas-halloween-tres-disenos.jpg",
-    alt: "Los tres pañuelos de Halloween disponibles",
-    caption: "Para el detalle final",
-    intro: "Bandanas y collares para completar el look.",
-  },
 ];
 
 const heroPhotos = [
@@ -160,15 +153,15 @@ export default function Home() {
           <h2 className="mt-2 text-2xl font-black text-[#243C3A] sm:text-4xl">¿Qué le gustaría usar hoy?</h2>
           <p className="mt-3 leading-7 text-[#52615D]">Entra por una categoría o sigue bajando para ver cada producto.</p>
         </div>
-        <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+        <div className="grid grid-cols-3 gap-2 sm:gap-4">
           {categorySections.map((category) => (
             <Link key={category.id} href={`#${category.id}`} className="group overflow-hidden rounded-lg border border-[#E5DED4] bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
               <div className="relative aspect-square overflow-hidden bg-[#F4E8D8] sm:aspect-[4/5]">
-                <Image src={category.image} alt={category.alt} fill sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" className="object-cover transition duration-500 group-hover:scale-105" />
+                <Image src={category.image} alt={category.alt} fill sizes="33vw" className="object-cover transition duration-500 group-hover:scale-105" />
               </div>
-              <div className="flex items-center justify-between gap-2 p-3 sm:gap-3 sm:p-4">
-                <div><h3 className="text-base font-black sm:text-xl">{officialCategoryLabels[category.id]}</h3><p className="mt-1 hidden text-sm text-[#52615D] sm:block">{category.caption}</p></div>
-                <ArrowRight className="shrink-0 text-[#B6633A]" size={17} />
+              <div className="flex items-center justify-between gap-2 p-2 sm:gap-3 sm:p-4">
+                <div><h3 className="text-sm font-black sm:text-xl">{officialCategoryLabels[category.id]}</h3><p className="mt-1 hidden text-sm text-[#52615D] sm:block">{category.caption}</p></div>
+                <ArrowRight className="hidden shrink-0 text-[#B6633A] sm:block" size={17} />
               </div>
             </Link>
           ))}

@@ -136,6 +136,6 @@ insert into shop_inventory(variant_key,product_slug,size,design,price_clp,stock_
 ('["bandana-halloween","Única","Halloween rosado"]','bandana-halloween','Única','Halloween rosado',4000,1),
 ('["bandana-halloween","Única","Fantasmas y murciélagos"]','bandana-halloween','Única','Fantasmas y murciélagos',4000,1),
 ('["bandana-halloween","Única","Boo! negro"]','bandana-halloween','Única','Boo! negro',4000,1),
-('["collar-murcielago","XS",""]','collar-murcielago','XS','',3500,1),
+('["collar-murcielago","XS",""]','collar-murcielago','XS','',3500,0),
 ('["collar-calabaza","XS",""]','collar-calabaza','XS','',3500,1)
 on conflict (variant_key) do nothing;

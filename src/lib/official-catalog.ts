@@ -11,6 +11,7 @@ export type OfficialProduct = {
   images: { src: string; alt: string; crop?: "left" | "right" }[];
   video?: { src: string; poster: string; label: string };
   featured?: boolean;
+  showWhenSoldOut?: boolean;
 };
 
 export const officialCategoryLabels: Record<OfficialCategory, string> = {
@@ -154,7 +155,7 @@ const catalogProducts: OfficialProduct[] = [
   {
     slug: "bandana-halloween",
     name: "Pañuelos Spooky",
-    category: "accesorios",
+    category: "halloween",
     description: "Un guiño spooky para el paseo. Elige entre tres diseños y deja que el pañuelo haga su magia.",
     fit: "Para perros medianos a grandes",
     images: [
@@ -167,8 +168,9 @@ const catalogProducts: OfficialProduct[] = [
   {
     slug: "collar-murcielago",
     name: "Collar murciélago",
-    category: "accesorios",
+    category: "halloween",
     description: "Unas alitas y cambia toda la actitud. Pequeño accesorio, gran entrada.",
+    showWhenSoldOut: true,
     images: [
       image("collar-murcielago-gato", "Gato negro con collar de murciélago y colgante de telaraña"),
       image("collar-murcielago-producto", "Collar con lazo blanco y alas negras de murciélago"),
@@ -178,7 +180,7 @@ const catalogProducts: OfficialProduct[] = [
   {
     slug: "collar-calabaza",
     name: "Collar calabaza",
-    category: "accesorios",
+    category: "halloween",
     description: "Un toque naranja para que la fiesta empiece desde el primer maullido o ladrido.",
     images: [
       image("collar-calabaza-producto", "Collar morado y naranja con calabaza y alas"),
@@ -188,9 +190,9 @@ const catalogProducts: OfficialProduct[] = [
   },
 ];
 
-// Only items with confirmed, positive stock belong in the live catalog.
+// Keep selected sold-out products visible when the shop wants to show demand.
 export const officialProducts = catalogProducts.filter((product) =>
-  publicInventoryBySlug[product.slug]?.variants.some((variant) => variant.units > 0),
+  publicInventoryBySlug[product.slug]?.variants.some((variant) => variant.units > 0) || product.showWhenSoldOut,
 );
 
 export function getOfficialProduct(slug: string) {

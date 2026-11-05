@@ -1,5 +1,5 @@
-// Public catalog snapshot confirmed by the shop on 19 October 2026.
-// Historical spreadsheet values are superseded. Update this file after every stock change.
+// Initial catalog snapshot, updated for the collar sale reported on 5 November 2026.
+// The live database is authoritative for checkout and displayed availability.
 export type StockedVariant = {
   size: string;
   units: number;
@@ -12,7 +12,7 @@ export type PublicInventory = {
   variants: StockedVariant[];
 };
 
-export const inventoryAsOf = "19 de octubre de 2026";
+export const inventoryAsOf = "5 de noviembre de 2026";
 
 export const publicInventoryBySlug: Record<string, PublicInventory> = {
   "parka-bicolor-gris": {
@@ -73,7 +73,7 @@ export const publicInventoryBySlug: Record<string, PublicInventory> = {
     ],
   },
   "collar-murcielago": {
-    variants: [{ size: "XS", units: 1, priceClp: 3500 }],
+    variants: [{ size: "XS", units: 0, priceClp: 3500 }],
   },
   "collar-calabaza": {
     variants: [{ size: "XS", units: 1, priceClp: 3500 }],

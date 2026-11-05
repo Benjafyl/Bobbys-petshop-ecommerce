@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import { InfoPage } from "@/components/info-page";
 import { whatsappProfileUrl } from "@/lib/social";
+
+export const metadata: Metadata = {
+  title: "Cambios y devoluciones",
+  description: "Conoce las opciones de garantía, cambios y devoluciones de Bobby's Pet Shop y contáctanos por WhatsApp para revisar tu caso.",
+  alternates: { canonical: "https://bobbyspetshop.cl/cambios-y-devoluciones" },
+};
 
 export default function ReturnsPage() {
   return (

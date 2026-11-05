@@ -8,6 +8,7 @@ import { useOfficialCart } from "@/components/official-cart-provider";
 import { officialCategoryLabels, type OfficialProduct } from "@/lib/official-catalog";
 import { getOfficialVariantId } from "@/lib/official-cart";
 import { formatClp } from "@/lib/public-inventory";
+import type { PublicInventory } from "@/lib/public-inventory";
 
 function galleryImageClassName(image: OfficialProduct["images"][number]) {
   if (image.crop === "left") return "object-cover object-left";
@@ -20,11 +21,11 @@ const bicolorOptions = [
   { slug: "parka-bicolor-beige", label: "Beige", image: "/images/official/parka-beige-producto.jpg" },
 ] as const;
 
-export function OfficialProductDetail({ product }: { product: OfficialProduct }) {
+export function OfficialProductDetail({ product, initialInventory }: { product: OfficialProduct; initialInventory?: PublicInventory }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const active = product.images[activeIndex];
   const { cart, ready, addItem, inventory: liveInventory, inventoryError } = useOfficialCart();
-  const inventory = liveInventory[product.slug];
+  const inventory = inventoryError ? undefined : (liveInventory[product.slug] ?? initialInventory);
   const [selectedVariantId, setSelectedVariantId] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [notice, setNotice] = useState("");

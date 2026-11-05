@@ -1,4 +1,7 @@
+import type { Metadata } from "next";
 import { InfoPage } from "@/components/info-page";
+
+export const metadata: Metadata = { robots: { index: false, follow: false } };
 
 export default function PrivacyPage() {
   return (

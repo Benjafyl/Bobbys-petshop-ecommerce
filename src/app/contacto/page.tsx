@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import { InfoPage } from "@/components/info-page";
 import { whatsappProfileUrl } from "@/lib/social";
+
+export const metadata: Metadata = {
+  title: "Contacto",
+  description: "Habla con Bobby's Pet Shop por WhatsApp sobre ropa para mascotas, tallas, pedidos o envíos en Chile.",
+  alternates: { canonical: "https://bobbyspetshop.cl/contacto" },
+};
 
 export default function ContactPage() {
   return (

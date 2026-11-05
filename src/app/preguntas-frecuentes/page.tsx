@@ -1,6 +1,14 @@
+import type { Metadata } from "next";
+import Link from "next/link";
 import { InfoPage } from "@/components/info-page";
 import { formatClp } from "@/lib/public-inventory";
 import { SHIPPING_FEE_CLP } from "@/lib/shipping";
+
+export const metadata: Metadata = {
+  title: "Preguntas frecuentes sobre ropa para mascotas",
+  description: "Cómo comprar ropa para tu perro, elegir la talla, pagar con Mercado Pago y recibir tu pedido en Chile.",
+  alternates: { canonical: "https://bobbyspetshop.cl/preguntas-frecuentes" },
+};
 
 export default function FaqPage() {
   return (
@@ -15,6 +23,9 @@ export default function FaqPage() {
         </p>
         <p>
           <strong>¿Cuánto cuesta el envío?</strong> {formatClp(SHIPPING_FEE_CLP)} por pedido a cualquier destino dentro de Chile.
+        </p>
+        <p>
+          <strong>¿Cómo elijo ropa para un perro salchicha?</strong> Mide su espalda, pecho y cuello antes de comprar. Bobby es salchicha y nos inspiró a buscar prendas que le queden cómodas. Consulta nuestra <Link href="/guia-de-tallas" className="font-bold text-[#B6633A] underline">guía de tallas</Link> y compara esas medidas con cada prenda.
         </p>
       </div>
     </InfoPage>

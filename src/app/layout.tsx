@@ -4,6 +4,9 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { OfficialCartProvider } from "@/components/official-cart-provider";
 import { WhatsAppFloatingButton } from "@/components/whatsapp-floating-button";
+import { JsonLd } from "@/components/json-ld";
+import { instagramProfileUrl } from "@/lib/social";
+import { SITE_URL, absoluteSiteUrl } from "@/lib/site-url";
 import "./globals.css";
 
 const nunito = Nunito({
@@ -17,18 +20,52 @@ const fredoka = Fredoka({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Bobby's Pet Shop | Ropa para mascotas y accesorios",
+    default: "Ropa para perros y mascotas en Chile | Bobby's Pet Shop",
     template: "%s | Bobby's Pet Shop",
   },
   description:
-    "Tienda online para mascotas en Chile: ropa para perros, parkas, chalecos y accesorios. Revisa modelos, tallas y precios con envío a todo Chile.",
+    "Tienda online de ropa para perros y accesorios para mascotas en Chile. Descubre parkas, chalecos y diseños de Bobby's; compra con envío a todo Chile o retiro en Viña del Mar.",
   openGraph: {
-    title: "Bobby's Pet Shop",
-    description: "Ropa para mascotas, parkas, chalecos y accesorios con estilo Bobby's.",
+    type: "website",
+    locale: "es_CL",
+    siteName: "Bobby's Pet Shop",
+    title: "Ropa para perros y mascotas en Chile | Bobby's Pet Shop",
+    description: "Parkas, chalecos y accesorios para mascotas con la personalidad de Bobby.",
     images: ["/images/official/parka-beige-modelo.jpg"],
   },
+  twitter: { card: "summary_large_image" },
+};
+
+const storeStructuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "OnlineStore",
+      "@id": `${SITE_URL}/#store`,
+      name: "Bobby's Pet Shop",
+      url: SITE_URL,
+      description: "Tienda online chilena de ropa para perros y accesorios para mascotas, inspirada en Bobby.",
+      logo: absoluteSiteUrl("/images/official/logo-bobbys-pet-shop.jpg"),
+      sameAs: [instagramProfileUrl],
+      foundingDate: "2021",
+      areaServed: { "@type": "Country", name: "Chile" },
+      contactPoint: { "@type": "ContactPoint", contactType: "customer service", telephone: "+56992970756", availableLanguage: "Spanish" },
+      hasMerchantReturnPolicy: {
+        "@type": "MerchantReturnPolicy",
+        merchantReturnLink: absoluteSiteUrl("/cambios-y-devoluciones"),
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      name: "Bobby's Pet Shop",
+      url: SITE_URL,
+      inLanguage: "es-CL",
+      publisher: { "@id": `${SITE_URL}/#store` },
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -39,6 +76,7 @@ export default function RootLayout({
   return (
     <html lang="es-CL" className={`${nunito.variable} ${fredoka.variable} h-full antialiased`}>
       <body className="min-h-full bg-[#FBF7F1] text-[#243C3A]">
+        <JsonLd data={storeStructuredData} />
         <OfficialCartProvider liveInventoryEnabled>
           <SiteHeader />
           <main>{children}</main>

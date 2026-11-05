@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowDown, ArrowRight, Heart, Star } from "lucide-react";
@@ -11,6 +12,8 @@ import {
   type OfficialCategory,
 } from "@/lib/official-catalog";
 import { instagramProfileUrl, instagramReels } from "@/lib/social";
+
+export const metadata: Metadata = { alternates: { canonical: "https://bobbyspetshop.cl/" } };
 
 const categorySections: {
   id: OfficialCategory;

@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Conoce a Bobby",
   description:
     "Conoce a Bobby, el perro salchicha que inspiró Bobby's Pet Shop, una marca creada en 2021 que hoy vive una nueva etapa.",
+  alternates: { canonical: "https://bobbyspetshop.cl/the-boss" },
 };
 
 const bobbyMoments = [

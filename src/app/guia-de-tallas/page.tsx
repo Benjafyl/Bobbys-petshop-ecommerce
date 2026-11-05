@@ -5,6 +5,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Cómo medir a tu perro | Guía de tallas",
   description: "Aprende dónde medir el cuello, pecho y espalda de tu perro para elegir su ropa. Consulta también las medidas disponibles de parkas Bobby's Pet Shop.",
+  alternates: { canonical: "https://bobbyspetshop.cl/guia-de-tallas" },
 };
 
 const measures = [

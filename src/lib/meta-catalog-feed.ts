@@ -1,6 +1,5 @@
 import { catalogProducts } from "@/lib/official-catalog";
-import { getOfficialVariantId } from "@/lib/official-cart";
-import type { PublicInventory } from "@/lib/public-inventory";
+import type { PublicInventory, StockedVariant } from "@/lib/public-inventory";
 import { absoluteSiteUrl } from "@/lib/site-url";
 
 type FeedInventory = Record<string, PublicInventory>;
@@ -15,6 +14,22 @@ function csvCell(value: string | number) {
   return /[",\r\n]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
 }
 
+export function getMetaVariantId(slug: string, variant: StockedVariant) {
+  const design = (variant.design || "default")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+  const size = variant.size
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+  return `${slug}-${size}-${design}`;
+}
+
 export function buildMetaCatalogFeed(inventory: FeedInventory) {
   const rows: (string | number)[][] = [Array.from(columns)];
 
@@ -23,7 +38,7 @@ export function buildMetaCatalogFeed(inventory: FeedInventory) {
       if (!Number.isInteger(variant.priceClp) || variant.priceClp <= 0 || !Number.isInteger(variant.units) || variant.units < 0) continue;
       const label = [variant.design, `talla ${variant.size}`].filter(Boolean).join(" · ");
       rows.push([
-        getOfficialVariantId(product.slug, variant),
+        getMetaVariantId(product.slug, variant),
         product.slug,
         `${product.name} · ${label}`,
         product.description,

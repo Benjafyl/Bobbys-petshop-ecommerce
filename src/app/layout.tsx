@@ -21,6 +21,7 @@ const fredoka = Fredoka({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  verification: { other: { "facebook-domain-verification": "i4n0apxetnkiyumuns93ty8m68d9aj" } },
   title: {
     default: "Ropa para perros y mascotas en Chile | Bobby's Pet Shop",
     template: "%s | Bobby's Pet Shop",

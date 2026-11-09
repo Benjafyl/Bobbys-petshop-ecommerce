@@ -23,7 +23,7 @@ export const officialCategoryLabels: Record<OfficialCategory, string> = {
 
 const image = (name: string, alt: string) => ({ src: `/images/official/${name}.jpg`, alt });
 
-const catalogProducts: OfficialProduct[] = [
+export const catalogProducts: OfficialProduct[] = [
   {
     slug: "parka-bicolor-gris",
     name: "Parka bicolor gris",

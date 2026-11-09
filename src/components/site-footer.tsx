@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Mail } from "lucide-react";
 import { InstagramIcon } from "@/components/instagram-icon";
+import { PrivacyPreferencesButton } from "@/components/privacy-preferences-button";
 import { instagramProfileUrl, whatsappProfileUrl } from "@/lib/social";
 
 export function SiteFooter() {
@@ -22,6 +23,9 @@ export function SiteFooter() {
             <Link href="/preguntas-frecuentes">Preguntas frecuentes</Link>
             <Link href="/cambios-y-devoluciones">Cambios y devoluciones</Link>
             <Link href="/contacto">Contacto</Link>
+            <Link href="/privacidad">Privacidad</Link>
+            <Link href="/terminos">Términos de compra</Link>
+            <PrivacyPreferencesButton />
           </div>
         </div>
         <div>

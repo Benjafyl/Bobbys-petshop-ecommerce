@@ -1,5 +1,6 @@
 import { catalogProducts } from "@/lib/official-catalog";
-import type { PublicInventory, StockedVariant } from "@/lib/public-inventory";
+import type { PublicInventory } from "@/lib/public-inventory";
+import { getMetaVariantId } from "@/lib/meta-variant-id";
 import { absoluteSiteUrl } from "@/lib/site-url";
 
 type FeedInventory = Record<string, PublicInventory>;
@@ -12,22 +13,6 @@ const columns = [
 function csvCell(value: string | number) {
   const text = String(value).replaceAll(/\r?\n/g, " ");
   return /[",\r\n]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
-}
-
-export function getMetaVariantId(slug: string, variant: StockedVariant) {
-  const design = (variant.design || "default")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-  const size = variant.size
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-  return `${slug}-${size}-${design}`;
 }
 
 export function buildMetaCatalogFeed(inventory: FeedInventory) {

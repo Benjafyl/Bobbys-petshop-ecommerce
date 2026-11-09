@@ -5,6 +5,7 @@ import { SiteHeader } from "@/components/site-header";
 import { OfficialCartProvider } from "@/components/official-cart-provider";
 import { WhatsAppFloatingButton } from "@/components/whatsapp-floating-button";
 import { JsonLd } from "@/components/json-ld";
+import { MetaPixelConsent } from "@/components/meta-pixel-consent";
 import { instagramProfileUrl } from "@/lib/social";
 import { SITE_URL, absoluteSiteUrl } from "@/lib/site-url";
 import "./globals.css";
@@ -83,6 +84,7 @@ export default function RootLayout({
           <main>{children}</main>
           <SiteFooter />
           <WhatsAppFloatingButton />
+          <MetaPixelConsent />
         </OfficialCartProvider>
       </body>
     </html>

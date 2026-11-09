@@ -4,6 +4,8 @@ import { db } from "@/lib/db";
 import { getPayment, paidCheckoutEnabled, searchOrderPayments } from "@/lib/mercadopago";
 import { recordVerifiedPayment } from "@/lib/shop-payments";
 import { ClearPaidCart } from "@/components/clear-paid-cart";
+import { MetaPurchaseEvent } from "@/components/meta-purchase-event";
+import { getMetaVariantId } from "@/lib/meta-variant-id";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Estado del pedido", robots: { index: false, follow: false } };
@@ -22,12 +24,21 @@ export default async function PaymentResult({ searchParams }: { searchParams: Pr
       for (const payment of payments) await recordVerifiedPayment(payment);
     }
   } catch { /* El webhook puede confirmar el pago después. */ }
-  const result = await db().query<{ order_number: string; payment_status: string; delivery_method: "shipping" | "pickup" }>("select order_number,payment_status,delivery_method from shop_orders where id=$1", [orderId]);
+  const result = await db().query<{ order_number: string; payment_status: string; delivery_method: "shipping" | "pickup"; total_clp: number }>("select order_number,payment_status,delivery_method,total_clp from shop_orders where id=$1", [orderId]);
   const order = result.rows[0];
   if (!order) return <section className="mx-auto max-w-2xl px-4 py-20"><h1 className="text-3xl font-black">No encontramos ese pedido</h1></section>;
   const paid = order.payment_status === "PAID";
+  const items = paid ? await db().query<{ variant_key: string; quantity: number }>("select variant_key,quantity from shop_order_items where order_id=$1", [orderId]) : null;
+  const contents = items?.rows.flatMap(({ variant_key, quantity }) => {
+    try {
+      const [slug, size, design] = JSON.parse(variant_key) as [string, string, string];
+      if (typeof slug !== "string" || typeof size !== "string" || typeof design !== "string") return [];
+      return [{ id: getMetaVariantId(slug, { size, design }), quantity }];
+    } catch { return []; }
+  }) ?? [];
   return <section className="mx-auto max-w-2xl px-4 py-20 text-center">
     {paid && <ClearPaidCart />}
+    {paid && contents.length > 0 && <MetaPurchaseEvent orderId={orderId} totalClp={order.total_clp} contents={contents} />}
     <p className="text-sm font-black uppercase tracking-widest text-[#B6633A]">Pedido {order.order_number}</p>
     <h1 className="mt-4 text-4xl font-black">{paid ? "¡Pago confirmado!" : "Estamos verificando tu pago"}</h1>
     <p className="mt-5 text-[#52615D]">{paid ? order.delivery_method === "pickup" ? "Recibimos el pago. Te contactaremos para coordinar el retiro." : "Recibimos el pago. Prepararemos tu pedido para el envío." : "Mercado Pago todavía no confirma este cobro. Si acabas de pagar, vuelve a consultar en unos minutos. No repitas el pago mientras esté pendiente."}</p>

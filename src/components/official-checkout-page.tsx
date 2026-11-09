@@ -2,12 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { ArrowLeft, LockKeyhole, MapPin, Truck } from "lucide-react";
 import { useOfficialCart } from "@/components/official-cart-provider";
 import { getOfficialCartLines } from "@/lib/official-cart";
 import { formatClp } from "@/lib/public-inventory";
 import { deliveryFeeClp, PICKUP_LOCATION, SHIPPING_FEE_CLP, type DeliveryMethod } from "@/lib/shipping";
+import { getMetaVariantId } from "@/lib/meta-variant-id";
+import { META_CONSENT_EVENT, trackMetaEvent } from "@/lib/meta-pixel";
 
 const regions = ["Arica y Parinacota", "Tarapacá", "Antofagasta", "Atacama", "Coquimbo", "Valparaíso", "Metropolitana de Santiago", "Libertador General Bernardo O'Higgins", "Maule", "Ñuble", "Biobío", "La Araucanía", "Los Ríos", "Los Lagos", "Aysén", "Magallanes y de la Antártica Chilena"];
 const field = "mt-2 min-h-12 w-full rounded-lg border border-[#D8CEC1] bg-white px-3 text-sm text-[#243C3A] outline-none focus:border-[#B6633A] focus:ring-2 focus:ring-[#B6633A]/20";
@@ -28,6 +30,19 @@ export function OfficialCheckoutPage({ checkoutEnabled, initialCoupon }: { check
   const discount = appliedCoupon?.signature === signature ? appliedCoupon.discountClp : 0;
   const shippingClp = deliveryMethod ? deliveryFeeClp(deliveryMethod) : null;
   const total = shippingClp === null ? null : subtotal + shippingClp - discount;
+  const trackedCheckout = useRef("");
+
+  useEffect(() => {
+    if (!ready || lines.length === 0) return;
+    const track = () => {
+      if (trackedCheckout.current === signature) return;
+      const contents = lines.map((line) => ({ id: getMetaVariantId(line.product.slug, line.variant), quantity: line.quantity }));
+      if (trackMetaEvent("InitiateCheckout", { content_type: "product", content_ids: contents.map((line) => line.id), contents, value: subtotal, currency: "CLP" })) trackedCheckout.current = signature;
+    };
+    track();
+    window.addEventListener(META_CONSENT_EVENT, track);
+    return () => window.removeEventListener(META_CONSENT_EVENT, track);
+  }, [ready, signature, lines, subtotal]);
 
   async function applyCoupon(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();

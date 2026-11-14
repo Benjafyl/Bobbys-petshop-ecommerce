@@ -11,6 +11,7 @@ import { formatClp } from "@/lib/public-inventory";
 import type { PublicInventory } from "@/lib/public-inventory";
 import { getMetaVariantId } from "@/lib/meta-variant-id";
 import { META_CONSENT_EVENT, trackMetaEvent } from "@/lib/meta-pixel";
+import { trackGoogleEvent } from "@/lib/google-analytics";
 
 function galleryImageClassName(image: OfficialProduct["images"][number]) {
   if (image.crop === "left") return "object-cover object-left";
@@ -40,18 +41,19 @@ export function OfficialProductDetail({ product, initialInventory }: { product: 
   const metaVariantId = selectedVariant ? getMetaVariantId(product.slug, selectedVariant) : "";
   const selectedPrice = selectedVariant?.priceClp;
   const trackedView = useRef("");
+  const trackedGoogleView = useRef("");
 
   useEffect(() => {
     if (!metaVariantId || !selectedPrice) return;
     const track = () => {
-      if (trackedView.current === metaVariantId) return;
-      if (trackMetaEvent("ViewContent", { content_type: "product", content_ids: [metaVariantId], value: selectedPrice, currency: "CLP" })) trackedView.current = metaVariantId;
+      if (trackedView.current !== metaVariantId && trackMetaEvent("ViewContent", { content_type: "product", content_ids: [metaVariantId], value: selectedPrice, currency: "CLP" })) trackedView.current = metaVariantId;
+      if (trackedGoogleView.current !== metaVariantId && trackGoogleEvent("view_item", { currency: "CLP", value: selectedPrice, items: [{ item_id: metaVariantId, item_name: product.name, item_variant: `${selectedVariant?.design ?? ""} ${selectedVariant?.size ?? ""}`.trim(), price: selectedPrice, quantity: 1 }] })) trackedGoogleView.current = metaVariantId;
     };
-    const trackAfterConsent = () => { trackedView.current = ""; track(); };
+    const trackAfterConsent = () => { trackedView.current = ""; trackedGoogleView.current = ""; track(); };
     track();
     window.addEventListener(META_CONSENT_EVENT, trackAfterConsent);
     return () => window.removeEventListener(META_CONSENT_EVENT, trackAfterConsent);
-  }, [metaVariantId, selectedPrice]);
+  }, [metaVariantId, selectedPrice, product.name, selectedVariant?.design, selectedVariant?.size]);
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
@@ -127,7 +129,7 @@ export function OfficialProductDetail({ product, initialInventory }: { product: 
                     <span className="w-9 text-center text-sm font-black" aria-live="polite">{Math.min(quantity, availableToAdd)}</span>
                     <button type="button" className="flex h-12 w-11 items-center justify-center disabled:opacity-40" aria-label="Sumar unidad" disabled={!ready || quantity >= availableToAdd} onClick={() => setQuantity((value) => Math.min(value + 1, availableToAdd))}><Plus size={17} /></button>
                   </div>
-                  <button type="button" disabled={!ready} onClick={() => { if (!selectedVariant) return; const amount = Math.min(quantity, availableToAdd); addItem(product.slug, effectiveVariantId, amount); trackMetaEvent("AddToCart", { content_type: "product", content_ids: [getMetaVariantId(product.slug, selectedVariant)], contents: [{ id: getMetaVariantId(product.slug, selectedVariant), quantity: amount }], value: selectedVariant.priceClp * amount, currency: "CLP" }); setQuantity(1); setNotice(`${amount} ${amount === 1 ? "unidad agregada" : "unidades agregadas"} al carrito`); }} className="inline-flex h-12 min-w-48 flex-1 items-center justify-center gap-2 rounded-lg bg-[#B6633A] px-5 text-sm font-black text-white transition-colors duration-200 hover:bg-[#96502E] disabled:cursor-not-allowed disabled:opacity-50"><ShoppingBag size={18} /> Agregar al carrito</button>
+                  <button type="button" disabled={!ready} onClick={() => { if (!selectedVariant) return; const amount = Math.min(quantity, availableToAdd); const itemId = getMetaVariantId(product.slug, selectedVariant); addItem(product.slug, effectiveVariantId, amount); trackMetaEvent("AddToCart", { content_type: "product", content_ids: [itemId], contents: [{ id: itemId, quantity: amount }], value: selectedVariant.priceClp * amount, currency: "CLP" }); trackGoogleEvent("add_to_cart", { currency: "CLP", value: selectedVariant.priceClp * amount, items: [{ item_id: itemId, item_name: product.name, item_variant: `${selectedVariant.design ?? ""} ${selectedVariant.size}`.trim(), price: selectedVariant.priceClp, quantity: amount }] }); setQuantity(1); setNotice(`${amount} ${amount === 1 ? "unidad agregada" : "unidades agregadas"} al carrito`); }} className="inline-flex h-12 min-w-48 flex-1 items-center justify-center gap-2 rounded-lg bg-[#B6633A] px-5 text-sm font-black text-white transition-colors duration-200 hover:bg-[#96502E] disabled:cursor-not-allowed disabled:opacity-50"><ShoppingBag size={18} /> Agregar al carrito</button>
                 </div> : selectedVariant?.units === 0 ? <p className="text-sm font-bold text-[#52615D]">Esta opción está agotada.</p> : <Link href="/carrito" className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-[#243C3A] px-5 text-sm font-black text-white hover:bg-[#31514E]"><ShoppingBag size={18} /> Ver en mi carrito</Link>}
                 {notice && <p className="mt-3 text-sm text-[#52615D]" aria-live="polite">{notice}</p>}
               </div>

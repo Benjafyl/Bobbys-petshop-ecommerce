@@ -1,5 +1,6 @@
 export const META_PIXEL_ID = "1143296638199935";
-export const META_CONSENT_KEY = "bobbys-meta-consent-v1";
+// A new choice is required because Google Analytics was added after the Meta-only notice.
+export const META_CONSENT_KEY = "bobbys-analytics-consent-v2";
 export const META_CONSENT_EVENT = "bobbys-meta-consent";
 
 type Fbq = ((...args: unknown[]) => void) & {

@@ -24,21 +24,22 @@ export default async function PaymentResult({ searchParams }: { searchParams: Pr
       for (const payment of payments) await recordVerifiedPayment(payment);
     }
   } catch { /* El webhook puede confirmar el pago después. */ }
-  const result = await db().query<{ order_number: string; payment_status: string; delivery_method: "shipping" | "pickup"; total_clp: number }>("select order_number,payment_status,delivery_method,total_clp from shop_orders where id=$1", [orderId]);
+  const result = await db().query<{ order_number: string; payment_status: string; delivery_method: "shipping" | "pickup"; total_clp: number; subtotal_clp: number; discount_clp: number; shipping_clp: number }>("select order_number,payment_status,delivery_method,total_clp,subtotal_clp,discount_clp,shipping_clp from shop_orders where id=$1", [orderId]);
   const order = result.rows[0];
   if (!order) return <section className="mx-auto max-w-2xl px-4 py-20"><h1 className="text-3xl font-black">No encontramos ese pedido</h1></section>;
   const paid = order.payment_status === "PAID";
-  const items = paid ? await db().query<{ variant_key: string; quantity: number }>("select variant_key,quantity from shop_order_items where order_id=$1", [orderId]) : null;
-  const contents = items?.rows.flatMap(({ variant_key, quantity }) => {
+  const items = paid ? await db().query<{ variant_key: string; product_name: string; size: string; design: string; unit_price_clp: number; quantity: number }>("select variant_key,product_name,size,design,unit_price_clp,quantity from shop_order_items where order_id=$1", [orderId]) : null;
+  const purchaseItems = items?.rows.flatMap(({ variant_key, product_name, size, design, unit_price_clp, quantity }) => {
     try {
-      const [slug, size, design] = JSON.parse(variant_key) as [string, string, string];
-      if (typeof slug !== "string" || typeof size !== "string" || typeof design !== "string") return [];
-      return [{ id: getMetaVariantId(slug, { size, design }), quantity }];
+      const [slug] = JSON.parse(variant_key) as [string, string, string];
+      if (typeof slug !== "string") return [];
+      return [{ item_id: getMetaVariantId(slug, { size, design }), item_name: product_name, item_variant: `${design} ${size}`.trim(), price: unit_price_clp, quantity }];
     } catch { return []; }
   }) ?? [];
+  const contents = purchaseItems.map(({ item_id, quantity }) => ({ id: item_id, quantity }));
   return <section className="mx-auto max-w-2xl px-4 py-20 text-center">
     {paid && <ClearPaidCart />}
-    {paid && contents.length > 0 && <MetaPurchaseEvent orderId={orderId} totalClp={order.total_clp} contents={contents} />}
+    {paid && contents.length > 0 && <MetaPurchaseEvent orderId={orderId} totalClp={order.total_clp} revenueClp={order.subtotal_clp - order.discount_clp} shippingClp={order.shipping_clp} contents={contents} items={purchaseItems} />}
     <p className="text-sm font-black uppercase tracking-widest text-[#B6633A]">Pedido {order.order_number}</p>
     <h1 className="mt-4 text-4xl font-black">{paid ? "¡Pago confirmado!" : "Estamos verificando tu pago"}</h1>
     <p className="mt-5 text-[#52615D]">{paid ? order.delivery_method === "pickup" ? "Recibimos el pago. Te contactaremos para coordinar el retiro." : "Recibimos el pago. Prepararemos tu pedido para el envío." : "Mercado Pago todavía no confirma este cobro. Si acabas de pagar, vuelve a consultar en unos minutos. No repitas el pago mientras esté pendiente."}</p>

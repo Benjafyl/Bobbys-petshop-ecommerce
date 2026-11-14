@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { loadMetaPixel, META_CONSENT_EVENT, META_CONSENT_KEY, revokeMetaPixel, trackMetaEvent } from "@/lib/meta-pixel";
+import { loadGoogleAnalytics, revokeGoogleAnalytics, trackGooglePageView } from "@/lib/google-analytics";
 
 export function MetaPixelConsent() {
   const pathname = usePathname();
@@ -30,9 +31,11 @@ export function MetaPixelConsent() {
   useEffect(() => {
     if (choice !== "accepted") return;
     loadMetaPixel();
+    loadGoogleAnalytics();
     if (lastPage.current !== pathname) {
       lastPage.current = pathname;
       trackMetaEvent("PageView");
+      if (!pathname.startsWith("/admin")) trackGooglePageView();
     }
   }, [choice, pathname]);
 
@@ -40,10 +43,13 @@ export function MetaPixelConsent() {
     try { window.localStorage.setItem(META_CONSENT_KEY, next); }
     catch { setChoice("rejected"); setOpen(false); return; }
     if (next === "accepted") {
-      lastPage.current = "";
       loadMetaPixel();
+      loadGoogleAnalytics();
+      lastPage.current = pathname;
+      trackMetaEvent("PageView");
+      if (!pathname.startsWith("/admin")) trackGooglePageView();
       window.dispatchEvent(new Event(META_CONSENT_EVENT));
-    } else revokeMetaPixel();
+    } else { revokeMetaPixel(); revokeGoogleAnalytics(); }
     setChoice(next);
     setOpen(false);
   }
@@ -51,7 +57,7 @@ export function MetaPixelConsent() {
   if (!open) return null;
   return <aside role="dialog" aria-label="Preferencias de privacidad" className="fixed bottom-4 left-4 right-4 z-[100] mx-auto max-w-lg rounded-xl border border-[#D8CEC1] bg-white p-4 shadow-xl sm:left-auto sm:right-5 sm:bottom-5 sm:p-5">
     <p className="text-sm font-black text-[#243C3A]">Privacidad</p>
-    <p className="mt-2 text-sm leading-5 text-[#52615D]">Podemos medir visitas y compras con Meta para mejorar nuestros anuncios. Tú decides. <Link href="/privacidad" className="font-bold text-[#B6633A] underline">Ver política</Link></p>
+    <p className="mt-2 text-sm leading-5 text-[#52615D]">Podemos medir visitas y compras con Google Analytics y Meta para mejorar la tienda y nuestros anuncios. Tú decides. <Link href="/privacidad" className="font-bold text-[#B6633A] underline">Ver política</Link></p>
     <div className="mt-4 flex gap-2"><button type="button" onClick={() => choose("rejected")} className="min-h-11 flex-1 rounded-lg border border-[#D8CEC1] px-3 text-sm font-bold">Rechazar</button><button type="button" onClick={() => choose("accepted")} className="min-h-11 flex-1 rounded-lg bg-[#243C3A] px-3 text-sm font-bold text-white">Aceptar</button></div>
   </aside>;
 }

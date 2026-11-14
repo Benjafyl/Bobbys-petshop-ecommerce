@@ -2,11 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { ArrowLeft, Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
 import { useOfficialCart } from "@/components/official-cart-provider";
 import { getOfficialCartLines } from "@/lib/official-cart";
 import { formatClp } from "@/lib/public-inventory";
+import { getMetaVariantId } from "@/lib/meta-variant-id";
+import { META_CONSENT_EVENT } from "@/lib/meta-pixel";
+import { trackGoogleEvent } from "@/lib/google-analytics";
 
 export function OfficialCartPage() {
   const { cart, ready, inventory, inventoryError, setQuantity, removeItem, clearCart } = useOfficialCart();
@@ -18,6 +21,18 @@ export function OfficialCartPage() {
   const subtotal = lines.reduce((total, line) => total + line.lineTotal, 0);
   const signature = JSON.stringify(cart);
   const discount = appliedCoupon?.signature === signature ? appliedCoupon.discountClp : 0;
+  const trackedCart = useRef("");
+
+  useEffect(() => {
+    if (!ready || lines.length === 0) return;
+    const track = () => {
+      if (trackedCart.current === signature) return;
+      if (trackGoogleEvent("view_cart", { currency: "CLP", value: subtotal, items: lines.map((line) => ({ item_id: getMetaVariantId(line.productSlug, line.variant), item_name: line.product.name, item_variant: `${line.variant.design ?? ""} ${line.variant.size}`.trim(), price: line.variant.priceClp, quantity: line.quantity })) })) trackedCart.current = signature;
+    };
+    track();
+    window.addEventListener(META_CONSENT_EVENT, track);
+    return () => window.removeEventListener(META_CONSENT_EVENT, track);
+  }, [ready, signature, lines, subtotal]);
 
   async function applyCoupon(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();

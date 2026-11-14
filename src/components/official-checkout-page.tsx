@@ -10,6 +10,7 @@ import { formatClp } from "@/lib/public-inventory";
 import { deliveryFeeClp, PICKUP_LOCATION, SHIPPING_FEE_CLP, type DeliveryMethod } from "@/lib/shipping";
 import { getMetaVariantId } from "@/lib/meta-variant-id";
 import { META_CONSENT_EVENT, trackMetaEvent } from "@/lib/meta-pixel";
+import { trackGoogleEvent } from "@/lib/google-analytics";
 
 const regions = ["Arica y Parinacota", "Tarapacá", "Antofagasta", "Atacama", "Coquimbo", "Valparaíso", "Metropolitana de Santiago", "Libertador General Bernardo O'Higgins", "Maule", "Ñuble", "Biobío", "La Araucanía", "Los Ríos", "Los Lagos", "Aysén", "Magallanes y de la Antártica Chilena"];
 const field = "mt-2 min-h-12 w-full rounded-lg border border-[#D8CEC1] bg-white px-3 text-sm text-[#243C3A] outline-none focus:border-[#B6633A] focus:ring-2 focus:ring-[#B6633A]/20";
@@ -31,13 +32,14 @@ export function OfficialCheckoutPage({ checkoutEnabled, initialCoupon }: { check
   const shippingClp = deliveryMethod ? deliveryFeeClp(deliveryMethod) : null;
   const total = shippingClp === null ? null : subtotal + shippingClp - discount;
   const trackedCheckout = useRef("");
+  const trackedGoogleCheckout = useRef("");
 
   useEffect(() => {
     if (!ready || lines.length === 0) return;
     const track = () => {
-      if (trackedCheckout.current === signature) return;
       const contents = lines.map((line) => ({ id: getMetaVariantId(line.product.slug, line.variant), quantity: line.quantity }));
-      if (trackMetaEvent("InitiateCheckout", { content_type: "product", content_ids: contents.map((line) => line.id), contents, value: subtotal, currency: "CLP" })) trackedCheckout.current = signature;
+      if (trackedCheckout.current !== signature && trackMetaEvent("InitiateCheckout", { content_type: "product", content_ids: contents.map((line) => line.id), contents, value: subtotal, currency: "CLP" })) trackedCheckout.current = signature;
+      if (trackedGoogleCheckout.current !== signature && trackGoogleEvent("begin_checkout", { currency: "CLP", value: subtotal, items: lines.map((line) => ({ item_id: getMetaVariantId(line.product.slug, line.variant), item_name: line.product.name, item_variant: `${line.variant.design ?? ""} ${line.variant.size}`.trim(), price: line.variant.priceClp, quantity: line.quantity })) })) trackedGoogleCheckout.current = signature;
     };
     track();
     window.addEventListener(META_CONSENT_EVENT, track);
